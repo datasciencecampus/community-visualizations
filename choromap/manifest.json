@@ -1,0 +1,21 @@
+{
+  "name": "Choropleth Map",
+  "logoUrl": "https://raw.githubusercontent.com/datasciencecampus/community-visualizations/master/choromap/img/choropleth.png",
+  "organization": "Data Science Campus",
+  "supportUrl": "https://url",
+  "packageUrl": "https://url",
+  "privacyPolicyUrl": "https://url",
+  "description": "Choropleth mapping for Google Data Studio written in d3.js",
+  "devMode": true,
+  "components": [{
+    "id": "choroMap",
+    "name": "Choropleth Map",
+    "iconUrl": "https://raw.githubusercontent.com/datasciencecampus/community-visualizations/master/choromap/img/choropleth.png",
+    "description": "Choropleth map for Google Data Studio written in d3.js",
+    "resource": {
+      "js": "gs://choro-maps/utla/myViz.js",
+      "config": "gs://choro-maps/utla/myViz.json",
+      "css": "gs://choro-maps/utla/myViz.css"
+    }
+  }]
+}
