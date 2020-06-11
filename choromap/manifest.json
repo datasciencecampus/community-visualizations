@@ -13,7 +13,7 @@
     "iconUrl": "https://raw.githubusercontent.com/datasciencecampus/community-visualizations/master/choromap/img/choropleth.png",
     "description": "Choropleth map for Google Data Studio written in d3.js",
     "resource": {
-      "js": "gs://choro-map//choromap.js",
+      "js": "gs://choromap//choromap.js",
       "config": "gs://horomap/choromap.json",
       "css": "gs://choromap/choromap.css"
     }
