@@ -47,7 +47,7 @@ We created our code using a mash of approaches largely from [Most basic chorople
 
 We also largely followed the [Create Custom Javascript Visualizations in Data Studio Codelab guide](https://codelabs.developers.google.com/codelabs/community-visualization/#0).
 
-This folder comprises the four important files for Data Studio:
+The `src` folder comprises the four important files for Data Studio:
 
 - choromap.css (any css to make things look nice)
 - choromap.js (the bulk of the code)
