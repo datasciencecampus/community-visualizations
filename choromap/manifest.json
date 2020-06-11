@@ -2,9 +2,9 @@
   "name": "Choropleth Map",
   "logoUrl": "https://raw.githubusercontent.com/datasciencecampus/community-visualizations/master/choromap/img/choropleth.png",
   "organization": "Data Science Campus",
-  "supportUrl": "https://url",
-  "packageUrl": "https://url",
-  "privacyPolicyUrl": "https://url",
+  "supportUrl": "https://github.com/datasciencecampus/community-visualizations/blob/master/choromap/README.md",
+  "packageUrl": "https://github.com/datasciencecampus/community-visualizations/blob/master/choromap/README.md",
+  "privacyPolicyUrl": "https://github.com/datasciencecampus/community-visualizations/blob/master/choromap/README.md",
   "description": "Choropleth mapping for Google Data Studio written in d3.js",
   "devMode": true,
   "components": [{
@@ -13,9 +13,9 @@
     "iconUrl": "https://raw.githubusercontent.com/datasciencecampus/community-visualizations/master/choromap/img/choropleth.png",
     "description": "Choropleth map for Google Data Studio written in d3.js",
     "resource": {
-      "js": "gs://choro-maps/utla/myViz.js",
-      "config": "gs://choro-maps/utla/myViz.json",
-      "css": "gs://choro-maps/utla/myViz.css"
+      "js": "gs://choro-map/choromap/choromap.js",
+      "config": "gs://choro-map/choromap/choromap.json",
+      "css": "gs://choro-map/choromap/choromap.css"
     }
   }]
 }
