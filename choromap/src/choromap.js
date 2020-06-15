@@ -17596,8 +17596,8 @@ const drawViz = data => {
     .geoPath();
 
   var plot = []
-  var boundaries = { "type" : "GeometryCollection",
-    "geometries" : []}
+  var boundaries = { "type" : "FeatureCollection",
+    "features" : []}
 
 
   rowData.forEach(function (row, i) {
@@ -17618,10 +17618,12 @@ const drawViz = data => {
 
 
     plot.push(mapData);
-    boundaries.geometries.push(JSON.parse(row["mapDimension"][1]));
+    boundaries.features.push(mapData);
 
 
     });
+
+
 
   var max = d3.max(plot, function(d) { return +d.properties.met;} );
 
@@ -17632,15 +17634,17 @@ const drawViz = data => {
     .domain([min,max])
     .range([minColor,maxColor]);
 
-  var centroid = d3.geoCentroid(boundaries)
+  var centroid = path.centroid(boundaries)
 
   var projection = d3
     .geoMercator()
-    .scale(1000)
     .center(centroid)
-    .fitSize([width, height], boundaries);
+    .scale(70)
+    .translate([width / 2, height / 2]);
 
-  console.log(plot)
+  var boundaries = d3.geoStitch(boundaries)
+
+  console.log(boundaries)
 
   var tool_tip = d3.tip()
       .attr("class", "d3-tip")
@@ -17653,7 +17657,7 @@ const drawViz = data => {
     svg
     .append("g")
     .selectAll("path")
-    .data(plot)
+    .data(boundaries.features)
     .enter()
     .append("path")
     // draw each country
