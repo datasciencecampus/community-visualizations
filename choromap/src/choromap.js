@@ -17535,118 +17535,125 @@ d3.tip = function() {
   return tip
 };
 
-
+// choromap code
 const drawViz = data => {
 
-  let rowData = data.tables.DEFAULT;
+    var rowData = data.tables.DEFAULT;
 
-  d3.select('body')
-    .selectAll('svg')
-    .remove();
+    d3.select('body')
+        .selectAll('svg')
+        .remove();
 
-  // remove the error handler if exists
-  d3.select('body')
-    .selectAll('div')
-    .remove();
+    // remove the error handler if exists
+    d3.select('body')
+        .selectAll('div')
+        .remove();
 
-  var minColor =  data.style.minColor.value
-  ? data.style.minColor.value.color
-  : data.style.minColor.defaultValue;
+    var polyNumber =  data.style.polyNumber.value
+    ? data.style.polyNumber.value
+    : data.style.polyNumber.defaultValue;
 
-  var maxColor =  data.style.maxColor.value
-  ? data.style.maxColor.value.color
-  : data.style.maxColor.defaultValue;
+    var minColor =  data.style.minColor.value
+    ? data.style.minColor.value.color
+    : data.style.minColor.defaultValue;
 
-  var nullColor =  data.style.nullColor.value
-  ? data.style.nullColor.value.color
-  : data.style.nullColor.defaultValue;
+    var maxColor =  data.style.maxColor.value
+    ? data.style.maxColor.value.color
+    : data.style.maxColor.defaultValue;
 
-  var polygonBorderColor =  data.style.polygonBorderColor.value
-  ? data.style.polygonBorderColor.value.color
-  : data.style.polygonBorderColor.defaultValue;
+    var nullColor =  data.style.nullColor.value
+    ? data.style.nullColor.value.color
+    : data.style.nullColor.defaultValue;
 
-  var polygonBorderWidth =  data.style.polygonBorderWidth.value
+    var polygonBorderColor =  data.style.polygonBorderColor.value
+    ? data.style.polygonBorderColor.value.color
+    : data.style.polygonBorderColor.defaultValue;
 
-  var legendTextColor =  data.style.legendTextColor.value
-  ? data.style.legendTextColor.value.color
-  : data.style.legendTextColor.defaultValue;
+    var polygonBorderWidth =  data.style.polygonBorderWidth.value
 
-  var showLegend =  data.style.showLegend.value
+    var legendTextColor =  data.style.legendTextColor.value
+    ? data.style.legendTextColor.value.color
+    : data.style.legendTextColor.defaultValue;
 
-  var legendTitle =  data.style.legendTitle.value
-  ? data.style.legendTitle.value
-  : data.style.legendTitle.defaultValue;
+    var showLegend =  data.style.showLegend.value
 
-  // get the width and the height of the iframe
-  var width = dscc.getWidth();
-  var height = dscc.getHeight();
+    var legendTitle =  data.style.legendTitle.value
+    ? data.style.legendTitle.value
+    : data.style.legendTitle.defaultValue;
 
-  // set up the canvas space
-  const yMargin = 5;
+    // get the width and the height of the iframe
+    var width = dscc.getWidth();
+    var height = dscc.getHeight();
 
-  var svg = d3
-    .select('body')
-    .append('svg')
-    .attr('width', width)
-    .attr('height', height - yMargin * 2)
-    .attr('transform', `translate(0, -${yMargin})`);
+    // set up the canvas space
+    const yMargin = 5;
 
-  // Map and projection
-  var path = d3
-    .geoPath();
+    // Create SVG
+    var svg = d3
+        .select('body')
+        .append('svg')
+        .attr('width', width)
+        .attr('height', height - yMargin * 2)
+        .attr('transform', `translate(0, -${yMargin})`);
 
-  var plot = []
-  var boundaries = { "type" : "FeatureCollection",
-    "features" : []}
+    // Map and projection
+    var path = d3
+        .geoPath();
 
+    // Create GeoJSON skeleton
+    var geo_plot = { "type" : "FeatureCollection",
+        "features" : []}
 
-  rowData.forEach(function (row, i) {
-    // 'barDimension' and 'barMetric' come from the id defined in myViz.json
+    if (polyNumber !== "max"){
+        var rowData = rowData.slice(0, polyNumber);
+    }
+
+    console.log(rowData)
+
+    // Add data to GeoJSON object
+    rowData.forEach(function (row, i) {
+    // 'mapDimension' and 'mapMetric' come from the id defined in choromap.json
     // 'dimId' is Data Studio's unique field ID, used for the filter interaction
 
-    let mapData = {
+    let geo_data = {
 
-      type: "Feature",
-      geometry: JSON.parse(row["mapDimension"][1]),
-      properties: {
-        dim: row["mapDimension"][0],
-        met: row["mapMetric"][0]
-      },
-      dimId: data.fields["mapDimension"][0].id
+        type: "Feature",
+        geometry: JSON.parse(row["mapDimension"][1]),
+        properties: {
+            dim: row["mapDimension"][0],
+            met: row["mapMetric"][0]
+        },
+        dimId: data.fields["mapDimension"][0].id
 
     };
 
-
-    plot.push(mapData);
-    boundaries.features.push(mapData);
-
+    geo_plot.features.push(geo_data);
 
     });
 
+    // Find the maximum value of metric
+    var max = d3.max(geo_plot.features, function(d) { return +d.properties.met;} );
 
+    // Find the minimum value of metric
+    var min = d3.min(geo_plot.features, function(d) { return +d.properties.met;} );
 
-  var max = d3.max(plot, function(d) { return +d.properties.met;} );
+    // Create color scale from min and max values and colours
+    var colorScale = d3
+        .scaleLinear()
+        .domain([min,max])
+        .range([minColor,maxColor]);
 
-  var min = d3.min(plot, function(d) { return +d.properties.met;} );
+    // Finds centroid of path for plotting
+    var centroid = path.centroid(geo_plot)
 
-  var colorScale = d3
-    .scaleLinear()
-    .domain([min,max])
-    .range([minColor,maxColor]);
+    // Sets projection //TODO: Add option for projection other than Mercator
+    var projection = d3
+        .geoMercator()
+        .center(centroid)
+        .fitExtent([[0,yMargin * 10],[width, height - 10]], geo_plot);
 
-  var centroid = path.centroid(boundaries)
-
-  var projection = d3
-    .geoMercator()
-    .center(centroid)
-    .scale(70)
-    .translate([width / 2, height / 2]);
-
-  var boundaries = d3.geoStitch(boundaries)
-
-  console.log(boundaries)
-
-  var tool_tip = d3.tip()
+    // Creates the tool tip
+    var tool_tip = d3.tip()
       .attr("class", "d3-tip")
       .offset([-8, 0])
       .html(d => d.properties.met === null ? d.properties.dim + ': no data available' : d.properties.dim + ': ' + d.properties.met);
@@ -17657,14 +17664,14 @@ const drawViz = data => {
     svg
     .append("g")
     .selectAll("path")
-    .data(boundaries.features)
+    .data(geo_plot.features)
     .enter()
     .append("path")
-    // draw each country
+    // draw each feature
     .attr("d", d3.geoPath()
         .projection(projection)
       )
-    // set the color of each country
+    // set the color of each feature
     .attr("fill", d => d.properties.met === null ? nullColor : colorScale(d.properties.met))
     .style("stroke", polygonBorderColor)
     .style("stroke-width", polygonBorderWidth)
@@ -17672,7 +17679,7 @@ const drawViz = data => {
     .on('mouseover', tool_tip.show)
     .on('mouseout', tool_tip.hide);
 
-
+    // Draw the legend
     svg.append("g")
       .attr("class", "legendLinear")
       .attr("transform", "translate(20,20)");
@@ -17683,20 +17690,19 @@ const drawViz = data => {
       .titleWidth(100)
       .scale(colorScale);
 
-  if (showLegend == 1) {
+    if (showLegend == 1) {
 
-    svg.select(".legendLinear")
-      .attr("fill", legendTextColor)
-      .call(legend);
+        svg.select(".legendLinear")
+            .attr("fill", legendTextColor)
+            .call(legend);
 
-   } else {
+    } else {
 
-     svg
-    .select('.legendLinear')
-    .remove();
+         svg
+            .select('.legendLinear')
+            .remove();
 
-   }
-
+    }
 
 };
 

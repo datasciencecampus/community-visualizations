@@ -1,4 +1,5 @@
 .d3-tip {
+  position: absolute;
   line-height: 1;
   padding: 12px;
   background: rgba(43,43,43, 0.8);
