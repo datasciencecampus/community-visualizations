@@ -1,5 +1,5 @@
 {
-  "name": "Choropleth Map",
+  "name": "Choropleth Map (Dev)",
   "logoUrl": "https://raw.githubusercontent.com/datasciencecampus/community-visualizations/master/choromap/img/choropleth.png",
   "organization": "Data Science Campus",
   "organizationUrl": "https://datasciencecampus.ons.gov.uk/",
@@ -7,17 +7,17 @@
   "packageUrl": "https://datastudio.google.com/reporting/4617cbac-3514-4c8d-a999-a3cb6683e579",
   "privacyPolicyUrl": "https://github.com/datasciencecampus/community-visualizations/blob/master/choromap/README.md",
   "description": "Choropleth mapping for Google Data Studio written in d3.js. One column of the data must be in STRING GeoJSON type format. Another column should be the name of the polygon, and another should be a metric associated with the polygon.",
-  "devMode": false,
+  "devMode": true,
   "termsOfServiceUrl": "https://github.com/datasciencecampus/community-visualizations/tree/master/choromap/README.md",
   "components": [{
     "id": "choroMap",
-    "name": "Choropleth Map",
+    "name": "Choropleth Map (Dev)",
     "iconUrl": "https://raw.githubusercontent.com/datasciencecampus/community-visualizations/master/choromap/img/choropleth.png",
     "description": "Choropleth mapping for Google Data Studio written in d3.js. One column of the data must be in STRING GeoJSON type format. Another column should be the name of the polygon, and another should be a metric associated with the polygon.",
     "resource": {
-      "js": "gs://choromap/choromap.js",
-      "config": "gs://choromap/choromap.json",
-      "css": "gs://choromap/choromap.css"
+      "js": "gs://choromap-dev/choromap.js",
+      "config": "gs://choromap-dev/choromap.json",
+      "css": "gs://choromap-dev/choromap.css"
     }
   }]
 }
