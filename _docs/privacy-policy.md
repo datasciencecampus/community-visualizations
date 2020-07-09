@@ -1,7 +1,7 @@
 ---
 layout: docs
 docid: "privacy-policy"
-title: "privacy-policy"
+title: "Privacy Policy and Terms of Service"
 permalink: /docs/privacy-policy.html
 subsections:
   - id: license
