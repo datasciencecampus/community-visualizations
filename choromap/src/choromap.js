@@ -17535,6 +17535,13 @@ d3.tip = function() {
   return tip
 };
 
+// https://d3js.org/d3-interpolate/ v1.4.0 Copyright 2019 Mike Bostock
+!function(t,n){"object"==typeof exports&&"undefined"!=typeof module?n(exports,require("d3-color")):"function"==typeof define&&define.amd?define(["exports","d3-color"],n):n((t=t||self).d3=t.d3||{},t.d3)}(this,function(t,n){"use strict";function r(t,n,r,e,a){var o=t*t,u=o*t;return((1-3*t+3*o-u)*n+(4-6*o+3*u)*r+(1+3*t+3*o-3*u)*e+u*a)/6}function e(t){var n=t.length-1;return function(e){var a=e<=0?e=0:e>=1?(e=1,n-1):Math.floor(e*n),o=t[a],u=t[a+1],i=a>0?t[a-1]:2*o-u,l=a<n-1?t[a+2]:2*u-o;return r((e-a/n)*n,i,o,u,l)}}function a(t){var n=t.length;return function(e){var a=Math.floor(((e%=1)<0?++e:e)*n),o=t[(a+n-1)%n],u=t[a%n],i=t[(a+1)%n],l=t[(a+2)%n];return r((e-a/n)*n,o,u,i,l)}}function o(t){return function(){return t}}function u(t,n){return function(r){return t+r*n}}function i(t,n){var r=n-t;return r?u(t,r>180||r<-180?r-360*Math.round(r/360):r):o(isNaN(t)?n:t)}function l(t){return 1==(t=+t)?c:function(n,r){return r-n?function(t,n,r){return t=Math.pow(t,r),n=Math.pow(n,r)-t,r=1/r,function(e){return Math.pow(t+e*n,r)}}(n,r,t):o(isNaN(n)?r:n)}}function c(t,n){var r=n-t;return r?u(t,r):o(isNaN(t)?n:t)}var f=function t(r){var e=l(r);function a(t,r){var a=e((t=n.rgb(t)).r,(r=n.rgb(r)).r),o=e(t.g,r.g),u=e(t.b,r.b),i=c(t.opacity,r.opacity);return function(n){return t.r=a(n),t.g=o(n),t.b=u(n),t.opacity=i(n),t+""}}return a.gamma=t,a}(1);function s(t){return function(r){var e,a,o=r.length,u=new Array(o),i=new Array(o),l=new Array(o);for(e=0;e<o;++e)a=n.rgb(r[e]),u[e]=a.r||0,i[e]=a.g||0,l[e]=a.b||0;return u=t(u),i=t(i),l=t(l),a.opacity=1,function(t){return a.r=u(t),a.g=i(t),a.b=l(t),a+""}}}var p=s(e),h=s(a);function v(t,n){n||(n=[]);var r,e=t?Math.min(n.length,t.length):0,a=n.slice();return function(o){for(r=0;r<e;++r)a[r]=t[r]*(1-o)+n[r]*o;return a}}function g(t){return ArrayBuffer.isView(t)&&!(t instanceof DataView)}function d(t,n){var r,e=n?n.length:0,a=t?Math.min(e,t.length):0,o=new Array(a),u=new Array(e);for(r=0;r<a;++r)o[r]=X(t[r],n[r]);for(;r<e;++r)u[r]=n[r];return function(t){for(r=0;r<a;++r)u[r]=o[r](t);return u}}function y(t,n){var r=new Date;return t=+t,n=+n,function(e){return r.setTime(t*(1-e)+n*e),r}}function m(t,n){return t=+t,n=+n,function(r){return t*(1-r)+n*r}}function M(t,n){var r,e={},a={};for(r in null!==t&&"object"==typeof t||(t={}),null!==n&&"object"==typeof n||(n={}),n)r in t?e[r]=X(t[r],n[r]):a[r]=n[r];return function(t){for(r in e)a[r]=e[r](t);return a}}var b=/[-+]?(?:\d+\.?\d*|\.?\d+)(?:[eE][-+]?\d+)?/g,x=new RegExp(b.source,"g");function w(t,n){var r,e,a,o=b.lastIndex=x.lastIndex=0,u=-1,i=[],l=[];for(t+="",n+="";(r=b.exec(t))&&(e=x.exec(n));)(a=e.index)>o&&(a=n.slice(o,a),i[u]?i[u]+=a:i[++u]=a),(r=r[0])===(e=e[0])?i[u]?i[u]+=e:i[++u]=e:(i[++u]=null,l.push({i:u,x:m(r,e)})),o=x.lastIndex;return o<n.length&&(a=n.slice(o),i[u]?i[u]+=a:i[++u]=a),i.length<2?l[0]?function(t){return function(n){return t(n)+""}}(l[0].x):function(t){return function(){return t}}(n):(n=l.length,function(t){for(var r,e=0;e<n;++e)i[(r=l[e]).i]=r.x(t);return i.join("")})}function X(t,r){var e,a=typeof r;return null==r||"boolean"===a?o(r):("number"===a?m:"string"===a?(e=n.color(r))?(r=e,f):w:r instanceof n.color?f:r instanceof Date?y:g(r)?v:Array.isArray(r)?d:"function"!=typeof r.valueOf&&"function"!=typeof r.toString||isNaN(r)?M:m)(t,r)}var A,N,C,Y,j=180/Math.PI,q={translateX:0,translateY:0,rotate:0,skewX:0,scaleX:1,scaleY:1};function k(t,n,r,e,a,o){var u,i,l;return(u=Math.sqrt(t*t+n*n))&&(t/=u,n/=u),(l=t*r+n*e)&&(r-=t*l,e-=n*l),(i=Math.sqrt(r*r+e*e))&&(r/=i,e/=i,l/=i),t*e<n*r&&(t=-t,n=-n,l=-l,u=-u),{translateX:a,translateY:o,rotate:Math.atan2(n,t)*j,skewX:Math.atan(l)*j,scaleX:u,scaleY:i}}function D(t,n,r,e){function a(t){return t.length?t.pop()+" ":""}return function(o,u){var i=[],l=[];return o=t(o),u=t(u),function(t,e,a,o,u,i){if(t!==a||e!==o){var l=u.push("translate(",null,n,null,r);i.push({i:l-4,x:m(t,a)},{i:l-2,x:m(e,o)})}else(a||o)&&u.push("translate("+a+n+o+r)}(o.translateX,o.translateY,u.translateX,u.translateY,i,l),function(t,n,r,o){t!==n?(t-n>180?n+=360:n-t>180&&(t+=360),o.push({i:r.push(a(r)+"rotate(",null,e)-2,x:m(t,n)})):n&&r.push(a(r)+"rotate("+n+e)}(o.rotate,u.rotate,i,l),function(t,n,r,o){t!==n?o.push({i:r.push(a(r)+"skewX(",null,e)-2,x:m(t,n)}):n&&r.push(a(r)+"skewX("+n+e)}(o.skewX,u.skewX,i,l),function(t,n,r,e,o,u){if(t!==r||n!==e){var i=o.push(a(o)+"scale(",null,",",null,")");u.push({i:i-4,x:m(t,r)},{i:i-2,x:m(n,e)})}else 1===r&&1===e||o.push(a(o)+"scale("+r+","+e+")")}(o.scaleX,o.scaleY,u.scaleX,u.scaleY,i,l),o=u=null,function(t){for(var n,r=-1,e=l.length;++r<e;)i[(n=l[r]).i]=n.x(t);return i.join("")}}}var R=D(function(t){return"none"===t?q:(A||(A=document.createElement("DIV"),N=document.documentElement,C=document.defaultView),A.style.transform=t,t=C.getComputedStyle(N.appendChild(A),null).getPropertyValue("transform"),N.removeChild(A),k(+(t=t.slice(7,-1).split(","))[0],+t[1],+t[2],+t[3],+t[4],+t[5]))},"px, ","px)","deg)"),S=D(function(t){return null==t?q:(Y||(Y=document.createElementNS("http://www.w3.org/2000/svg","g")),Y.setAttribute("transform",t),(t=Y.transform.baseVal.consolidate())?k((t=t.matrix).a,t.b,t.c,t.d,t.e,t.f):q)},", ",")",")"),V=Math.SQRT2,B=2,E=4,H=1e-12;function I(t){return((t=Math.exp(t))+1/t)/2}function L(t){return function(r,e){var a=t((r=n.hsl(r)).h,(e=n.hsl(e)).h),o=c(r.s,e.s),u=c(r.l,e.l),i=c(r.opacity,e.opacity);return function(t){return r.h=a(t),r.s=o(t),r.l=u(t),r.opacity=i(t),r+""}}}var T=L(i),O=L(c);function P(t){return function(r,e){var a=t((r=n.hcl(r)).h,(e=n.hcl(e)).h),o=c(r.c,e.c),u=c(r.l,e.l),i=c(r.opacity,e.opacity);return function(t){return r.h=a(t),r.c=o(t),r.l=u(t),r.opacity=i(t),r+""}}}var _=P(i),z=P(c);function Q(t){return function r(e){function a(r,a){var o=t((r=n.cubehelix(r)).h,(a=n.cubehelix(a)).h),u=c(r.s,a.s),i=c(r.l,a.l),l=c(r.opacity,a.opacity);return function(t){return r.h=o(t),r.s=u(t),r.l=i(Math.pow(t,e)),r.opacity=l(t),r+""}}return e=+e,a.gamma=r,a}(1)}var Z=Q(i),F=Q(c);t.interpolate=X,t.interpolateArray=function(t,n){return(g(n)?v:d)(t,n)},t.interpolateBasis=e,t.interpolateBasisClosed=a,t.interpolateCubehelix=Z,t.interpolateCubehelixLong=F,t.interpolateDate=y,t.interpolateDiscrete=function(t){var n=t.length;return function(r){return t[Math.max(0,Math.min(n-1,Math.floor(r*n)))]}},t.interpolateHcl=_,t.interpolateHclLong=z,t.interpolateHsl=T,t.interpolateHslLong=O,t.interpolateHue=function(t,n){var r=i(+t,+n);return function(t){var n=r(t);return n-360*Math.floor(n/360)}},t.interpolateLab=function(t,r){var e=c((t=n.lab(t)).l,(r=n.lab(r)).l),a=c(t.a,r.a),o=c(t.b,r.b),u=c(t.opacity,r.opacity);return function(n){return t.l=e(n),t.a=a(n),t.b=o(n),t.opacity=u(n),t+""}},t.interpolateNumber=m,t.interpolateNumberArray=v,t.interpolateObject=M,t.interpolateRgb=f,t.interpolateRgbBasis=p,t.interpolateRgbBasisClosed=h,t.interpolateRound=function(t,n){return t=+t,n=+n,function(r){return Math.round(t*(1-r)+n*r)}},t.interpolateString=w,t.interpolateTransformCss=R,t.interpolateTransformSvg=S,t.interpolateZoom=function(t,n){var r,e,a=t[0],o=t[1],u=t[2],i=n[0],l=n[1],c=n[2],f=i-a,s=l-o,p=f*f+s*s;if(p<H)e=Math.log(c/u)/V,r=function(t){return[a+t*f,o+t*s,u*Math.exp(V*t*e)]};else{var h=Math.sqrt(p),v=(c*c-u*u+E*p)/(2*u*B*h),g=(c*c-u*u-E*p)/(2*c*B*h),d=Math.log(Math.sqrt(v*v+1)-v),y=Math.log(Math.sqrt(g*g+1)-g);e=(y-d)/V,r=function(t){var n,r=t*e,i=I(d),l=u/(B*h)*(i*(n=V*r+d,((n=Math.exp(2*n))-1)/(n+1))-function(t){return((t=Math.exp(t))-1/t)/2}(d));return[a+l*f,o+l*s,u*i/I(V*r+d)]}}return r.duration=1e3*e,r},t.piecewise=function(t,n){for(var r=0,e=n.length-1,a=n[0],o=new Array(e<0?0:e);r<e;)o[r]=t(a,a=n[++r]);return function(t){var n=Math.max(0,Math.min(e-1,Math.floor(t*=e)));return o[n](t-n)}},t.quantize=function(t,n){for(var r=new Array(n),e=0;e<n;++e)r[e]=t(e/(n-1));return r},Object.defineProperty(t,"__esModule",{value:!0})});
+
+
+// https://d3js.org/d3-color/ v1.4.1 Copyright 2020 Mike Bostock
+!function(t,e){"object"==typeof exports&&"undefined"!=typeof module?e(exports):"function"==typeof define&&define.amd?define(["exports"],e):e((t=t||self).d3=t.d3||{})}(this,function(t){"use strict";function e(t,e,n){t.prototype=e.prototype=n,n.constructor=t}function n(t,e){var n=Object.create(t.prototype);for(var i in e)n[i]=e[i];return n}function i(){}var r="\\s*([+-]?\\d+)\\s*",a="\\s*([+-]?\\d*\\.?\\d+(?:[eE][+-]?\\d+)?)\\s*",s="\\s*([+-]?\\d*\\.?\\d+(?:[eE][+-]?\\d+)?)%\\s*",o=/^#([0-9a-f]{3,8})$/,h=new RegExp("^rgb\\("+[r,r,r]+"\\)$"),l=new RegExp("^rgb\\("+[s,s,s]+"\\)$"),u=new RegExp("^rgba\\("+[r,r,r,a]+"\\)$"),c=new RegExp("^rgba\\("+[s,s,s,a]+"\\)$"),g=new RegExp("^hsl\\("+[a,s,s]+"\\)$"),f=new RegExp("^hsla\\("+[a,s,s,a]+"\\)$"),d={aliceblue:15792383,antiquewhite:16444375,aqua:65535,aquamarine:8388564,azure:15794175,beige:16119260,bisque:16770244,black:0,blanchedalmond:16772045,blue:255,blueviolet:9055202,brown:10824234,burlywood:14596231,cadetblue:6266528,chartreuse:8388352,chocolate:13789470,coral:16744272,cornflowerblue:6591981,cornsilk:16775388,crimson:14423100,cyan:65535,darkblue:139,darkcyan:35723,darkgoldenrod:12092939,darkgray:11119017,darkgreen:25600,darkgrey:11119017,darkkhaki:12433259,darkmagenta:9109643,darkolivegreen:5597999,darkorange:16747520,darkorchid:10040012,darkred:9109504,darksalmon:15308410,darkseagreen:9419919,darkslateblue:4734347,darkslategray:3100495,darkslategrey:3100495,darkturquoise:52945,darkviolet:9699539,deeppink:16716947,deepskyblue:49151,dimgray:6908265,dimgrey:6908265,dodgerblue:2003199,firebrick:11674146,floralwhite:16775920,forestgreen:2263842,fuchsia:16711935,gainsboro:14474460,ghostwhite:16316671,gold:16766720,goldenrod:14329120,gray:8421504,green:32768,greenyellow:11403055,grey:8421504,honeydew:15794160,hotpink:16738740,indianred:13458524,indigo:4915330,ivory:16777200,khaki:15787660,lavender:15132410,lavenderblush:16773365,lawngreen:8190976,lemonchiffon:16775885,lightblue:11393254,lightcoral:15761536,lightcyan:14745599,lightgoldenrodyellow:16448210,lightgray:13882323,lightgreen:9498256,lightgrey:13882323,lightpink:16758465,lightsalmon:16752762,lightseagreen:2142890,lightskyblue:8900346,lightslategray:7833753,lightslategrey:7833753,lightsteelblue:11584734,lightyellow:16777184,lime:65280,limegreen:3329330,linen:16445670,magenta:16711935,maroon:8388608,mediumaquamarine:6737322,mediumblue:205,mediumorchid:12211667,mediumpurple:9662683,mediumseagreen:3978097,mediumslateblue:8087790,mediumspringgreen:64154,mediumturquoise:4772300,mediumvioletred:13047173,midnightblue:1644912,mintcream:16121850,mistyrose:16770273,moccasin:16770229,navajowhite:16768685,navy:128,oldlace:16643558,olive:8421376,olivedrab:7048739,orange:16753920,orangered:16729344,orchid:14315734,palegoldenrod:15657130,palegreen:10025880,paleturquoise:11529966,palevioletred:14381203,papayawhip:16773077,peachpuff:16767673,peru:13468991,pink:16761035,plum:14524637,powderblue:11591910,purple:8388736,rebeccapurple:6697881,red:16711680,rosybrown:12357519,royalblue:4286945,saddlebrown:9127187,salmon:16416882,sandybrown:16032864,seagreen:3050327,seashell:16774638,sienna:10506797,silver:12632256,skyblue:8900331,slateblue:6970061,slategray:7372944,slategrey:7372944,snow:16775930,springgreen:65407,steelblue:4620980,tan:13808780,teal:32896,thistle:14204888,tomato:16737095,turquoise:4251856,violet:15631086,wheat:16113331,white:16777215,whitesmoke:16119285,yellow:16776960,yellowgreen:10145074};function p(){return this.rgb().formatHex()}function b(){return this.rgb().formatRgb()}function y(t){var e,n;return t=(t+"").trim().toLowerCase(),(e=o.exec(t))?(n=e[1].length,e=parseInt(e[1],16),6===n?w(e):3===n?new M(e>>8&15|e>>4&240,e>>4&15|240&e,(15&e)<<4|15&e,1):8===n?m(e>>24&255,e>>16&255,e>>8&255,(255&e)/255):4===n?m(e>>12&15|e>>8&240,e>>8&15|e>>4&240,e>>4&15|240&e,((15&e)<<4|15&e)/255):null):(e=h.exec(t))?new M(e[1],e[2],e[3],1):(e=l.exec(t))?new M(255*e[1]/100,255*e[2]/100,255*e[3]/100,1):(e=u.exec(t))?m(e[1],e[2],e[3],e[4]):(e=c.exec(t))?m(255*e[1]/100,255*e[2]/100,255*e[3]/100,e[4]):(e=g.exec(t))?R(e[1],e[2]/100,e[3]/100,1):(e=f.exec(t))?R(e[1],e[2]/100,e[3]/100,e[4]):d.hasOwnProperty(t)?w(d[t]):"transparent"===t?new M(NaN,NaN,NaN,0):null}function w(t){return new M(t>>16&255,t>>8&255,255&t,1)}function m(t,e,n,i){return i<=0&&(t=e=n=NaN),new M(t,e,n,i)}function N(t){return t instanceof i||(t=y(t)),t?new M((t=t.rgb()).r,t.g,t.b,t.opacity):new M}function k(t,e,n,i){return 1===arguments.length?N(t):new M(t,e,n,null==i?1:i)}function M(t,e,n,i){this.r=+t,this.g=+e,this.b=+n,this.opacity=+i}function v(){return"#"+q(this.r)+q(this.g)+q(this.b)}function x(){var t=this.opacity;return(1===(t=isNaN(t)?1:Math.max(0,Math.min(1,t)))?"rgb(":"rgba(")+Math.max(0,Math.min(255,Math.round(this.r)||0))+", "+Math.max(0,Math.min(255,Math.round(this.g)||0))+", "+Math.max(0,Math.min(255,Math.round(this.b)||0))+(1===t?")":", "+t+")")}function q(t){return((t=Math.max(0,Math.min(255,Math.round(t)||0)))<16?"0":"")+t.toString(16)}function R(t,e,n,i){return i<=0?t=e=n=NaN:n<=0||n>=1?t=e=NaN:e<=0&&(t=NaN),new H(t,e,n,i)}function E(t){if(t instanceof H)return new H(t.h,t.s,t.l,t.opacity);if(t instanceof i||(t=y(t)),!t)return new H;if(t instanceof H)return t;var e=(t=t.rgb()).r/255,n=t.g/255,r=t.b/255,a=Math.min(e,n,r),s=Math.max(e,n,r),o=NaN,h=s-a,l=(s+a)/2;return h?(o=e===s?(n-r)/h+6*(n<r):n===s?(r-e)/h+2:(e-n)/h+4,h/=l<.5?s+a:2-s-a,o*=60):h=l>0&&l<1?0:o,new H(o,h,l,t.opacity)}function $(t,e,n,i){return 1===arguments.length?E(t):new H(t,e,n,null==i?1:i)}function H(t,e,n,i){this.h=+t,this.s=+e,this.l=+n,this.opacity=+i}function j(t,e,n){return 255*(t<60?e+(n-e)*t/60:t<180?n:t<240?e+(n-e)*(240-t)/60:e)}e(i,y,{copy:function(t){return Object.assign(new this.constructor,this,t)},displayable:function(){return this.rgb().displayable()},hex:p,formatHex:p,formatHsl:function(){return E(this).formatHsl()},formatRgb:b,toString:b}),e(M,k,n(i,{brighter:function(t){return t=null==t?1/.7:Math.pow(1/.7,t),new M(this.r*t,this.g*t,this.b*t,this.opacity)},darker:function(t){return t=null==t?.7:Math.pow(.7,t),new M(this.r*t,this.g*t,this.b*t,this.opacity)},rgb:function(){return this},displayable:function(){return-.5<=this.r&&this.r<255.5&&-.5<=this.g&&this.g<255.5&&-.5<=this.b&&this.b<255.5&&0<=this.opacity&&this.opacity<=1},hex:v,formatHex:v,formatRgb:x,toString:x})),e(H,$,n(i,{brighter:function(t){return t=null==t?1/.7:Math.pow(1/.7,t),new H(this.h,this.s,this.l*t,this.opacity)},darker:function(t){return t=null==t?.7:Math.pow(.7,t),new H(this.h,this.s,this.l*t,this.opacity)},rgb:function(){var t=this.h%360+360*(this.h<0),e=isNaN(t)||isNaN(this.s)?0:this.s,n=this.l,i=n+(n<.5?n:1-n)*e,r=2*n-i;return new M(j(t>=240?t-240:t+120,r,i),j(t,r,i),j(t<120?t+240:t-120,r,i),this.opacity)},displayable:function(){return(0<=this.s&&this.s<=1||isNaN(this.s))&&0<=this.l&&this.l<=1&&0<=this.opacity&&this.opacity<=1},formatHsl:function(){var t=this.opacity;return(1===(t=isNaN(t)?1:Math.max(0,Math.min(1,t)))?"hsl(":"hsla(")+(this.h||0)+", "+100*(this.s||0)+"%, "+100*(this.l||0)+"%"+(1===t?")":", "+t+")")}}));var O=Math.PI/180,P=180/Math.PI,I=.96422,S=1,_=.82521,z=4/29,C=6/29,L=3*C*C,A=C*C*C;function B(t){if(t instanceof F)return new F(t.l,t.a,t.b,t.opacity);if(t instanceof V)return W(t);t instanceof M||(t=N(t));var e,n,i=Q(t.r),r=Q(t.g),a=Q(t.b),s=G((.2225045*i+.7168786*r+.0606169*a)/S);return i===r&&r===a?e=n=s:(e=G((.4360747*i+.3850649*r+.1430804*a)/I),n=G((.0139322*i+.0971045*r+.7141733*a)/_)),new F(116*s-16,500*(e-s),200*(s-n),t.opacity)}function D(t,e,n,i){return 1===arguments.length?B(t):new F(t,e,n,null==i?1:i)}function F(t,e,n,i){this.l=+t,this.a=+e,this.b=+n,this.opacity=+i}function G(t){return t>A?Math.pow(t,1/3):t/L+z}function J(t){return t>C?t*t*t:L*(t-z)}function K(t){return 255*(t<=.0031308?12.92*t:1.055*Math.pow(t,1/2.4)-.055)}function Q(t){return(t/=255)<=.04045?t/12.92:Math.pow((t+.055)/1.055,2.4)}function T(t){if(t instanceof V)return new V(t.h,t.c,t.l,t.opacity);if(t instanceof F||(t=B(t)),0===t.a&&0===t.b)return new V(NaN,0<t.l&&t.l<100?0:NaN,t.l,t.opacity);var e=Math.atan2(t.b,t.a)*P;return new V(e<0?e+360:e,Math.sqrt(t.a*t.a+t.b*t.b),t.l,t.opacity)}function U(t,e,n,i){return 1===arguments.length?T(t):new V(t,e,n,null==i?1:i)}function V(t,e,n,i){this.h=+t,this.c=+e,this.l=+n,this.opacity=+i}function W(t){if(isNaN(t.h))return new F(t.l,0,0,t.opacity);var e=t.h*O;return new F(t.l,Math.cos(e)*t.c,Math.sin(e)*t.c,t.opacity)}e(F,D,n(i,{brighter:function(t){return new F(this.l+18*(null==t?1:t),this.a,this.b,this.opacity)},darker:function(t){return new F(this.l-18*(null==t?1:t),this.a,this.b,this.opacity)},rgb:function(){var t=(this.l+16)/116,e=isNaN(this.a)?t:t+this.a/500,n=isNaN(this.b)?t:t-this.b/200;return new M(K(3.1338561*(e=I*J(e))-1.6168667*(t=S*J(t))-.4906146*(n=_*J(n))),K(-.9787684*e+1.9161415*t+.033454*n),K(.0719453*e-.2289914*t+1.4052427*n),this.opacity)}})),e(V,U,n(i,{brighter:function(t){return new V(this.h,this.c,this.l+18*(null==t?1:t),this.opacity)},darker:function(t){return new V(this.h,this.c,this.l-18*(null==t?1:t),this.opacity)},rgb:function(){return W(this).rgb()}}));var X=-.14861,Y=1.78277,Z=-.29227,tt=-.90649,et=1.97294,nt=et*tt,it=et*Y,rt=Y*Z-tt*X;function at(t,e,n,i){return 1===arguments.length?function(t){if(t instanceof st)return new st(t.h,t.s,t.l,t.opacity);t instanceof M||(t=N(t));var e=t.r/255,n=t.g/255,i=t.b/255,r=(rt*i+nt*e-it*n)/(rt+nt-it),a=i-r,s=(et*(n-r)-Z*a)/tt,o=Math.sqrt(s*s+a*a)/(et*r*(1-r)),h=o?Math.atan2(s,a)*P-120:NaN;return new st(h<0?h+360:h,o,r,t.opacity)}(t):new st(t,e,n,null==i?1:i)}function st(t,e,n,i){this.h=+t,this.s=+e,this.l=+n,this.opacity=+i}e(st,at,n(i,{brighter:function(t){return t=null==t?1/.7:Math.pow(1/.7,t),new st(this.h,this.s,this.l*t,this.opacity)},darker:function(t){return t=null==t?.7:Math.pow(.7,t),new st(this.h,this.s,this.l*t,this.opacity)},rgb:function(){var t=isNaN(this.h)?0:(this.h+120)*O,e=+this.l,n=isNaN(this.s)?0:this.s*e*(1-e),i=Math.cos(t),r=Math.sin(t);return new M(255*(e+n*(X*i+Y*r)),255*(e+n*(Z*i+tt*r)),255*(e+n*(et*i)),this.opacity)}})),t.color=y,t.cubehelix=at,t.gray=function(t,e){return new F(t,0,0,null==e?1:e)},t.hcl=U,t.hsl=$,t.lab=D,t.lch=function(t,e,n,i){return 1===arguments.length?T(t):new V(n,e,t,null==i?1:i)},t.rgb=k,Object.defineProperty(t,"__esModule",{value:!0})});
+
 // choromap code
 const drawViz = data => {
 
@@ -17577,9 +17584,31 @@ const drawViz = data => {
 
     var showLegend =  data.style.showLegend.value
 
+    var legendType =  data.style.legendType.value
+
+    var legendCells =  data.style.legendCells.value
+    ? data.style.legendCells.value
+    : data.style.legendCells.defaultValue;
+
+    var legendBreaks =  data.style.legendBreaks.value
+    ? data.style.legendBreaks.value
+    : data.style.legendBreaks.defaultValue;
+
+    var legendDecimalPlaces =  data.style.legendDecimalPlaces.value
+    ? data.style.legendDecimalPlaces.value
+    : data.style.legendDecimalPlaces.defaultValue;
+
+    var legendDecimalPlacesShort =  data.style.legendDecimalPlacesShort.value
+    ? data.style.legendDecimalPlacesShort.value
+    : data.style.legendDecimalPlacesShort.defaultValue;
+
     var legendTitle =  data.style.legendTitle.value
     ? data.style.legendTitle.value
     : data.style.legendTitle.defaultValue;
+
+    var legendPosition =  data.style.legendPosition.value
+    ? data.style.legendPosition.value
+    : data.style.legendPosition.defaultValue;
 
     // get the width and the height of the iframe
     var width = dscc.getWidth();
@@ -17608,7 +17637,7 @@ const drawViz = data => {
         var rowData = rowData.slice(0, polyNumber);
     }
 
-    console.log(rowData)
+    var vls = []
 
     // Add data to GeoJSON object
     rowData.forEach(function (row, i) {
@@ -17628,6 +17657,7 @@ const drawViz = data => {
     };
 
     geo_plot.features.push(geo_data);
+    vls.push(row["mapMetric"][0])
 
     });
 
@@ -17637,11 +17667,61 @@ const drawViz = data => {
     // Find the minimum value of metric
     var min = d3.min(geo_plot.features, function(d) { return +d.properties.met;} );
 
-    // Create color scale from min and max values and colours
-    var colorScale = d3
-        .scaleLinear()
-        .domain([min,max])
-        .range([minColor,maxColor]);
+    if (legendType == 'Quantile') {
+        var numCells = legendCells
+    } else if (legendType == 'Custom') {
+        try {
+            var legendBreaks = legendBreaks.split(',')
+        } catch (TypeError) {
+            var legendBreaks = [legendBreaks]
+        }
+
+        var legendBreaks = legendBreaks.concat(legendBreaks.slice(-1)[0])
+
+        var numCells = legendBreaks.length
+
+
+    } else {
+        var numCells = 1
+    }
+    var start = 0
+    var step = 1 / (numCells - 1);
+    var stop = 1 + step
+    var colorArray = [];
+    for (let i = 0, n = Math.ceil((stop - start) / step); i < n; ++i) {
+        colorArray.push(d3.interpolateRgb(minColor, maxColor)(start + i * step));
+    }
+
+
+    if (legendType == 'Linear') {
+
+    //    // Create color scale from min and max values and colours
+        var colorScale = d3
+            .scaleLinear()
+            .domain([min,max])
+            .range([minColor,maxColor]);
+
+    } else if (legendType == 'Quantile') {
+            // Create color scale from min and max values and colours
+        var colorScale = d3
+            .scaleQuantile()
+            .domain(vls)
+            .range(colorArray);
+
+    } else if (legendType == 'Custom') {
+        var colorScale = d3
+            .scaleThreshold()
+            .domain(legendBreaks)
+            .range(colorArray);
+    }
+
+
+
+    if (legendDecimalPlacesShort == 'Long') {
+        var decimalSuffix = 'f'
+    } else if (legendDecimalPlacesShort == 'Short') {
+        var decimalSuffix = 's'
+    }
 
     // Finds centroid of path for plotting
     var centroid = path.centroid(geo_plot)
@@ -17681,25 +17761,41 @@ const drawViz = data => {
 
     // Draw the legend
     svg.append("g")
-      .attr("class", "legendLinear")
-      .attr("transform", "translate(20,20)");
+      .attr("class", "legend")
+      .attr("transform", "translate(" + legendPosition + ")");
 
-    var legend = d3
+    var legendPlot = d3
       .legendColor()
+      .labelFormat(d3.format(",."+ legendDecimalPlaces + decimalSuffix))
       .title(legendTitle)
       .titleWidth(100)
       .scale(colorScale);
 
+    var legendCustom = d3
+      .legendColor()
+      .labelFormat(d3.format(",."+ legendDecimalPlaces + decimalSuffix))
+      .title(legendTitle)
+      .labels(d3.legendHelpers.thresholdLabels)
+      .titleWidth(100)
+      .scale(colorScale);
+
+
     if (showLegend == 1) {
 
-        svg.select(".legendLinear")
-            .attr("fill", legendTextColor)
-            .call(legend);
+        if (legendType == 'Custom') {
+            svg.select(".legend")
+                .attr("fill", legendTextColor)
+                .call(legendCustom);
+        } else {
+            svg.select(".legend")
+                .attr("fill", legendTextColor)
+                .call(legendPlot);
+        }
 
     } else {
 
          svg
-            .select('.legendLinear')
+            .select('.legend')
             .remove();
 
     }

@@ -7,7 +7,7 @@
   "packageUrl": "https://datastudio.google.com/reporting/4617cbac-3514-4c8d-a999-a3cb6683e579",
   "privacyPolicyUrl": "https://datasciencecampus.github.io/community-visualizations/docs/privacy-policy.html",
   "description": "Choropleth mapping for Google Data Studio written in d3.js. One column of the data must be in STRING GeoJSON type format. Another column should be the name of the polygon, and another should be a metric associated with the polygon.",
-  "devMode": false,
+  "devMode": true,
   "termsOfServiceUrl": "https://datasciencecampus.github.io/community-visualizations/docs/privacy-policy.html",
   "components": [{
     "id": "choromap-dev",
