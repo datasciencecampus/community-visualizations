@@ -50,6 +50,12 @@
         },
         {
           "type": "FILL_COLOR",
+          "id": "midColor",
+          "label": "Mid Color",
+          "defaultValue": "#0053c7"
+        },
+        {
+          "type": "FILL_COLOR",
           "id": "maxColor",
           "label": "Max Color",
           "defaultValue": "#003B8E"
@@ -87,16 +93,20 @@
         {
           "type": "SELECT_RADIO",
           "id": "showLegend",
-          "label": "Show Legend",
-          "defaultValue": "true",
+          "label": "Legend Orientation",
+          "defaultValue": "Vertical",
           "options": [
             {
-              "label": "True",
-              "value": "true"
+              "label": "Vertical",
+              "value": "Vertical"
             },
             {
-              "label": "False",
-              "value": "false"
+              "label": "Horizontal",
+              "value": "Horizontal"
+            },
+            {
+              "label": "Off",
+              "value": "Off"
             }
           ]
         },

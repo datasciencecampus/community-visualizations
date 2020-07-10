@@ -1,0 +1,23 @@
+{
+  "name": "Date Slider (Develop)",
+  "logoUrl": "https://raw.githubusercontent.com/datasciencecampus/community-visualizations/master/date-slider/img/date-slider.png",
+  "organization": "Data Science Campus",
+  "organizationUrl": "https://datasciencecampus.ons.gov.uk/",
+  "supportUrl": "https://github.com/datasciencecampus/community-visualizations/issues",
+  "packageUrl": "https://datastudio.google.com/reporting/4617cbac-3514-4c8d-a999-a3cb6683e579",
+  "privacyPolicyUrl": "https://datasciencecampus.github.io/community-visualizations/docs/privacy-policy.html",
+  "description": "Date slider for Google Data Studio written in d3.js.",
+  "devMode": true,
+  "termsOfServiceUrl": "https://datasciencecampus.github.io/community-visualizations/docs/privacy-policy.html",
+  "components": [{
+    "id": "date-slider-dev",
+    "name": "Date Slider (Develop)",
+    "iconUrl": "https://raw.githubusercontent.com/datasciencecampus/community-visualizations/master/date-slider/img/date-slider.png",
+    "description": "Date slider  for Google Data Studio written in d3.js.",
+    "resource": {
+      "js": "gs://date-slider-dev/date-slider.js",
+      "config": "gs://date-slider-dev/date-slider.json",
+      "css": "gs://date-slider-dev/date-slider.css"
+    }
+  }]
+}
