@@ -50,6 +50,12 @@
         },
         {
           "type": "FILL_COLOR",
+          "id": "midColor",
+          "label": "Mid Color",
+          "defaultValue": "#0053c7"
+        },
+        {
+          "type": "FILL_COLOR",
           "id": "maxColor",
           "label": "Max Color",
           "defaultValue": "#003B8E"
@@ -87,30 +93,90 @@
         {
           "type": "SELECT_RADIO",
           "id": "showLegend",
-          "label": "Show Legend",
-          "defaultValue": "true",
+          "label": "Legend Orientation",
+          "defaultValue": "Vertical",
           "options": [
             {
-              "label": "True",
-              "value": "true"
+              "label": "Vertical",
+              "value": "Vertical"
             },
             {
-              "label": "False",
-              "value": "false"
+              "label": "Horizontal",
+              "value": "Horizontal"
+            },
+            {
+              "label": "Off",
+              "value": "Off"
             }
           ]
-        }
-      ]
-    },
-    {
-      "id": "text",
-      "label": "Text",
-      "elements": [
+        },
+        {
+          "type": "SELECT_RADIO",
+          "id": "legendType",
+          "label": "Legend Type",
+          "defaultValue": "Linear",
+          "options": [
+            {
+              "label": "Linear",
+              "value": "Linear"
+            },
+            {
+              "label": "Quantile",
+              "value": "Quantile"
+            },
+            {
+              "label": "Custom",
+              "value": "Custom"
+            }
+          ]
+        },
         {
           "type": "TEXTINPUT",
-          "id": "legendTitle",
-          "label": "Legend Title",
-          "defaultValue": "Legend Title"
+          "id": "legendCells",
+          "label": "Number of Quantiles",
+          "defaultValue": 5
+        },
+        {
+          "type": "TEXTINPUT",
+          "id": "legendBreaks",
+          "label": "Custom Breaks",
+          "defaultValue": "1,5,10"
+        },
+        {
+          "type": "TEXTINPUT",
+          "id": "legendDecimalPlaces",
+          "label": "Decimal Places",
+          "defaultValue": 0
+        },
+        {
+          "type": "SELECT_RADIO",
+          "id": "legendDecimalPlacesShort",
+          "label": "Number Format",
+          "defaultValue": "Long",
+          "options": [
+            {
+              "label": "Long",
+              "value": "Long"
+            },
+            {
+              "label": "Short",
+              "value": "Short"
+            }
+          ]
+        },
+        {
+            "type": "TEXTINPUT",
+            "id": "legendTitle",
+            "label": "Legend Title",
+            "defaultValue": "Legend Title"
+
+        },
+        {
+            "type": "TEXTINPUT",
+            "id": "legendPosition",
+            "label": "Legend Position (x,y)",
+            "defaultValue": "20,20"
+
         }
       ]
     }
