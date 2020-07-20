@@ -17656,14 +17656,16 @@ const drawViz = data => {
             dim: row["mapDimension"][0],
             met: row["mapMetric"][0]
         },
-        dimId: data.fields["mapDimension"][0].id
-
+        dimId: data.fields["mapDimension"][0].id,
+        tooltip: row["mapTooltip"][0]
     };
 
     geo_plot.features.push(geo_data);
     vls.push(row["mapMetric"][0])
 
     });
+
+    console.log(geo_plot)
 
     // Find the maximum value of metric
     var max = d3.max(geo_plot.features, function(d) { return +d.properties.met;} );
@@ -17738,17 +17740,15 @@ const drawViz = data => {
         .geoMercator()
         .center(centroid)
         .fitExtent([[0,yMargin * 10],[width, height - 10]], geo_plot);
-
+//
     // Creates the tool tip
     var tool_tip = d3.tip()
       .attr("class", "d3-tip")
-      .offset([-8, 0])
-      .html(d => d.properties.met === null ? d.properties.dim + ': no data available' : d.properties.dim + ': ' + d.properties.met);
-
+      .html(d => d.tooltip)
       svg.call(tool_tip);
 
     // Draw the map
-    svg
+    var g = svg
     .append("g")
     .selectAll("path")
     .data(geo_plot.features)
@@ -17766,6 +17766,13 @@ const drawViz = data => {
     .on('mouseover', tool_tip.show)
     .on('mouseout', tool_tip.hide);
 
+     var zoom = d3.zoom()
+          .scaleExtent([1, 8])
+          .extent([[0, 0], [width, height]])
+          .on("zoom", () => g.attr("transform", d3.event.transform));
+
+      svg.call(zoom);
+
     // Draw the legend
     svg.append("g")
       .attr("class", "legend")
@@ -17773,16 +17780,20 @@ const drawViz = data => {
 
     if (showLegend != "Horizontal") {
         var legendOr = 'vertical'
+        var shapeW = 20
+        var titleW = 200
     } else {
         var legendOr = 'horizontal'
+        var shapeW = 50
+        var titleW = 400
     }
 
     var legendPlot = d3
       .legendColor()
       .labelFormat(d3.format(",."+ legendDecimalPlaces + decimalSuffix))
       .title(legendTitle)
-      .titleWidth(100)
-      .shapeWidth(50)
+      .titleWidth(titleW)
+      .shapeWidth(shapeW)
       .orient(legendOr)
       .scale(colorScale);
 
@@ -17791,8 +17802,8 @@ const drawViz = data => {
       .labelFormat(d3.format(",."+ legendDecimalPlaces + decimalSuffix))
       .title(legendTitle)
       .labels(customLabels)
-      .titleWidth(100)
-      .shapeWidth(50)
+      .titleWidth(titleW)
+      .shapeWidth(shapeW)
       .orient(legendOr)
       .scale(colorScale);
 
