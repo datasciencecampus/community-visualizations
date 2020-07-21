@@ -1,0 +1,161 @@
+{
+  "data": [
+    {
+      "id": "concepts",
+      "label": "Concepts",
+      "elements": [
+        {
+          "id": "violinDimension",
+          "label": "Dimension",
+          "type": "DIMENSION",
+          "options": {
+            "min": 2,
+            "max": 2
+          }
+        }
+      ]
+    }
+  ],
+  "style": [
+    {
+      "id": "data",
+      "label": "Data",
+      "elements": [
+      {
+          "type": "SELECT_RADIO",
+          "id": "showScatter",
+          "label": "Show scatter points",
+          "defaultValue": "On",
+          "options": [
+            {
+              "label": "On",
+              "value": "On"
+            },
+            {
+              "label": "Off",
+              "value": "Off"
+            }
+          ]
+        },
+        {
+          "type": "TEXTINPUT",
+          "id": "jitterWidth",
+          "label": "Distance of points from plot",
+          "defaultValue": 10
+        },
+        {
+          "type": "TEXTINPUT",
+          "id": "scatterRadius",
+          "label": "Radius of points",
+          "defaultValue": 1
+        }
+      ]
+    },
+    {
+      "id": "color",
+      "label": "Colors",
+      "elements": [
+        {
+          "type": "FILL_COLOR",
+          "id": "violinColor",
+          "label": "Violin Color",
+          "defaultValue": "#808080"
+        }
+      ]
+    },
+    {
+      "id": "legend",
+      "label": "Legend",
+      "elements": [
+        {
+          "type": "SELECT_RADIO",
+          "id": "showLegend",
+          "label": "Legend Orientation",
+          "defaultValue": "Vertical",
+          "options": [
+            {
+              "label": "Vertical",
+              "value": "Vertical"
+            },
+            {
+              "label": "Horizontal",
+              "value": "Horizontal"
+            },
+            {
+              "label": "Off",
+              "value": "Off"
+            }
+          ]
+        },
+        {
+          "type": "SELECT_RADIO",
+          "id": "legendType",
+          "label": "Legend Type",
+          "defaultValue": "Linear",
+          "options": [
+            {
+              "label": "Linear",
+              "value": "Linear"
+            },
+            {
+              "label": "Quantile",
+              "value": "Quantile"
+            },
+            {
+              "label": "Custom",
+              "value": "Custom"
+            }
+          ]
+        },
+        {
+          "type": "TEXTINPUT",
+          "id": "legendCells",
+          "label": "Number of Quantiles",
+          "defaultValue": 5
+        },
+        {
+          "type": "TEXTINPUT",
+          "id": "legendBreaks",
+          "label": "Custom Breaks",
+          "defaultValue": "1,5,10"
+        },
+        {
+          "type": "TEXTINPUT",
+          "id": "legendDecimalPlaces",
+          "label": "Decimal Places",
+          "defaultValue": 0
+        },
+        {
+          "type": "SELECT_RADIO",
+          "id": "legendDecimalPlacesShort",
+          "label": "Number Format",
+          "defaultValue": "Long",
+          "options": [
+            {
+              "label": "Long",
+              "value": "Long"
+            },
+            {
+              "label": "Short",
+              "value": "Short"
+            }
+          ]
+        },
+        {
+            "type": "TEXTINPUT",
+            "id": "legendTitle",
+            "label": "Legend Title",
+            "defaultValue": "Legend Title"
+
+        },
+        {
+            "type": "TEXTINPUT",
+            "id": "legendPosition",
+            "label": "Legend Position (x,y)",
+            "defaultValue": "20,40"
+
+        }
+      ]
+    }
+  ]
+}
