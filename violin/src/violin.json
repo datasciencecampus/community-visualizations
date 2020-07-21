@@ -21,7 +21,35 @@
       "id": "data",
       "label": "Data",
       "elements": [
-      {
+        {
+          "type": "TEXTINPUT",
+          "id": "violinBinSize",
+          "label": "Bin size of violins",
+          "defaultValue": 20
+        },
+        {
+          "type": "SELECT_RADIO",
+          "id": "showMedian",
+          "label": "Show Median Point",
+          "defaultValue": "On",
+          "options": [
+            {
+              "label": "On",
+              "value": "On"
+            },
+            {
+              "label": "Off",
+              "value": "Off"
+            }
+          ]
+        },
+        {
+          "type": "TEXTINPUT",
+          "id": "medianCircleSize",
+          "label": "Median Circle Size",
+          "defaultValue": 5
+        },
+        {
           "type": "SELECT_RADIO",
           "id": "showScatter",
           "label": "Show scatter points",
@@ -57,103 +85,81 @@
       "elements": [
         {
           "type": "FILL_COLOR",
-          "id": "violinColor",
-          "label": "Violin Color",
+          "id": "violinFillColor",
+          "label": "Violin Fill Color",
           "defaultValue": "#808080"
+        },
+        {
+          "type": "BORDER_COLOR",
+          "id": "violinBorderColor",
+          "label": "Violin Border Color",
+          "defaultValue": "#fff"
+        },
+        {
+          "type": "TEXTINPUT",
+          "id": "violinBorderWidth",
+          "label": "Violin Border Width",
+          "defaultValue": 0
+        },
+        {
+          "type": "FILL_COLOR",
+          "id": "minColor",
+          "label": "Min Scatter Color",
+          "defaultValue": "#BED9FF"
+        },
+        {
+          "type": "FILL_COLOR",
+          "id": "maxColor",
+          "label": "Max Scatter Color",
+          "defaultValue": "#003B8E"
+        },
+        {
+          "type": "BORDER_COLOR",
+          "id": "scatterBorderColor",
+          "label": "scatter Border Color",
+          "defaultValue": "#fff"
+        },
+        {
+          "type": "TEXTINPUT",
+          "id": "scatterBorderWidth",
+          "label": "scatter Border Width",
+          "defaultValue": 0
+        },
+        {
+          "type": "BORDER_COLOR",
+          "id": "medianFillColor",
+          "label": "Median Fill Color",
+          "defaultValue": "#fff"
+        },
+        {
+          "type": "BORDER_COLOR",
+          "id": "medianBorderColor",
+          "label": "Median Border Color",
+          "defaultValue": "#000"
+        },
+        {
+          "type": "TEXTINPUT",
+          "id": "medianBorderWidth",
+          "label": "Median Border Width",
+          "defaultValue": 1
         }
       ]
     },
     {
-      "id": "legend",
-      "label": "Legend",
+      "id": "labels",
+      "label": "Labels",
       "elements": [
         {
-          "type": "SELECT_RADIO",
-          "id": "showLegend",
-          "label": "Legend Orientation",
-          "defaultValue": "Vertical",
-          "options": [
-            {
-              "label": "Vertical",
-              "value": "Vertical"
-            },
-            {
-              "label": "Horizontal",
-              "value": "Horizontal"
-            },
-            {
-              "label": "Off",
-              "value": "Off"
-            }
-          ]
-        },
-        {
-          "type": "SELECT_RADIO",
-          "id": "legendType",
-          "label": "Legend Type",
-          "defaultValue": "Linear",
-          "options": [
-            {
-              "label": "Linear",
-              "value": "Linear"
-            },
-            {
-              "label": "Quantile",
-              "value": "Quantile"
-            },
-            {
-              "label": "Custom",
-              "value": "Custom"
-            }
-          ]
+          "type": "TEXTINPUT",
+          "id": "xAxisRotation",
+          "label": "X Axis Rotation",
+          "defaultValue": 45
         },
         {
           "type": "TEXTINPUT",
-          "id": "legendCells",
-          "label": "Number of Quantiles",
-          "defaultValue": 5
-        },
-        {
-          "type": "TEXTINPUT",
-          "id": "legendBreaks",
-          "label": "Custom Breaks",
-          "defaultValue": "1,5,10"
-        },
-        {
-          "type": "TEXTINPUT",
-          "id": "legendDecimalPlaces",
-          "label": "Decimal Places",
-          "defaultValue": 0
-        },
-        {
-          "type": "SELECT_RADIO",
-          "id": "legendDecimalPlacesShort",
-          "label": "Number Format",
-          "defaultValue": "Long",
-          "options": [
-            {
-              "label": "Long",
-              "value": "Long"
-            },
-            {
-              "label": "Short",
-              "value": "Short"
-            }
-          ]
-        },
-        {
-            "type": "TEXTINPUT",
-            "id": "legendTitle",
-            "label": "Legend Title",
-            "defaultValue": "Legend Title"
-
-        },
-        {
-            "type": "TEXTINPUT",
-            "id": "legendPosition",
-            "label": "Legend Position (x,y)",
-            "defaultValue": "20,40"
-
+          "id": "yAxisLabel",
+          "label": "Y Axis Label",
+          "defaultValue": "yAxisLabel"
         }
       ]
     }

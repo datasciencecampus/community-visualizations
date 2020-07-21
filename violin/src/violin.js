@@ -17556,6 +17556,14 @@ const drawViz = data => {
         .selectAll('div')
         .remove();
 
+    var violinBinSize =  data.style.violinBinSize.value
+    ? data.style.violinBinSize.value
+    : data.style.violinBinSize.defaultValue;
+
+    var medianCircleSize =  data.style.medianCircleSize.value
+    ? data.style.medianCircleSize.value
+    : data.style.medianCircleSize.defaultValue;
+
     var jitterWidth =  data.style.jitterWidth.value
     ? data.style.jitterWidth.value
     : data.style.jitterWidth.defaultValue;
@@ -17564,18 +17572,61 @@ const drawViz = data => {
     ? data.style.scatterRadius.value
     : data.style.scatterRadius.defaultValue;
 
-    var violinColor =  data.style.violinColor.value
-    ? data.style.violinColor.value.color
-    : data.style.violinColor.defaultValue;
+    var violinFillColor =  data.style.violinFillColor.value
+    ? data.style.violinFillColor.value.color
+    : data.style.violinFillColor.defaultValue;
+
+    var violinBorderColor =  data.style.violinBorderColor.value
+    ? data.style.violinBorderColor.value.color
+    : data.style.violinBorderColor.defaultValue;
+
+    var violinBorderWidth =  data.style.violinBorderWidth.value
+    ? data.style.violinBorderWidth.value.color
+    : data.style.violinBorderWidth.defaultValue;
+
+    var minColor =  data.style.minColor.value
+    ? data.style.minColor.value.color
+    : data.style.minColor.defaultValue;
+
+    var maxColor =  data.style.maxColor.value
+    ? data.style.maxColor.value.color
+    : data.style.maxColor.defaultValue;
+
+    var scatterBorderColor =  data.style.scatterBorderColor.value
+    ? data.style.scatterBorderColor.value.color
+    : data.style.scatterBorderColor.defaultValue;
+
+    var scatterBorderWidth =  data.style.scatterBorderWidth.value
+    ? data.style.scatterBorderWidth.value.color
+    : data.style.scatterBorderWidth.defaultValue;
+
+    var medianFillColor =  data.style.medianFillColor.value
+    ? data.style.medianFillColor.value.color
+    : data.style.medianFillColor.defaultValue;
+
+    var medianBorderColor =  data.style.medianBorderColor.value
+    ? data.style.medianBorderColor.value.color
+    : data.style.medianBorderColor.defaultValue;
+
+    var medianBorderWidth =  data.style.medianBorderWidth.value
+    ? data.style.medianBorderWidth.value.color
+    : data.style.medianBorderWidth.defaultValue;
 
     var showScatter =  data.style.showScatter.value
 
+    var showMedian =  data.style.showMedian.value
 
-    console.log(jitterWidth)
-    console.log(scatterRadius)
+    var yAxisLabel =  data.style.yAxisLabel.value
+    ? data.style.yAxisLabel.value
+    : data.style.yAxisLabel.defaultValue;
+
+    var xAxisRotation =  data.style.xAxisRotation.value
+    ? data.style.xAxisRotation.value
+    : data.style.xAxisRotation.defaultValue;
+
 
     // get the width and the height of the iframe
-    var margin = {top: 10, right: 30, bottom: 30, left: 40};
+    var margin = {top: 10, right: 40, bottom: 50, left: 60};
     var width = dscc.getWidth() - margin.left - margin.right;
     var height = dscc.getHeight() - margin.top - margin.bottom;
 
@@ -17584,13 +17635,14 @@ const drawViz = data => {
         .select('body')
         .append('svg')
         .attr('width', width + margin.left + margin.right)
-        .attr('height', height + margin.top + margin.bottom)
+        .attr('height', height + margin.top + margin.bottom - 5)
         .append("g")
         .attr("transform",
           "translate(" + margin.left + "," + margin.top + ")");
 
     var data = []
     var y_vls = []
+    var x_vls = []
 
 
     // Add data to GeoJSON object
@@ -17598,31 +17650,51 @@ const drawViz = data => {
     // 'mapDimension' and 'mapMetric' come from the id defined in choromap.json
     // 'dimId' is Data Studio's unique field ID, used for the filter interaction
 
-    let vio_data_tmp = {
-        values: row["violinDimension"][0],
-        labels: row["violinDimension"][1]
+    if (row["violinDimension"][1] !== null) {
+
+        let vio_data_tmp = {
+            values: row["violinDimension"][0],
+            labels: row["violinDimension"][1]
+        }
+
+        data.push(vio_data_tmp);
+
+        if (!y_vls.includes(row["violinDimension"][1]))
+        { y_vls.push(row["violinDimension"][1]); }
+
+        x_vls.push(row["violinDimension"][0])
+
     }
-
-    data.push(vio_data_tmp);
-
-    if (!y_vls.includes(row["violinDimension"][1]))
-    { y_vls.push(row["violinDimension"][1]); }
 
     });
 
-    console.log(data)
-
     // Find the maximum value of metric
-    var x_max = d3.max(data, function(d) { return +d.values;} );
+    var x_max = d3.max(x_vls);
 
     // Find the minimum value of metric
-    var x_min = d3.min(data, function(d) { return +d.values;} );
+    var x_min = d3.min(x_vls);
+
+    var colorScale = d3
+        .scaleLinear()
+        .domain([x_min,x_max])
+        .range([minColor,maxColor]);
 
     // Build and Show the Y scale
     var y = d3.scaleLinear()
         .domain([x_min,x_max])          // Note that here the Y scale is set manually
         .range([height, 0])
     svg.append("g").call( d3.axisLeft(y) )
+
+    var wrap = function() {
+      var self = d3.select(this),
+        textLength = self.node().getComputedTextLength(),
+        text = self.text();
+      while (textLength > (50) && text.length > 0) {
+        text = text.slice(0, -1);
+        self.text(text + '...');
+        textLength = self.node().getComputedTextLength();
+      }
+    };
 
     // Build and Show the X scale. It is a band scale like for a boxplot: each group has an dedicated RANGE on the axis. This range has a length of x.bandwidth
     var x = d3.scaleBand()
@@ -17632,11 +17704,15 @@ const drawViz = data => {
     svg.append("g")
         .attr("transform", "translate(0," + height + ")")
         .call(d3.axisBottom(x))
+        .selectAll("text")
+        .attr("transform", "rotate(" + xAxisRotation + ")")
+        .style("text-anchor", "start")
+        .each(wrap);
 
     // Features of the histogram
     var histogram = d3.histogram()
         .domain(y.domain())
-        .thresholds(y.ticks(20))
+        .thresholds(y.ticks(violinBinSize))
           // Important: how many bins approx are going to be made? It is the 'resolution' of the violin plot
         .value(d => d)
 
@@ -17650,8 +17726,14 @@ const drawViz = data => {
     })
     .entries(data)
 
-
-    console.log(sumstat)
+    // Compute the binning for each group of the dataset
+    var median = d3.nest()  // nest function allows to group the calculation per level of a factor
+        .key(function(d) { return d.labels;})
+        .rollup(function(d) {   // For each key..
+            median = d3.quantile(d.map(function(g) { return g.values;}).sort(d3.ascending),.5)
+        return(median)
+    })
+    .entries(data)
 
     // What is the biggest number of value in a bin? We need it cause this value will have a width of 100% of the bandwidth.
     var maxNum = 0
@@ -17667,25 +17749,14 @@ const drawViz = data => {
         .range([0, x.bandwidth()])
         .domain([-maxNum,maxNum])
 
-    // Color scale for dots
-    var myColor = d3.scaleSequential()
-        .interpolator(d3.interpolateInferno)
-        .domain([x_min,x_max])
-
-    svg.append("text")
-        .attr("class", "x label")
-        .attr("text-anchor", "end")
-        .attr("x", width)
-        .attr("y", height - 6)
-        .text("income per capita, inflation-adjusted (dollars)");
-
     svg.append("text")
         .attr("class", "y label")
-        .attr("text-anchor", "end")
-        .attr("y", 6)
+        .attr("text-anchor", "middle")
+        .attr("y", 0 - margin.left)
+        .attr("x",0 - (height / 2))
         .attr("dy", ".75em")
         .attr("transform", "rotate(-90)")
-        .text("life expectancy (years)");
+        .text(yAxisLabel);
 
     if (showScatter == "On") {
 
@@ -17698,7 +17769,9 @@ const drawViz = data => {
           .attr("cx", function(d){return(x(d.labels) + x.bandwidth()/2 - Math.random()*jitterWidth )})
           .attr("cy", function(d){return(y(d.values))})
           .attr("r", scatterRadius)
-          .style("fill", function(d){ return(myColor(d.values))})
+          .style("fill", function(d){ return(colorScale(d.values))})
+          .style("stroke", scatterBorderColor)
+          .style("stroke-width", scatterBorderWidth)
 
       // Add the shape to this svg!
     svg
@@ -17709,8 +17782,9 @@ const drawViz = data => {
           .attr("transform", function(d){ return("translate(" + x(d.key) +" ,0)") } ) // Translation on the right to be at the group position
         .append("path")
             .datum(function(d){ return(d.value)})     // So now we are working bin per bin
-            .style("stroke", "none")
-            .style("fill",violinColor)
+            .style("stroke", violinBorderColor)
+            .style("stroke-width", violinBorderWidth)
+            .style("fill",violinFillColor)
             .attr("d", d3.area()
                 .x0( xNum(0) )
                 .x1(function(d){ return(xNum(d.length)) } )
@@ -17720,23 +17794,38 @@ const drawViz = data => {
 
     } else {
 
-    svg
-    .selectAll("myViolin")
-    .data(sumstat)
-    .enter()        // So now we are working group per group
-    .append("g")
-      .attr("transform", function(d){ return("translate(" + x(d.key) +" ,0)") } ) // Translation on the right to be at the group position
-    .append("path")
-        .datum(function(d){ return(d.value)})     // So now we are working bin per bin
-        .style("stroke", "none")
-        .style("fill",violinColor)
-        .attr("d", d3.area()
-            .x0(function(d){ return(xNum(-d.length)) } )
-            .x1(function(d){ return(xNum(d.length)) } )
-            .y(function(d){ return(y(d.x0)) } )
-            .curve(d3.curveCatmullRom)    // This makes the line smoother to give the violin appearance. Try d3.curveStep to see the difference
-        )
+        svg
+        .selectAll("myViolin")
+        .data(sumstat)
+        .enter()        // So now we are working group per group
+        .append("g")
+          .attr("transform", function(d){ return("translate(" + x(d.key) +" ,0)") } ) // Translation on the right to be at the group position
+        .append("path")
+            .datum(function(d){ return(d.value)})     // So now we are working bin per bin
+            .style("stroke", violinBorderColor)
+            .style("stroke-width", violinBorderWidth)
+            .style("fill",violinFillColor)
+            .attr("d", d3.area()
+                .x0(function(d){ return(xNum(-d.length)) } )
+                .x1(function(d){ return(xNum(d.length)) } )
+                .y(function(d){ return(y(d.x0)) } )
+                .curve(d3.curveCatmullRom)    // This makes the line smoother to give the violin appearance. Try d3.curveStep to see the difference
+            )
 
+    }
+
+    if (showMedian == "On") {
+        svg
+            .selectAll("medianPoint")
+            .data(median)
+            .enter()
+            .append("circle")
+              .attr("cx", function(d){return(x(d.key) + x.bandwidth()/2)})
+              .attr("cy", function(d){return(y(d.value))})
+              .attr("r", medianCircleSize)
+              .style("fill", medianFillColor)
+              .style("stroke", medianBorderColor)
+              .style("stroke-width", medianBorderWidth)
     }
 
 };
