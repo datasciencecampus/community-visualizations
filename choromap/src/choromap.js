@@ -17761,7 +17761,7 @@ const drawViz = data => {
     // set the color of each feature
     .attr("fill", d => d.properties.met === null ? nullColor : colorScale(d.properties.met))
     .style("stroke", polygonBorderColor)
-    .style("stroke-width", polygonBorderWidth)
+    .style("]", polygonBorderWidth)
     .attr("class", "area")
     .on('mouseover', tool_tip.show)
     .on('mouseout', tool_tip.hide);
