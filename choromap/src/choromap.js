@@ -17563,6 +17563,8 @@ function join(lookupTable, mainTable, lookupKey, mainKey, select) {
 // choromap-lite code
 const drawViz = data => {
 
+    console.log(data)
+
     var rowData = data.tables.DEFAULT;
 
     d3.select('body')
@@ -17644,13 +17646,11 @@ const drawViz = data => {
     var width = dscc.getWidth();
     var height = dscc.getHeight();
 
-    console.log(geojsonID)
-
     geojson = geojson.split(geojsonID).join('id');
 
     var geojson = JSON.parse(geojson)
-    console.log(geojson)
 
+    console.log(rowData)
 
     // set up the canvas space
     const yMargin = 5;
@@ -17689,14 +17689,15 @@ const drawViz = data => {
         dim: row["mapDimension"][0],
         met: row["mapMetric"][0],
         },
-        dimId: data.fields["mapDimension"][0].id,
-        tooltip: row["mapTooltip"][0]
+        dimId: data.fields["mapDimension"][0].id
     };
 
     geo_plot.features.push(geo_data);
     vls.push(row["mapMetric"][0]);
 
     });
+
+    console.log(geo_plot)
 
     geojson.features.map(x => Object.assign(x, geo_plot.features.find(y => y.properties.dim == x.properties.id)));
 
@@ -17719,7 +17720,6 @@ const drawViz = data => {
         }
 
         var legendBreaks = legendBreaks.concat(legendBreaks.slice(-1)[0])
-        console.log(legendBreaks)
         var numCells = legendBreaks.length
 
 
@@ -17775,7 +17775,7 @@ const drawViz = data => {
     // Creates the tool tip
     var tool_tip = d3.tip()
       .attr("class", "d3-tip")
-      .html(d => d.tooltip)
+      .html(d => d.properties.met === null ? d.properties.dim + ': no data available' : d.properties.dim + ': ' + d.properties.met);
       svg.call(tool_tip);
 
     // Draw the map
