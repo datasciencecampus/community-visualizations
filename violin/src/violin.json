@@ -1,0 +1,161 @@
+{
+  "data": [
+    {
+      "id": "concepts",
+      "label": "Concepts",
+      "elements": [
+        {
+          "id": "violinDimension",
+          "label": "Dimension",
+          "type": "DIMENSION",
+          "options": {
+            "min": 2,
+            "max": 2
+          }
+        }
+      ]
+    }
+  ],
+  "style": [
+    {
+      "id": "data",
+      "label": "Data",
+      "elements": [
+        {
+          "type": "TEXTINPUT",
+          "id": "violinBinSize",
+          "label": "Bin size of violins",
+          "defaultValue": 20
+        },
+        {
+          "type": "SELECT_RADIO",
+          "id": "showMedian",
+          "label": "Show Median Point",
+          "defaultValue": "On",
+          "options": [
+            {
+              "label": "On",
+              "value": "On"
+            },
+            {
+              "label": "Off",
+              "value": "Off"
+            }
+          ]
+        },
+        {
+          "type": "TEXTINPUT",
+          "id": "medianCircleSize",
+          "label": "Median Circle Size",
+          "defaultValue": 5
+        },
+        {
+          "type": "SELECT_RADIO",
+          "id": "showScatter",
+          "label": "Show scatter points",
+          "defaultValue": "On",
+          "options": [
+            {
+              "label": "On",
+              "value": "On"
+            },
+            {
+              "label": "Off",
+              "value": "Off"
+            }
+          ]
+        },
+        {
+          "type": "TEXTINPUT",
+          "id": "scatterRadius",
+          "label": "Radius of points",
+          "defaultValue": 1
+        }
+      ]
+    },
+    {
+      "id": "color",
+      "label": "Colors",
+      "elements": [
+        {
+          "type": "FILL_COLOR",
+          "id": "violinFillColor",
+          "label": "Violin Fill Color",
+          "defaultValue": "#808080"
+        },
+        {
+          "type": "BORDER_COLOR",
+          "id": "violinBorderColor",
+          "label": "Violin Border Color",
+          "defaultValue": "#fff"
+        },
+        {
+          "type": "TEXTINPUT",
+          "id": "violinBorderWidth",
+          "label": "Violin Border Width",
+          "defaultValue": 0
+        },
+        {
+          "type": "FILL_COLOR",
+          "id": "minColor",
+          "label": "Min Scatter Color",
+          "defaultValue": "#BED9FF"
+        },
+        {
+          "type": "FILL_COLOR",
+          "id": "maxColor",
+          "label": "Max Scatter Color",
+          "defaultValue": "#003B8E"
+        },
+        {
+          "type": "BORDER_COLOR",
+          "id": "scatterBorderColor",
+          "label": "scatter Border Color",
+          "defaultValue": "#fff"
+        },
+        {
+          "type": "TEXTINPUT",
+          "id": "scatterBorderWidth",
+          "label": "scatter Border Width",
+          "defaultValue": 0
+        },
+        {
+          "type": "BORDER_COLOR",
+          "id": "medianFillColor",
+          "label": "Median Fill Color",
+          "defaultValue": "#fff"
+        },
+        {
+          "type": "BORDER_COLOR",
+          "id": "medianBorderColor",
+          "label": "Median Border Color",
+          "defaultValue": "#000"
+        },
+        {
+          "type": "TEXTINPUT",
+          "id": "medianBorderWidth",
+          "label": "Median Border Width",
+          "defaultValue": 1
+        }
+      ]
+    },
+    {
+      "id": "labels",
+      "label": "Labels",
+      "elements": [
+        {
+          "type": "TEXTINPUT",
+          "id": "xAxisRotation",
+          "label": "X Axis Rotation",
+          "defaultValue": 45
+        },
+        {
+          "type": "TEXTINPUT",
+          "id": "yAxisLabel",
+          "label": "Y Axis Label",
+          "defaultValue": "yAxisLabel"
+        }
+      ]
+    }
+  ]
+}
