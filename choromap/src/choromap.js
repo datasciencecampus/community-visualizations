@@ -17686,10 +17686,10 @@ const drawViz = data => {
 
         type: "Feature",
         properties: {
-        dim: row["mapDimension"][1],
+        dim: row["mapDimension"][0],
         met: row["mapMetric"][0],
         },
-        dimId: data.fields["mapDimension"][1].id,
+        dimId: data.fields["mapDimension"][0].id,
         tooltip: row["mapTooltip"][0]
     };
 
