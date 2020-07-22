@@ -67,12 +67,6 @@
         },
         {
           "type": "TEXTINPUT",
-          "id": "jitterWidth",
-          "label": "Distance of points from plot",
-          "defaultValue": 10
-        },
-        {
-          "type": "TEXTINPUT",
           "id": "scatterRadius",
           "label": "Radius of points",
           "defaultValue": 1

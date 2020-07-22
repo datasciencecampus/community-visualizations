@@ -1,5 +1,5 @@
 {
-  "name": "Violin plot (Develop)",
+  "name": "Violin plot",
   "logoUrl": "https://raw.githubusercontent.com/datasciencecampus/community-visualizations/violin/violin/img/violin.png",
   "organization": "Data Science Campus",
   "organizationUrl": "https://datasciencecampus.ons.gov.uk/",
@@ -11,13 +11,13 @@
   "termsOfServiceUrl": "https://datasciencecampus.github.io/community-visualizations/docs/privacy-policy.html",
   "components": [{
     "id": "violin-dev",
-    "name": "Violin plot (Develop)",
+    "name": "Violin plot",
     "iconUrl": "https://raw.githubusercontent.com/datasciencecampus/community-visualizations/violin/violin/img/violin.png",
     "description": "Violin plots using D3.",
     "resource": {
-      "js": "gs://violin-dev/violin.js",
-      "config": "gs://violin-dev/violin.json",
-      "css": "gs://violin-dev/violin.css"
+      "js": "gs://violin-plot/violin.js",
+      "config": "gs://violin-plot/violin.json",
+      "css": "gs://violin-plot/violin.css"
     }
   }]
 }

@@ -17564,10 +17564,6 @@ const drawViz = data => {
     ? data.style.medianCircleSize.value
     : data.style.medianCircleSize.defaultValue;
 
-    var jitterWidth =  data.style.jitterWidth.value
-    ? data.style.jitterWidth.value
-    : data.style.jitterWidth.defaultValue;
-
     var scatterRadius =  data.style.scatterRadius.value
     ? data.style.scatterRadius.value
     : data.style.scatterRadius.defaultValue;
@@ -17759,6 +17755,8 @@ const drawViz = data => {
         .text(yAxisLabel);
 
     if (showScatter == "On") {
+
+    jitterWidth = (width / y_vls.length) / 2
 
     // Add individual points with jitter
       svg
