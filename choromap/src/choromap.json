@@ -32,18 +32,6 @@
       "elements": [
         {
           "type": "TEXTINPUT",
-          "id": "geojson",
-          "label": "Input GeoJSON",
-          "defaultValue": ""
-        },
-        {
-          "type": "TEXTINPUT",
-          "id": "geojsonID",
-          "label": "ID of GeoJSON features",
-          "defaultValue": "name"
-        },
-        {
-          "type": "TEXTINPUT",
           "id": "polyNumber",
           "label": "Number of Polygons",
           "defaultValue": "max"

@@ -1,23 +1,23 @@
 {
-  "name": "Choropleth Map (lite)",
+  "name": "Choropleth Map (UTLA embedded)",
   "logoUrl": "https://raw.githubusercontent.com/datasciencecampus/community-visualizations/master/choromap/img/choropleth.png",
   "organization": "Data Science Campus",
   "organizationUrl": "https://datasciencecampus.ons.gov.uk/",
   "supportUrl": "https://github.com/datasciencecampus/community-visualizations/issues",
   "packageUrl": "https://datastudio.google.com/reporting/4617cbac-3514-4c8d-a999-a3cb6683e579",
   "privacyPolicyUrl": "https://datasciencecampus.github.io/community-visualizations/docs/privacy-policy.html",
-  "description": "Choropleth mapping for Google Data Studio written in D3 (lite)",
+  "description": "Choropleth mapping for Google Data Studio written in D3 (UTLA embedded)",
   "devMode": true,
   "termsOfServiceUrl": "https://datasciencecampus.github.io/community-visualizations/docs/privacy-policy.html",
   "components": [{
     "id": "choromap-lite",
-    "name": "Choropleth Map (lite)",
+    "name": "Choropleth Map (UTLA embedded)",
     "iconUrl": "https://raw.githubusercontent.com/datasciencecampus/community-visualizations/master/choromap/img/choropleth.png",
-    "description": "Choropleth mapping for Google Data Studio written in D3 (lite).",
+    "description": "Choropleth mapping for Google Data Studio written in D3 (UTLA embedded).",
     "resource": {
-      "js": "gs://choromap-lite/choromap.js",
-      "config": "gs://choromap-lite/choromap.json",
-      "css": "gs://choromap-lite/choromap.css"
+      "js": "gs://choromap-utla/choromap.js",
+      "config": "gs://choromap-utla/choromap.json",
+      "css": "gs://choromap-utla/choromap.css"
     }
   }]
 }
