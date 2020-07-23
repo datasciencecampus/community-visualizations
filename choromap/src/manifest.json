@@ -10,7 +10,7 @@
   "devMode": true,
   "termsOfServiceUrl": "https://datasciencecampus.github.io/community-visualizations/docs/privacy-policy.html",
   "components": [{
-    "id": "choromap-lite",
+    "id": "choromap-utla",
     "name": "Choropleth Map (UTLA embedded)",
     "iconUrl": "https://raw.githubusercontent.com/datasciencecampus/community-visualizations/master/choromap/img/choropleth.png",
     "description": "Choropleth mapping for Google Data Studio written in D3 (UTLA embedded).",
