@@ -1,6 +1,6 @@
 {
   "name": "Choropleth Map",
-  "logoUrl": "https://raw.githubusercontent.com/datasciencecampus/community-visualizations/main/choromap/img/choropleth.png",
+  "logoUrl": "https://storage.googleapis.com/choromap/choropleth.png",
   "organization": "Data Science Campus",
   "organizationUrl": "https://datasciencecampus.ons.gov.uk/",
   "supportUrl": "https://github.com/datasciencecampus/community-visualizations/issues",
@@ -12,7 +12,7 @@
   "components": [{
     "id": "choromap",
     "name": "Choropleth Map",
-    "iconUrl": "https://raw.githubusercontent.com/datasciencecampus/community-visualizations/main/choromap/img/choropleth.png",
+    "iconUrl": "https://storage.googleapis.com/choromap/choropleth.png",
     "description": "Choropleth mapping using D3.",
     "resource": {
       "js": "gs://choromap/choromap.js",
