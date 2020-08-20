@@ -19,7 +19,7 @@
           "type": "METRIC",
           "options": {
             "min": 1,
-            "max": 1
+            "max": 3
           }
         }
       ]
@@ -77,12 +77,6 @@
           "id": "polygonBorderWidth",
           "label": "Polygon Border Width",
           "defaultValue": 0
-        },
-        {
-          "type": "FONT_COLOR",
-          "id": "legendTextColor",
-          "label": "Legend Text Color",
-          "defaultValue": "#000"
         }
       ]
     },
@@ -91,7 +85,7 @@
       "label": "Legend",
       "elements": [
         {
-          "type": "SELECT_RADIO",
+          "type": "SELECT_SINGLE",
           "id": "showLegend",
           "label": "Legend Orientation",
           "defaultValue": "Vertical",
@@ -111,7 +105,7 @@
           ]
         },
         {
-          "type": "SELECT_RADIO",
+          "type": "SELECT_SINGLE",
           "id": "legendType",
           "label": "Legend Type",
           "defaultValue": "Linear",
@@ -125,6 +119,18 @@
               "value": "Quantile"
             },
             {
+              "label": "Divergent",
+              "value": "Divergent"
+            },
+            {
+              "label": "Categorical",
+              "value": "Categorical"
+            },
+            {
+              "label": "User Breaks",
+              "value": "User Breaks"
+            },
+            {
               "label": "Custom",
               "value": "Custom"
             }
@@ -133,7 +139,7 @@
         {
           "type": "TEXTINPUT",
           "id": "legendCells",
-          "label": "Number of Quantiles",
+          "label": "Number of Quantiles / Categories",
           "defaultValue": 5
         },
         {
@@ -149,7 +155,7 @@
           "defaultValue": 0
         },
         {
-          "type": "SELECT_RADIO",
+          "type": "SELECT_SINGLE",
           "id": "legendDecimalPlacesShort",
           "label": "Number Format",
           "defaultValue": "Long",
@@ -169,14 +175,27 @@
             "id": "legendTitle",
             "label": "Legend Title",
             "defaultValue": "Legend Title"
-
         },
         {
             "type": "TEXTINPUT",
             "id": "legendPosition",
             "label": "Legend Position (x,y)",
-            "defaultValue": "20,20"
-
+            "defaultValue": "20,40"
+        },
+        {
+            "type": "FONT_COLOR",
+            "id": "legendTextColor",
+            "label": "Legend Font Color"
+        },
+        {
+            "type": "FONT_SIZE",
+            "id": "legendTextSize",
+            "label": "Legend Font Size"
+        },
+        {
+            "type": "FONT_FAMILY",
+            "id": "legendTextFamily",
+            "label": "Legend Font Family"
         }
       ]
     }
