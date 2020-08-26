@@ -28,7 +28,7 @@
           "defaultValue": 20
         },
         {
-          "type": "SELECT_RADIO",
+          "type": "SELECT_SINGLE",
           "id": "showMedian",
           "label": "Show Median Point",
           "defaultValue": "On",
@@ -50,7 +50,7 @@
           "defaultValue": 5
         },
         {
-          "type": "SELECT_RADIO",
+          "type": "SELECT_SINGLE",
           "id": "showScatter",
           "label": "Show scatter points",
           "defaultValue": "On",
@@ -74,8 +74,8 @@
       ]
     },
     {
-      "id": "color",
-      "label": "Colors",
+      "id": "violincolor",
+      "label": "Violin Colors",
       "elements": [
         {
           "type": "FILL_COLOR",
@@ -90,11 +90,17 @@
           "defaultValue": "#fff"
         },
         {
-          "type": "TEXTINPUT",
+          "type": "LINE_WEIGHT",
           "id": "violinBorderWidth",
           "label": "Violin Border Width",
           "defaultValue": 0
-        },
+        }
+      ]
+    },
+    {
+      "id": "scattercolor",
+      "label": "Scatter Colors",
+      "elements": [
         {
           "type": "FILL_COLOR",
           "id": "minColor",
@@ -114,11 +120,17 @@
           "defaultValue": "#fff"
         },
         {
-          "type": "TEXTINPUT",
+          "type": "LINE_WEIGHT",
           "id": "scatterBorderWidth",
           "label": "scatter Border Width",
           "defaultValue": 0
-        },
+        }
+      ]
+    },
+    {
+      "id": "mediancolor",
+      "label": "Median Colors",
+      "elements": [
         {
           "type": "BORDER_COLOR",
           "id": "medianFillColor",
@@ -132,7 +144,7 @@
           "defaultValue": "#000"
         },
         {
-          "type": "TEXTINPUT",
+          "type": "LINE_WEIGHT",
           "id": "medianBorderWidth",
           "label": "Median Border Width",
           "defaultValue": 1
@@ -154,6 +166,27 @@
           "id": "yAxisLabel",
           "label": "Y Axis Label",
           "defaultValue": "yAxisLabel"
+        },
+        {
+            "type": "FONT_COLOR",
+            "id": "axisTextColor",
+            "label": "Legend Font Color",
+            "default": "#000"
+        },
+        {
+            "type": "FONT_SIZE",
+            "id": "axisTextSize",
+            "label": "Legend Font Size"
+        },
+        {
+            "type": "FONT_FAMILY",
+            "id": "axisTextFamily",
+            "label": "Legend Font Family"
+        },
+        {
+            "type": "CHECKBOX",
+            "id": "axisIsDate",
+            "label": "Date Axis"
         }
       ]
     }

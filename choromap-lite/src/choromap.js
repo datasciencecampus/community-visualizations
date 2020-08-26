@@ -17856,12 +17856,20 @@ function updateData(selectedIndex) {
         .geoMercator()
         .center(centroid)
         .fitExtent([[0,0],[width, height - 25]], geojson);
-//
-    // Creates the tool tip
-    var tool_tip = d3.tip()
-      .attr("class", "d3-tip")
-      .html(d => d.properties.met === null ? d.properties.name + ': null' : d.properties.name + ': ' + d.properties.met.toFixed(legendDecimalPlaces));
-      svg.call(tool_tip);
+
+    if (legendType == 'Custom'){
+            // Creates the tool tip
+        var tool_tip = d3.tip()
+          .attr("class", "d3-tip")
+          .html(d => d.properties.met === null ? d.properties.name + ': null' : d.properties.name + ': ' + d.properties.met);
+          svg.call(tool_tip);
+    } else {
+        // Creates the tool tip
+        var tool_tip = d3.tip()
+          .attr("class", "d3-tip")
+          .html(d => d.properties.met === null ? d.properties.name + ': null' : d.properties.name + ': ' + d.properties.met.toFixed(legendDecimalPlaces));
+          svg.call(tool_tip);
+    }
 
     // Draw the map
     var g = svg
