@@ -1,0 +1,23 @@
+{
+  "name": "Flight paths",
+  "logoUrl": "https://storage.googleapis.com/flight-lite/choropleth.png",
+  "organization": "Data Science Campus",
+  "organizationUrl": "https://datasciencecampus.ons.gov.uk/",
+  "supportUrl": "https://github.com/datasciencecampus/community-visualizations/issues",
+  "packageUrl": "https://datastudio.google.com/reporting/d0c938d0-9e49-4781-8cab-ec159c233499/page/XEHUB",
+  "privacyPolicyUrl": "https://datasciencecampus.github.io/community-visualizations/docs/privacy-policy.html",
+  "description": "Connected scatter plots created using D3.",
+  "devMode": true,
+  "termsOfServiceUrl": "https://datasciencecampus.github.io/community-visualizations/docs/privacy-policy.html",
+  "components": [{
+    "id": "flight-paths",
+    "name": "Flight paths",
+    "iconUrl": "https://storage.googleapis.com/flight-paths/choropleth.png",
+    "description": "Connected scatter plots created using D3.",
+    "resource": {
+      "js": "gs://flight-paths/flight-paths.js",
+      "config": "gs://flight-paths/flight-paths.json",
+      "css": "gs://flight-paths/flight-paths.css"
+    }
+  }]
+}

@@ -1,0 +1,210 @@
+{
+  "data": [
+    {
+      "id": "concepts",
+      "label": "Concepts",
+      "elements": [
+        {
+          "id": "MetricX",
+          "label": "Metric X",
+          "type": "DIMENSION",
+          "options": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        {
+          "id": "MetricY",
+          "label": "Metric Y",
+          "type": "DIMENSION",
+          "options": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        {
+          "id": "aggregateBy",
+          "label": "Aggregate by",
+          "type": "DIMENSION",
+          "options": {
+            "min": 1,
+            "max": 1
+          }
+        }
+      ]
+    }
+  ],
+   "style": [
+    {
+      "id": "points",
+      "label": "Points",
+      "elements": [
+        {
+          "type": "FILL_COLOR",
+          "id": "markerFillColor",
+          "label": "Marker fill color",
+          "defaultValue": "#fff"
+        },
+        {
+          "type": "BORDER_COLOR",
+          "id": "markerLineColor",
+          "label": "Marker line color",
+          "defaultValue": "#000"
+        },
+        {
+          "type": "LINE_WEIGHT",
+          "id": "markerBorderWidth",
+          "label": "Marker border width",
+          "defaultValue": 1
+        },
+        {
+          "type": "TEXTINPUT",
+          "id": "markerSize",
+          "label": "Marker size",
+          "defaultValue": 5
+        },
+        {
+          "type": "SELECT_SINGLE",
+          "id": "showMarkers",
+          "label": "Show markers",
+          "defaultValue": "On",
+          "options": [
+            {
+              "label": "On",
+              "value": "On"
+            },
+            {
+              "label": "Off",
+              "value": "Off"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "line",
+      "label": "Line",
+      "elements": [
+        {
+          "type": "FILL_COLOR",
+          "id": "lineColor",
+          "label": "Line color",
+          "defaultValue": "#808080"
+        },
+        {
+          "type": "LINE_WEIGHT",
+          "id": "lineWeight",
+          "label": "Line weight",
+          "defaultValue": 1
+        }
+      ]
+    },
+    {
+      "id": "animation",
+      "label": "Animation",
+      "elements": [
+        {
+          "type": "TEXTINPUT",
+          "id": "transitionSpeed",
+          "label": "Transition speed",
+          "defaultValue": 100
+        }
+      ]
+    },
+    {
+      "id": "labels",
+      "label": "Labels",
+      "elements": [
+        {
+          "type": "SELECT_SINGLE",
+          "id": "showLabels",
+          "label": "Show labels",
+          "defaultValue": "On",
+          "options": [
+            {
+              "label": "On",
+              "value": "On"
+            },
+            {
+              "label": "Off",
+              "value": "Off"
+            }
+          ]
+        },
+        {
+          "type": "TEXTINPUT",
+          "id": "labelsEvery",
+          "label": "Show labels every X points",
+          "defaultValue": 10
+        },
+        {
+          "type": "FONT_COLOR",
+          "id": "labelColor",
+          "label": "Label color",
+          "defaultValue": "#000"
+        },
+        {
+            "type": "FONT_SIZE",
+            "id": "labelTextSize",
+            "label": "Label font size"
+        },
+        {
+            "type": "FONT_FAMILY",
+            "id": "labelTextFamily",
+            "label": "Label font family"
+        },
+        {
+          "type": "SELECT_SINGLE",
+          "id": "labelIsDate",
+          "label": "Label is date",
+          "defaultValue": "false",
+          "options": [
+            {
+              "label": "true",
+              "value": "true"
+            },
+            {
+              "label": "false",
+              "value": "false"
+            }
+          ]
+        },
+        {
+            "type": "TEXTINPUT",
+            "id": "labelDateFormat",
+            "label": "Label date format",
+            "default": "D MMM YYYY"
+        }
+      ]
+    },
+    {
+      "id": "axis",
+      "label": "Axis",
+      "elements": [
+        {
+          "type": "FONT_COLOR",
+          "id": "axisColor",
+          "label": "Axis color",
+          "defaultValue": "#000"
+        },
+        {
+          "type": "FONT_COLOR",
+          "id": "axisLabelColor",
+          "label": "Axis label color",
+          "defaultValue": "#000"
+        },
+        {
+          "type": "FONT_SIZE",
+          "id": "axisTextSize",
+          "label": "Axis font size"
+        },
+        {
+          "type": "TEXTINPUT",
+          "id": "axisDecimalPlaces",
+          "label": "Axis decimal places",
+          "default": 1
+        }
+      ]
+    }
+  ]
+}

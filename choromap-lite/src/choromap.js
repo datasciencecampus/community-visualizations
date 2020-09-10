@@ -17594,6 +17594,8 @@ const drawViz = data => {
     ? data.style.polyNumber.value
     : data.style.polyNumber.defaultValue;
 
+    var filterNull =  data.style.filterNull.value
+    console.log(filterNull)
     var minColor =  data.style.minColor.value
     ? data.style.minColor.value.color
     : data.style.minColor.defaultValue;
@@ -17744,14 +17746,30 @@ function updateData(selectedIndex) {
 
     });
 
+    console.log(geojson)
+
     geojson.features.forEach(val => {
       let { properties } = val
       let newProps = new_data[properties.id]
       val.properties = { ...properties, ...newProps }
       if (typeof val.properties.met === "undefined") {
         val.properties.met = null
+        if (filterNull == true){
+        delete val.geometry
+        }
       }
     })
+
+
+//    if (filterNull === "true"){
+//        geojson.features.forEach(val => {
+//          if (val.properties.met === null) {
+//            val.geometry = null
+//          }
+//        })
+//    }
+
+    console.log(geojson)
 
     // Find the maximum value of metric
     var max = d3.max(geojson.features, function(d) { return +d.properties.met;} );

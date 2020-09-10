@@ -53,6 +53,22 @@
           "id": "polyNumber",
           "label": "Number of Polygons",
           "defaultValue": "max"
+        },
+        {
+          "type": "SELECT_SINGLE",
+          "id": "filterNull",
+          "label": "Filter nulls",
+          "defaultValue": "false",
+          "options": [
+            {
+              "label": "true",
+              "value": "true"
+            },
+            {
+              "label": "false",
+              "value": "false"
+            }
+          ]
         }
       ]
     },
