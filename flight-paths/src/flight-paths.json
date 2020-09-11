@@ -55,13 +55,13 @@
           "type": "LINE_WEIGHT",
           "id": "markerBorderWidth",
           "label": "Marker border width",
-          "defaultValue": 1
+          "defaultValue": "1"
         },
         {
           "type": "TEXTINPUT",
           "id": "markerSize",
           "label": "Marker size",
-          "defaultValue": 5
+          "defaultValue": "5"
         },
         {
           "type": "SELECT_SINGLE",
@@ -95,7 +95,7 @@
           "type": "LINE_WEIGHT",
           "id": "lineWeight",
           "label": "Line weight",
-          "defaultValue": 1
+          "defaultValue": "1"
         }
       ]
     },
@@ -107,7 +107,7 @@
           "type": "TEXTINPUT",
           "id": "transitionSpeed",
           "label": "Transition speed",
-          "defaultValue": 100
+          "defaultValue": "10000"
         }
       ]
     },
@@ -135,7 +135,7 @@
           "type": "TEXTINPUT",
           "id": "labelsEvery",
           "label": "Show labels every X points",
-          "defaultValue": 10
+          "defaultValue": "10"
         },
         {
           "type": "FONT_COLOR",
@@ -146,7 +146,8 @@
         {
             "type": "FONT_SIZE",
             "id": "labelTextSize",
-            "label": "Label font size"
+            "label": "Label font size",
+            "defaultValue": "12"
         },
         {
             "type": "FONT_FAMILY",
@@ -173,7 +174,7 @@
             "type": "TEXTINPUT",
             "id": "labelDateFormat",
             "label": "Label date format",
-            "default": "D MMM YYYY"
+            "defaultValue": "D MMM YYYY"
         }
       ]
     },
@@ -196,13 +197,28 @@
         {
           "type": "FONT_SIZE",
           "id": "axisTextSize",
-          "label": "Axis font size"
+          "label": "Axis font size",
+          "defaultValue": "12"
         },
         {
-          "type": "TEXTINPUT",
+          "type": "SELECT_SINGLE",
           "id": "axisDecimalPlaces",
           "label": "Axis decimal places",
-          "default": 1
+          "defaultValue": "1",
+          "options": [
+            {
+              "label": "0",
+              "value": "0"
+            },
+            {
+              "label": "1",
+              "value": "1"
+            },
+            {
+              "label": "2",
+              "value": "2"
+            }
+          ]
         }
       ]
     }

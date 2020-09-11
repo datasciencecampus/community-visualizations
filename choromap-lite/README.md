@@ -60,4 +60,4 @@ Then add the chart to your report. In the `DATA` tab, for the `Dimensions` make 
 
 ## Contributing and Bugs
 
-See CONTRIBUTING.md for guidelines on how to contribute. For all Bugs please raise an Issue ticket.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to contribute. For all Bugs please raise an Issue ticket.

@@ -17,4 +17,4 @@ violin uses two Dimensions. The first is the numeric data you want to plot. The 
 
 ## Contributing and Bugs
 
-See CONTRIBUTING.md for guidelines on how to contribute. For all Bugs please raise an Issue ticket.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to contribute. For all Bugs please raise an Issue ticket.
