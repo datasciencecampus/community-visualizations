@@ -36,3 +36,14 @@
 d {
   fill:"#808080"
 }
+
+.button {
+  background: #fff;
+  text-align: center;
+  border-color: #fff;
+  color: #000;
+  margin: 0;
+  width: 60px;
+  cursor: pointer;
+  height: 30px;
+}

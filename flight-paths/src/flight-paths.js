@@ -42611,7 +42611,6 @@ function join(lookupTable, mainTable, lookupKey, mainKey, select) {
 
 // flight-paths code
 const drawViz = data => {
-    console.log(data)
 
     var rowData = data.tables.DEFAULT;
 
@@ -42697,6 +42696,10 @@ const drawViz = data => {
     ? data.style.labelDateFormat.value
     : data.style.labelDateFormat.defaultValue;
 
+    var gridOpacity =  data.style.gridOpacity.value
+    ? data.style.gridOpacity.value
+    : data.style.gridOpacity.defaultValue;
+
     var labelIsDate = data.style.labelIsDate.value;
 
     // set up the canvas space
@@ -42712,6 +42715,7 @@ const drawViz = data => {
     var clickButton = d3.select("body")
       .append('button')
       .attr('transform', `translate(20, 0)`)
+      .attr("class", "button")
 
     // add the options to the button
     clickButton // Add a button
@@ -42722,6 +42726,7 @@ const drawViz = data => {
     var fasterButton = d3.select("body")
       .append('button')
       .attr('transform', `translate(20, 20)`)
+      .attr("class", "button")
 
 
     // add the options to the button
@@ -42733,10 +42738,12 @@ const drawViz = data => {
     var slowerButton = d3.select("body")
       .append('button')
       .attr('transform', `translate(20, 40)`)
+      .attr("class", "button")
 
     // add the options to the button
     slowerButton // Add a button
       .text('<<') // Next 4 lines add 6 options = 6 colors
+      .style("stroke-opacity", 0)
       .classed("Button", true)
 
 function updateData(selectedIndex) {
@@ -42860,6 +42867,10 @@ function updateData(selectedIndex) {
 
     var margin = ({top: 20, right: 50, bottom: 100, left: 60})
 
+    if (gridOpacity == "None") {
+     gridOpacity = 0
+     axisColor = data.theme.themeFillColor.color
+    }
 
     var yAxis = g => g
     .attr("transform", `translate(${margin.left},0)`)
@@ -42867,9 +42878,9 @@ function updateData(selectedIndex) {
     .call(g => g.select(".domain").remove())
     .call(g => g.selectAll(".tick line").clone()
         .attr("x2", width)
-        .attr("stroke-opacity", 0.1))
+        .attr("stroke-opacity", gridOpacity)
         .attr("color", axisColor)
-        .attr("font-size", axisTextSize)
+        .attr("font-size", axisTextSize))
     .call(g => g.select(".tick:last-of-type text").clone()
         .attr("transform", "rotate(-90)")
         .attr("y", -40)
@@ -42886,9 +42897,9 @@ function updateData(selectedIndex) {
     .call(g => g.select(".domain").remove())
     .call(g => g.selectAll(".tick line").clone()
         .attr("y2", -height)
-        .attr("stroke-opacity", 0.1))
+        .attr("stroke-opacity", gridOpacity)
         .attr("color", axisColor)
-        .attr("font-size", axisTextSize)
+        .attr("font-size", axisTextSize))
     .call(g => g.append("text")
         .attr("x", width/2)
         .attr("y", 30)
