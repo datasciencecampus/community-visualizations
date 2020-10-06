@@ -17782,6 +17782,7 @@ function updateData(selectedIndex) {
 
     var abs_max = d3.max([Math.abs(min),Math.abs(max)]);
 
+    console.log(vls)
 
     if (legendType == 'Quantile') {
         var numCells = legendCells

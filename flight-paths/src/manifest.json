@@ -7,7 +7,7 @@
   "packageUrl": "https://datastudio.google.com/reporting/13679fea-2a83-4e91-9c52-91589f988915",
   "privacyPolicyUrl": "https://datasciencecampus.github.io/community-visualizations/docs/privacy-policy.html",
   "description": "Animated, connected scatter plots created using D3.",
-  "devMode": true,
+  "devMode": false,
   "termsOfServiceUrl": "https://datasciencecampus.github.io/community-visualizations/docs/privacy-policy.html",
   "components": [{
     "id": "flight-paths",
