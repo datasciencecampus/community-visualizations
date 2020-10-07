@@ -17667,24 +17667,7 @@ const drawViz = data => {
 
     });
 
-    // Initialize the button
-    var dropdownButton = d3.select("body")
-      .append('select')
-      .attr('transform', `translate(20, 0)`)
-
-
-    // add the options to the button
-    dropdownButton // Add a button
-      .selectAll('myOptions') // Next 4 lines add 6 options = 6 colors
-        .data(allGroup)
-      .enter()
-        .append('option')
-      .text(function (d) { return d; }) // text showed in the menu
-      .attr("value", function (d) { return d; }) // corresponding value returned by the button\
-
-
-
-function updateData(selectedIndex) {
+function updateData() {
 
     delete geojson
 
@@ -17726,7 +17709,7 @@ function updateData(selectedIndex) {
         geometry: JSON.parse(row["mapDimension"][1]),
         properties: {
             dim: row["mapDimension"][0],
-            met: row["mapMetric"][selectedIndex]
+            met: row["mapMetric"][0]
         },
         dimId: data.fields["mapDimension"][0].id
 
@@ -17942,19 +17925,7 @@ function updateData(selectedIndex) {
 
     }
 }
-updateData(0)
-
-// When the button is changed, run the updateChart function
-dropdownButton.on("change", function(d) {
-
-    // recover the option that has been chosen
-    var selectedOption = d3.select(this).property("value")
-
-    var selectedIndex = allGroup.indexOf(selectedOption);
-
-    // run the updateChart function with this selected option
-    updateData(selectedIndex)
-})
+updateData()
 
 function customLabels({
   i,

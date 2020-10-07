@@ -7,7 +7,7 @@
   "packageUrl": "https://datastudio.google.com/reporting/d0c938d0-9e49-4781-8cab-ec159c233499/page/XEHUB",
   "privacyPolicyUrl": "https://datasciencecampus.github.io/community-visualizations/docs/privacy-policy.html",
   "description": "Choropleth mapping for Google Data Studio written in D3 (lite)",
-  "devMode": true,
+  "devMode": false,
   "termsOfServiceUrl": "https://datasciencecampus.github.io/community-visualizations/docs/privacy-policy.html",
   "components": [{
     "id": "choromap-lite",

@@ -17595,7 +17595,6 @@ const drawViz = data => {
     : data.style.polyNumber.defaultValue;
 
     var filterNull =  data.style.filterNull.value
-    console.log(filterNull)
     var minColor =  data.style.minColor.value
     ? data.style.minColor.value.color
     : data.style.minColor.defaultValue;
@@ -17686,23 +17685,7 @@ const drawViz = data => {
 
     });
 
-    // Initialize the button
-    var dropdownButton = d3.select("body")
-      .append('select')
-      .attr('transform', `translate(20, 0)`)
-
-
-    // add the options to the button
-    dropdownButton // Add a button
-      .selectAll('myOptions') // Next 4 lines add 6 options = 6 colors
-        .data(allGroup)
-      .enter()
-        .append('option')
-      .text(function (d) { return d; }) // text showed in the menu
-      .attr("value", function (d) { return d; }) // corresponding value returned by the button\
-
-function updateData(selectedIndex) {
-
+function updateData() {
 
 
     d3.select('body')
@@ -17737,16 +17720,14 @@ function updateData(selectedIndex) {
         var key_name = row["mapDimension"][0].toString()
 
         new_data = {...new_data, [key_name]: {
-            met: row["mapMetric"][selectedIndex],
+            met: row["mapMetric"][0],
             dimId: data.fields["mapDimension"][0].id
             }
         }
 
-        vls.push(row["mapMetric"][selectedIndex]);
+        vls.push(row["mapMetric"][0]);
 
     });
-
-    console.log(geojson)
 
     geojson.features.forEach(val => {
       let { properties } = val
@@ -17769,20 +17750,22 @@ function updateData(selectedIndex) {
 //        })
 //    }
 
-    console.log(geojson)
-
     // Find the maximum value of metric
-    var max = d3.max(geojson.features, function(d) { return +d.properties.met;} );
+    var max = Math.max(...vls);
 
     // Find the minimum value of metric
-    var min = d3.min(geojson.features, function(d) { return +d.properties.met;} );
+    var min = Math.min(...vls);
 
     // Find the mean value of metric
-    var av = d3.mean(geojson.features, function(d) { return +d.properties.met;} );
+    function getAvg(array) {
+      const total = array.reduce((acc, c) => acc + c, 0);
+      return total / array.length;
+    }
+
+    // Find the mean value of metric
+    var av = getAvg(vls);
 
     var abs_max = d3.max([Math.abs(min),Math.abs(max)]);
-
-    console.log(vls)
 
     if (legendType == 'Quantile') {
         var numCells = legendCells
@@ -17804,7 +17787,6 @@ function updateData(selectedIndex) {
         } catch (TypeError) {
             var customBreaks = [legendBreaks]
         }
-        console.log(customBreaks)
         var numCells = customBreaks.length
 
     } else {
@@ -17978,19 +17960,7 @@ function updateData(selectedIndex) {
     }
 }
 
-updateData(0)
-
-// When the button is changed, run the updateChart function
-dropdownButton.on("change", function(d) {
-
-    // recover the option that has been chosen
-    var selectedOption = d3.select(this).property("value")
-
-    var selectedIndex = allGroup.indexOf(selectedOption);
-
-    // run the updateChart function with this selected option
-    updateData(selectedIndex)
-})
+updateData()
 
 function customLabels({
   i,
