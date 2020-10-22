@@ -21,6 +21,15 @@
             "min": 1,
             "max": 1
           }
+        },
+        {
+          "id": "tooltipDimension",
+          "label": "Tooltip",
+          "type": "DIMENSION",
+          "options": {
+            "min": 1,
+            "max": 1
+          }
         }
       ]
     }

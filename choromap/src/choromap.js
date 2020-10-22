@@ -17565,6 +17565,7 @@ const drawViz = data => {
 
     var rowData = data.tables.DEFAULT;
 
+    console.log(rowData)
     d3.select('body')
         .selectAll('svg')
         .remove();
@@ -17703,6 +17704,12 @@ function updateData() {
     // 'mapDimension' and 'mapMetric' come from the id defined in choromap.json
     // 'dimId' is Data Studio's unique field ID, used for the filter interaction
 
+        if (row["tooltipDimension"][0] === undefined){
+            var tooltip_text = row["mapDimension"][0]
+            } else {
+            var tooltip_text = row["tooltipDimension"][0]
+        }
+
     let geo_data = {
 
         type: "Feature",
@@ -17711,9 +17718,11 @@ function updateData() {
             dim: row["mapDimension"][0],
             met: row["mapMetric"][0]
         },
-        dimId: data.fields["mapDimension"][0].id
-
+        dimId: data.fields["mapDimension"][0].id,
+        tooltip: tooltip_text
     };
+
+    console.log(geo_data)
 
     geojson.features.push(geo_data);
     vls.push(row["mapMetric"][0])
@@ -17828,13 +17837,13 @@ function updateData() {
             // Creates the tool tip
         var tool_tip = d3.tip()
           .attr("class", "d3-tip")
-          .html(d => d.properties.met === null ? d.properties.dim + ': null' : d.properties.dim + ': ' + d.properties.met);
+          .html(d => d.properties.met === null ? d.tooltip + ': null' : d.tooltip + ': ' + d.properties.met);
           svg.call(tool_tip);
     } else {
         // Creates the tool tip
         var tool_tip = d3.tip()
           .attr("class", "d3-tip")
-          .html(d => d.properties.met === null ? d.properties.dim + ': null' : d.properties.dim + ': ' + Number.parseFloat(d.properties.met).toFixed(legendDecimalPlaces));
+          .html(d => d.properties.met === null ? d.tooltip + ': null' : d.tooltip + ': ' + Number.parseFloat(d.properties.met).toFixed(legendDecimalPlaces));
           svg.call(tool_tip);
     }
 
