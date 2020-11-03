@@ -271,6 +271,22 @@
               "value": "1"
             }
           ]
+        },
+        {
+          "type": "SELECT_SINGLE",
+          "id": "horizontalLine",
+          "label": "Add horizontal line at 0",
+          "defaultValue": "false",
+          "options": [
+            {
+              "label": "true",
+              "value": "true"
+            },
+            {
+              "label": "false",
+              "value": "false"
+            }
+          ]
         }
       ]
     }

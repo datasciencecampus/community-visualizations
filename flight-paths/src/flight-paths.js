@@ -42702,6 +42702,8 @@ const drawViz = data => {
 
     var labelIsDate = data.style.labelIsDate.value;
 
+    var horizontalLine = data.style.horizontalLine.value;
+
     // set up the canvas space
     const yMargin = 5;
 
@@ -42872,6 +42874,7 @@ function updateData(selectedIndex) {
      axisColor = data.theme.themeFillColor.color
     }
 
+
     var yAxis = g => g
     .attr("transform", `translate(${margin.left},0)`)
     .call(d3.axisLeft(y).ticks(null, "."+ axisDecimalPlaces +"f"))
@@ -42909,7 +42912,6 @@ function updateData(selectedIndex) {
         .text(data.fields.MetricX[0].name)
         .call(halo))
 
-
     var y = d3.scaleLinear()
     .domain([min_y,max_y])
     .range([height - margin.bottom, margin.top])
@@ -42928,9 +42930,20 @@ function updateData(selectedIndex) {
   svg.append("g")
       .call(yAxis);
 
+    if (horizontalLine == true) {
+        svg.append("line")
+                      .attr("x1", d => x(min_x))
+                      .attr("y1", d => y(0))
+                      .attr("x2", d => x(max_x))
+                      .attr("y2", d => y(0))
+                      .style("stroke", "black")
+                      .style("stroke-width", 1)
+     }
+
         var tool_tip = d3.tip()
           .attr("class", "d3-tip")
           .html(d => d.aggregateby === null ? 'null' : d.aggregateby);
+
 
   var path = svg.append("path")
       .datum(new_agg)
@@ -42941,10 +42954,12 @@ function updateData(selectedIndex) {
       .attr("stroke-linecap", "round")
       .attr("stroke-dasharray", `0,${l}`)
       .attr("d", line)
+
     .transition()
       .duration(transitionSpeed)
       .ease(d3.easeLinear)
       .attr("stroke-dasharray", `${l},${l}`);
+
 
     if (showMarkers == "On"){
   svg.append("g")

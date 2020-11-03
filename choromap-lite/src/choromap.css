@@ -30,9 +30,6 @@
   left: 0;
 }
 
-.area:hover[style]{
-  opacity: .6;
-}
 d {
   fill:"#808080"
 }

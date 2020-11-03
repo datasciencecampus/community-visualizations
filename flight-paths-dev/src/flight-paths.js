@@ -42944,17 +42944,6 @@ function updateData(selectedIndex) {
           .attr("class", "d3-tip")
           .html(d => d.aggregateby === null ? 'null' : d.aggregateby);
 
-    var arrowPoints = [[0, 0], [0, 20], [20, 10]];
-
-    svg.append("defs").append("marker")
-    .attr("id", "arrowhead")
-    .attr("refX", 4) /*must be smarter way to calculate shift*/
-    .attr("refY", 0)
-    .attr("markerWidth", 6)
-    .attr("markerHeight", 6)
-    .attr("orient", "auto")
-    .append("path")
-        .attr("d", "M0,-5L10,0L0,5");
 
   var path = svg.append("path")
       .datum(new_agg)
@@ -42965,7 +42954,6 @@ function updateData(selectedIndex) {
       .attr("stroke-linecap", "round")
       .attr("stroke-dasharray", `0,${l}`)
       .attr("d", line)
-      .attr('marker-end', 'url(#arrowhead)')
 
     .transition()
       .duration(transitionSpeed)

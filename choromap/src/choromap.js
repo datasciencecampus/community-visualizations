@@ -17649,9 +17649,36 @@ const drawViz = data => {
     ? data.style.legendTextFamily.value
     : data.style.legendTextFamily.defaultValue;
 
+    var boundary =  data.style.geojson.value
+    ? data.style.geojson.value
+    : data.style.geojson.defaultValue;
+
+    var boundaryID =  data.style.geojsonID.value
+    ? data.style.geojsonID.value
+    : data.style.geojsonID.defaultValue;
+
+    var boundaryName =  data.style.geojsonName.value
+    ? data.style.geojsonName.value
+    : data.style.geojsonName.defaultValue;
+
+    var boundaryBorderColor =  data.style.boundaryBorderColor.value
+    ? data.style.boundaryBorderColor.value.color
+    : data.style.boundaryBorderColor.defaultValue;
+
+    var boundaryBorderWidth =  data.style.boundaryBorderWidth.value
+
     // get the width and the height of the iframe
     var width = dscc.getWidth();
     var height = dscc.getHeight();
+
+    if (boundary != "Add boundary geojson here"){
+
+        boundary = boundary.split(boundaryID).join('id');
+        boundary = boundary.split(boundaryName).join('name');
+
+        var boundary = JSON.parse(boundary)
+
+    }
 
 // set up the canvas space
     const yMargin = 5;
@@ -17684,13 +17711,18 @@ function updateData() {
     .selectAll('path')
     .remove();
 
+    d3.select("body").style('overflow', 'visible');
+
     // Create SVG
     var svg = d3
         .select('body')
         .append('svg')
-        .attr('width', width)
-        .attr('height', height - 25)
-        .attr('transform', `translate(0, 0)`);
+            .attr('width', width)
+            .attr('height', height - 25)
+            .attr('transform', `translate(0, 0)`)
+            .style('overflow', 'visible');
+
+
 
     // Map and projection
     var path = d3
@@ -17721,8 +17753,6 @@ function updateData() {
         dimId: data.fields["mapDimension"][0].id,
         tooltip: tooltip_text
     };
-
-    console.log(geo_data)
 
     geojson.features.push(geo_data);
     vls.push(row["mapMetric"][0])
@@ -17761,7 +17791,6 @@ function updateData() {
         } catch (TypeError) {
             var customBreaks = [legendBreaks]
         }
-        console.log(customBreaks)
         var numCells = customBreaks.length
 
     } else {
@@ -17825,24 +17854,45 @@ function updateData() {
     }
 
     // Finds centroid of path for plotting
-    var centroid = path.centroid(geojson)
 
-    // Sets projection //TODO: Add option for projection other than Mercator
-    var projection = d3
-        .geoMercator()
-        .center(centroid)
-        .fitExtent([[0,0],[width, height - 25]], geojson);
+    if (boundary != "Add boundary geojson here"){
+
+        var centroid = path.centroid(boundary)
+
+        // Sets projection //TODO: Add option for projection other than Mercator
+        var projection = d3
+            .geoMercator()
+            .center(centroid)
+            .fitExtent([[0,0],[width, height - 25]], boundary);
+
+    } else {
+
+        // Finds centroid of path for plotting
+        var centroid = path.centroid(geojson)
+
+        // Sets projection //TODO: Add option for projection other than Mercator
+        var projection = d3
+            .geoMercator()
+            .center(centroid)
+            .fitExtent([[0,0],[width, height - 25]], geojson);
+
+    }
+
 
     if (legendType == 'Custom'){
             // Creates the tool tip
         var tool_tip = d3.tip()
           .attr("class", "d3-tip")
+          .style("position", "absolute")
+          .style("overflow", "visible")
           .html(d => d.properties.met === null ? d.tooltip + ': null' : d.tooltip + ': ' + d.properties.met);
           svg.call(tool_tip);
     } else {
         // Creates the tool tip
         var tool_tip = d3.tip()
           .attr("class", "d3-tip")
+          .style("position", "absolute")
+          .style("overflow", "visible")
           .html(d => d.properties.met === null ? d.tooltip + ': null' : d.tooltip + ': ' + Number.parseFloat(d.properties.met).toFixed(legendDecimalPlaces));
           svg.call(tool_tip);
     }
@@ -17864,13 +17914,41 @@ function updateData() {
     .style("stroke", polygonBorderColor)
     .style("stroke-width", polygonBorderWidth)
     .attr("class", "area")
+//    .append("title")
+//        .text(d => d.properties.met === null ? d.tooltip + ': null' : d.tooltip + ': ' + Number.parseFloat(d.properties.met).toFixed(legendDecimalPlaces));
     .on('mouseover', tool_tip.show)
     .on('mouseout', tool_tip.hide);
+
+    if (boundary != "Add boundary geojson here"){
+
+        // Draw the boundary
+        var b = svg
+        .append("g")
+        .selectAll("path")
+        .data(boundary.features)
+        .enter()
+        .append("path")
+        // draw each feature
+        .attr("d", d3.geoPath()
+            .projection(projection)
+          )
+        // set the color of each feature
+        .style("stroke", boundaryBorderColor)
+        .style("stroke-width", boundaryBorderWidth)
+        .style("fill", "none");
+
+    }
 
      var zoom = d3.zoom()
           .scaleExtent([1, 8])
           .extent([[0, 0], [width, height]])
-          .on("zoom", () => g.attr("transform", d3.event.transform));
+          .on("zoom", function() {
+          g.attr("transform", d3.event.transform);
+          b.attr("transform", d3.event.transform);
+          })
+
+
+
 
       svg.call(zoom);
 
