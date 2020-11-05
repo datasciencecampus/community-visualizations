@@ -17717,11 +17717,18 @@ function updateData() {
     // 'mapDimension' and 'mapMetric' come from the id defined in choromap.json
     // 'dimId' is Data Studio's unique field ID, used for the filter interaction
 
+        if (row["tooltipDimension"][0] === undefined){
+            var tooltip_text = row["mapDimension"][0]
+            } else {
+            var tooltip_text = row["tooltipDimension"][0]
+        }
+
         var key_name = row["mapDimension"][0].toString()
 
         new_data = {...new_data, [key_name]: {
             met: row["mapMetric"][0],
-            dimId: data.fields["mapDimension"][0].id
+            dimId: data.fields["mapDimension"][0].id,
+            tooltip: tooltip_text
             }
         }
 
@@ -17862,13 +17869,13 @@ function updateData() {
             // Creates the tool tip
         var tool_tip = d3.tip()
           .attr("class", "d3-tip")
-          .html(d => d.properties.met === null ? d.properties.name + ': null' : d.properties.name + ': ' + d.properties.met);
+          .html(d => d.properties.met === null ? d.properties.tooltip + ': null' : d.properties.tooltip + ': ' + d.properties.met);
           svg.call(tool_tip);
     } else {
         // Creates the tool tip
         var tool_tip = d3.tip()
           .attr("class", "d3-tip")
-          .html(d => d.properties.met === null ? d.properties.name + ': null' : d.properties.name + ': ' + Number.parseFloat(d.properties.met).toFixed(legendDecimalPlaces));
+          .html(d => d.properties.met === null ? d.properties.tooltip + ': null' : d.properties.tooltip + ': ' + Number.parseFloat(d.properties.met).toFixed(legendDecimalPlaces));
           svg.call(tool_tip);
     }
 

@@ -17934,20 +17934,18 @@ function updateData() {
           )
         // set the color of each feature
         .style("stroke", boundaryBorderColor)
-        .style("stroke-width", boundaryBorderWidth)
         .style("fill", "none");
 
     }
 
      var zoom = d3.zoom()
-          .scaleExtent([1, 8])
           .extent([[0, 0], [width, height]])
           .on("zoom", function() {
+          b.attr("transform", d3.event.transform);
           g.attr("transform", d3.event.transform);
+          b.attr("stroke-width", boundaryBorderWidth / d3.event.transform.k);
           b.attr("transform", d3.event.transform);
           })
-
-
 
 
       svg.call(zoom);
