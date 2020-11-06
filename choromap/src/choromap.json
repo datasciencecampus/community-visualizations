@@ -192,6 +192,18 @@
             "defaultValue": "20,40"
         },
         {
+            "type": "BORDER_COLOR",
+            "id": "legendBorderColor",
+            "label": "Legend Border Color",
+            "defaultValue": "#fff"
+        },
+        {
+            "type": "TEXTINPUT",
+            "id": "legendBorderWidth",
+            "label": "Legend Border Width",
+            "defaultValue": "1"
+        },
+        {
             "type": "FONT_COLOR",
             "id": "legendTextColor",
             "label": "Legend Font Color"
@@ -241,6 +253,22 @@
           "id": "boundaryBorderWidth",
           "label": "Boundary Border Width",
           "defaultValue": 0
+        },
+        {
+          "type": "SELECT_SINGLE",
+          "id": "zoomOnFilter",
+          "label": "Zoom to data extent on filters?",
+          "defaultValue": "Yes",
+          "options": [
+            {
+              "label": "Yes",
+              "value": "Yes"
+            },
+            {
+              "label": "No",
+              "value": "No"
+            }
+          ]
         }
       ]
     }

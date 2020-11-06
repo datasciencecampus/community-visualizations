@@ -78,6 +78,22 @@
               "value": "false"
             }
           ]
+        },
+        {
+          "type": "SELECT_SINGLE",
+          "id": "reverseWindingOrder",
+          "label": "Reverse Winding Order",
+          "defaultValue": "false",
+          "options": [
+            {
+              "label": "true",
+              "value": "true"
+            },
+            {
+              "label": "false",
+              "value": "false"
+            }
+          ]
         }
       ]
     },
@@ -224,6 +240,18 @@
             "id": "legendPosition",
             "label": "Legend Position (x,y)",
             "defaultValue": "20,40"
+        },
+                {
+            "type": "BORDER_COLOR",
+            "id": "legendBorderColor",
+            "label": "Legend Border Color",
+            "defaultValue": "#fff"
+        },
+        {
+            "type": "TEXTINPUT",
+            "id": "legendBorderWidth",
+            "label": "Legend Border Width",
+            "defaultValue": "1"
         },
         {
             "type": "FONT_COLOR",

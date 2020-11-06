@@ -17564,7 +17564,6 @@ function join(lookupTable, mainTable, lookupKey, mainKey, select) {
 const drawViz = data => {
 
     var rowData = data.tables.DEFAULT;
-
     console.log(rowData)
     d3.select('body')
         .selectAll('svg')
@@ -17637,6 +17636,12 @@ const drawViz = data => {
     ? data.style.legendPosition.value
     : data.style.legendPosition.defaultValue;
 
+    var legendBorderColor =  data.style.legendBorderColor.value
+    ? data.style.legendBorderColor.value.color
+    : data.style.legendBorderColor.defaultValue;
+
+    var legendBorderWidth =  data.style.legendBorderWidth.value
+
     var legendTextColor =  data.style.legendTextColor.value
     ? data.style.legendTextColor.value.color
     : data.style.legendTextColor.defaultValue;
@@ -17666,6 +17671,11 @@ const drawViz = data => {
     : data.style.boundaryBorderColor.defaultValue;
 
     var boundaryBorderWidth =  data.style.boundaryBorderWidth.value
+
+    var zoomOnFilter =  data.style.zoomOnFilter.value
+    ? data.style.zoomOnFilter.value
+    : data.style.zoomOnFilter.defaultValue;
+
 
     // get the width and the height of the iframe
     var width = dscc.getWidth();
@@ -17855,7 +17865,9 @@ function updateData() {
 
     // Finds centroid of path for plotting
 
-    if (boundary != "Add boundary geojson here"){
+    console.log(zoomOnFilter)
+
+    if (boundary != "Add boundary geojson here" && zoomOnFilter == "No"){
 
         var centroid = path.centroid(boundary)
 
@@ -17919,6 +17931,7 @@ function updateData() {
     .on('mouseover', tool_tip.show)
     .on('mouseout', tool_tip.hide);
 
+
     if (boundary != "Add boundary geojson here"){
 
         // Draw the boundary
@@ -17936,28 +17949,36 @@ function updateData() {
         .style("stroke", boundaryBorderColor)
         .style("fill", "none");
 
+         var zoom = d3.zoom()
+              .extent([[0, 0], [width, height]])
+              .on("zoom", function() {
+              b.attr("transform", d3.event.transform);
+              g.attr("transform", d3.event.transform);
+              b.attr("stroke-width", boundaryBorderWidth / d3.event.transform.k);
+              b.attr("transform", d3.event.transform);
+              })
+
+    } else {
+
+        var zoom = d3.zoom()
+                      .extent([[0, 0], [width, height]])
+                      .on("zoom", function() {
+                      g.attr("transform", d3.event.transform);
+                      })
+
     }
-
-     var zoom = d3.zoom()
-          .extent([[0, 0], [width, height]])
-          .on("zoom", function() {
-          b.attr("transform", d3.event.transform);
-          g.attr("transform", d3.event.transform);
-          b.attr("stroke-width", boundaryBorderWidth / d3.event.transform.k);
-          b.attr("transform", d3.event.transform);
-          })
-
 
       svg.call(zoom);
 
 
     // Draw the legend
-    svg.append("g")
+    var l = svg.append("g")
       .attr("class", "legend")
       .attr("transform", "translate(" + legendPosition + ")")
       .style("font-size",legendTextSize)
       .style("fill",legendTextColor)
       .style("font-family",legendTextFamily);
+
 
     if (showLegend != "Horizontal") {
         var legendOr = 'vertical'
@@ -18009,6 +18030,13 @@ function updateData() {
             .remove();
 
     }
+
+
+    svg.select(".legend")
+      .selectAll("rect")
+      .attr("stroke", legendBorderColor)
+      .attr("stroke-width", legendBorderWidth);
+
 }
 updateData()
 
