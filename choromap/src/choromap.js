@@ -17564,7 +17564,8 @@ function join(lookupTable, mainTable, lookupKey, mainKey, select) {
 const drawViz = data => {
 
     var rowData = data.tables.DEFAULT;
-    console.log(rowData)
+
+    // Remove frame
     d3.select('body')
         .selectAll('svg')
         .remove();
@@ -17573,11 +17574,12 @@ const drawViz = data => {
         .selectAll('select')
         .remove();
 
-    // remove the error handler if exists
+    // Rremove the error handler if exists
     d3.select('body')
         .selectAll('div')
         .remove();
 
+    // Create variables from STYLE
     var polyNumber =  data.style.polyNumber.value
     ? data.style.polyNumber.value
     : data.style.polyNumber.defaultValue;
@@ -17654,17 +17656,9 @@ const drawViz = data => {
     ? data.style.legendTextFamily.value
     : data.style.legendTextFamily.defaultValue;
 
-    var boundary =  data.style.geojson.value
-    ? data.style.geojson.value
-    : data.style.geojson.defaultValue;
-
-    var boundaryID =  data.style.geojsonID.value
-    ? data.style.geojsonID.value
-    : data.style.geojsonID.defaultValue;
-
-    var boundaryName =  data.style.geojsonName.value
-    ? data.style.geojsonName.value
-    : data.style.geojsonName.defaultValue;
+    var boundary =  data.style.boundary.value
+    ? data.style.boundary.value
+    : data.style.boundary.defaultValue;
 
     var boundaryBorderColor =  data.style.boundaryBorderColor.value
     ? data.style.boundaryBorderColor.value.color
@@ -17676,11 +17670,11 @@ const drawViz = data => {
     ? data.style.zoomOnFilter.value
     : data.style.zoomOnFilter.defaultValue;
 
-
-    // get the width and the height of the iframe
+    // Get the width and the height of the iframe
     var width = dscc.getWidth();
     var height = dscc.getHeight();
 
+    // Create boundary geoJSON object if user specifies they want to plot one in STYLE
     if (boundary != "Add boundary geojson here"){
 
         boundary = boundary.split(boundaryID).join('id');
@@ -17690,9 +17684,10 @@ const drawViz = data => {
 
     }
 
-// set up the canvas space
+    // Set up the canvas space
     const yMargin = 5;
 
+    // Limit the number of polygons if the user specifies this in STYLE
     if (polyNumber !== "max"){
         var rowData = rowData.slice(0, polyNumber);
     }
@@ -17705,358 +17700,315 @@ const drawViz = data => {
 
     });
 
-function updateData() {
-
-    delete geojson
-
-    // Create GeoJSON skeleton
-    var geojson = { "type" : "FeatureCollection",
-        "features" : []}
-
-    d3.select('body')
-        .selectAll('svg')
-        .remove();
-
-    d3.select('body')
-    .selectAll('path')
-    .remove();
-
-    d3.select("body").style('overflow', 'visible');
-
-    // Create SVG
-    var svg = d3
-        .select('body')
-        .append('svg')
-            .attr('width', width)
-            .attr('height', height - 25)
-            .attr('transform', `translate(0, 0)`)
-            .style('overflow', 'visible');
-
-
-
-    // Map and projection
-    var path = d3
-        .geoPath();
-
-
-    var vls = []
-
-    // Add data to GeoJSON object
-    rowData.forEach(function (row, i) {
-    // 'mapDimension' and 'mapMetric' come from the id defined in choromap.json
-    // 'dimId' is Data Studio's unique field ID, used for the filter interaction
-
-        if (row["tooltipDimension"][0] === undefined){
-            var tooltip_text = row["mapDimension"][0]
-            } else {
-            var tooltip_text = row["tooltipDimension"][0]
-        }
-
-    let geo_data = {
-
-        type: "Feature",
-        geometry: JSON.parse(row["mapDimension"][1]),
-        properties: {
-            dim: row["mapDimension"][0],
-            met: row["mapMetric"][0]
-        },
-        dimId: data.fields["mapDimension"][0].id,
-        tooltip: tooltip_text
-    };
-
-    geojson.features.push(geo_data);
-    vls.push(row["mapMetric"][0])
-
-    });
-
-    // Find the maximum value of metric
-    var max = d3.max(geojson.features, function(d) { return +d.properties.met;} );
-
-    // Find the minimum value of metric
-    var min = d3.min(geojson.features, function(d) { return +d.properties.met;} );
-
-    // Find the mean value of metric
-    var av = d3.mean(geojson.features, function(d) { return +d.properties.met;} );
-
-    var abs_max = d3.max([Math.abs(min),Math.abs(max)]);
-
-
-    if (legendType == 'Quantile') {
-        var numCells = legendCells
-    } else if (legendType == 'Categorical') {
-        var numCells = legendCells
-    } else if (legendType == 'User Breaks') {
-
-        try {
-            var userBreaks = legendBreaks.split(',')
-        } catch (TypeError) {
-            var userBreaks = [legendBreaks]
-        }
-        var userBreaks = userBreaks.concat(userBreaks.slice(-1)[0])
-        var numCells = userBreaks.length
-    } else if (legendType == 'Custom') {
-
-        try {
-            var customBreaks = legendBreaks.split(',').map(x=>+x)
-        } catch (TypeError) {
-            var customBreaks = [legendBreaks]
-        }
-        var numCells = customBreaks.length
-
-    } else {
-        var numCells = 1
-    }
-    var start = 0
-    var step = 1 / (numCells - 1);
-    var stop = 1 + step
-    var colorArray = [];
-    for (let i = 0, n = Math.ceil((stop - start) / step); i < n; ++i) {
-        colorArray.push(d3.piecewise(d3.interpolateRgb.gamma(1),[minColor, midColor, maxColor])(start + i * step));
-    }
-
-    var catValues = [...new Set(vls)]
-
-    if (legendType == 'Linear') {
-
-    //    // Create color scale from min and max values and colours
-        var colorScale = d3
-            .scaleLinear()
-            .domain([min,av,max])
-            .range([minColor,midColor,maxColor]);
-
-    } else if (legendType == 'Quantile') {
-            // Create color scale from min and max values and colours
-        var colorScale = d3
-            .scaleQuantile()
-            .domain(vls)
-            .range(colorArray);
-
-    } else if (legendType == 'Divergent') {
-            // Create color scale from min and max values and colours
-        var colorScale = d3
-            .scaleLinear()
-            .domain([-abs_max,0,abs_max])
-            .range([minColor,midColor,maxColor]);
-
-    } else if (legendType == 'Categorical') {
-        var colorScale = d3
-            .scaleOrdinal()
-            .domain(catValues)
-            .range(colorArray);
-
-    } else if (legendType == 'User Breaks') {
-        var colorScale = d3
-            .scaleThreshold()
-            .domain(userBreaks)
-            .range(colorArray);
-
-    } else if (legendType == 'Custom') {
-        var colorScale = d3
-            .scaleOrdinal()
-            .domain(customBreaks)
-            .range(colorArray);
-    }
-
-    if (legendDecimalPlacesShort == 'Long') {
-        var decimalSuffix = 'f'
-    } else if (legendDecimalPlacesShort == 'Short') {
-        var decimalSuffix = 's'
-    }
-
-    // Finds centroid of path for plotting
-
-    console.log(zoomOnFilter)
-
-    if (boundary != "Add boundary geojson here" && zoomOnFilter == "No"){
-
-        var centroid = path.centroid(boundary)
-
-        // Sets projection //TODO: Add option for projection other than Mercator
-        var projection = d3
-            .geoMercator()
-            .center(centroid)
-            .fitExtent([[0,0],[width, height - 25]], boundary);
-
-    } else {
-
-        // Finds centroid of path for plotting
-        var centroid = path.centroid(geojson)
-
-        // Sets projection //TODO: Add option for projection other than Mercator
-        var projection = d3
-            .geoMercator()
-            .center(centroid)
-            .fitExtent([[0,0],[width, height - 25]], geojson);
-
-    }
-
-
-    if (legendType == 'Custom'){
-            // Creates the tool tip
-        var tool_tip = d3.tip()
-          .attr("class", "d3-tip")
-          .style("position", "absolute")
-          .style("overflow", "visible")
-          .html(d => d.properties.met === null ? d.tooltip + ': null' : d.tooltip + ': ' + d.properties.met);
-          svg.call(tool_tip);
-    } else {
-        // Creates the tool tip
-        var tool_tip = d3.tip()
-          .attr("class", "d3-tip")
-          .style("position", "absolute")
-          .style("overflow", "visible")
-          .html(d => d.properties.met === null ? d.tooltip + ': null' : d.tooltip + ': ' + Number.parseFloat(d.properties.met).toFixed(legendDecimalPlaces));
-          svg.call(tool_tip);
-    }
-
-    // Draw the map
-    var g = svg
-    .append("g")
-    .selectAll("path")
-    .data(geojson.features)
-    .enter()
-    .append("path")
-    // draw each feature
-    .attr("d", d3.geoPath()
-        .projection(projection)
-      )
-    // set the color of each feature
-    .attr("fill", "#808080")
-    .attr("fill", d => (d.properties.met === null) || (d.properties.met < min) || (d.properties.met > max) ? nullColor : colorScale(d.properties.met))
-    .style("stroke", polygonBorderColor)
-    .style("stroke-width", polygonBorderWidth)
-    .attr("class", "area")
-//    .append("title")
-//        .text(d => d.properties.met === null ? d.tooltip + ': null' : d.tooltip + ': ' + Number.parseFloat(d.properties.met).toFixed(legendDecimalPlaces));
-    .on('mouseover', tool_tip.show)
-    .on('mouseout', tool_tip.hide);
-
-
-    if (boundary != "Add boundary geojson here"){
-
-        // Draw the boundary
-        var b = svg
-        .append("g")
-        .selectAll("path")
-        .data(boundary.features)
-        .enter()
-        .append("path")
-        // draw each feature
-        .attr("d", d3.geoPath()
-            .projection(projection)
-          )
-        // set the color of each feature
-        .style("stroke", boundaryBorderColor)
-        .style("fill", "none");
-
-         var zoom = d3.zoom()
-              .extent([[0, 0], [width, height]])
-              .on("zoom", function() {
-              b.attr("transform", d3.event.transform);
-              g.attr("transform", d3.event.transform);
-              b.attr("stroke-width", boundaryBorderWidth / d3.event.transform.k);
-              b.attr("transform", d3.event.transform);
-              })
-
-    } else {
-
-        var zoom = d3.zoom()
-                      .extent([[0, 0], [width, height]])
-                      .on("zoom", function() {
-                      g.attr("transform", d3.event.transform);
-                      })
-
-    }
-
-      svg.call(zoom);
-
-
-    // Draw the legend
-    var l = svg.append("g")
-      .attr("class", "legend")
-      .attr("transform", "translate(" + legendPosition + ")")
-      .style("font-size",legendTextSize)
-      .style("fill",legendTextColor)
-      .style("font-family",legendTextFamily);
-
-
-    if (showLegend != "Horizontal") {
-        var legendOr = 'vertical'
-        var shapeW = 20
-        var titleW = 200
-    } else {
-        var legendOr = 'horizontal'
-        var shapeW = 50
-        var titleW = 400
-    }
-
-    var legendPlot = d3
-      .legendColor()
-      .labelFormat(d3.format(",."+ legendDecimalPlaces + decimalSuffix))
-      .title(legendTitle)
-      .titleWidth(titleW)
-      .shapeWidth(shapeW)
-      .orient(legendOr)
-      .cellFilter(function(d){ return d.label != null })
-      .scale(colorScale);
-
-    var legendCustom = d3
-      .legendColor()
-      .labelFormat(d3.format(",."+ legendDecimalPlaces + decimalSuffix))
-      .title(legendTitle)
-      .labels(customLabels)
-      .titleWidth(titleW)
-      .shapeWidth(shapeW)
-      .orient(legendOr)
-      .scale(colorScale);
-
-
-    if (showLegend != "Off") {
-
-        if (legendType == 'User Breaks') {
-            svg.select(".legend")
-                .attr("fill", legendTextColor)
-                .call(legendCustom);
+    // Updates the data and map if DATA changes
+    function updateData() {
+
+        // Make sure there are no skeletons in the closet causing performance issues
+        delete geojson
+
+        // Create GeoJSON skeleton
+        var geojson = { "type" : "FeatureCollection",
+            "features" : []}
+
+        // Remove all frames
+        d3.select('body')
+            .selectAll('svg')
+                .remove();
+
+        d3.select('body')
+            .selectAll('path')
+                .remove();
+
+        d3.select("body").style('overflow', 'visible');
+
+        // Create SVG
+        var svg = d3.select('body')
+            .append('svg')
+                .attr('width', width)
+                .attr('height', height - 25)
+                .attr('transform', `translate(0, 0)`)
+                .style('overflow', 'visible');
+
+
+        // Create map and projection
+        var path = d3
+            .geoPath();
+
+        // Create blank values array for mathematical operations
+        var vls = []
+
+        // Add data to GeoJSON object
+        rowData.forEach(function (row, i) {
+        // 'mapDimension' and 'mapMetric' come from the id defined in choromap.json
+        // 'dimId' is Data Studio's unique field ID, used for the filter interaction
+
+            if (row["tooltipDimension"][0] === undefined){
+                var tooltip_text = row["mapDimension"][0]
+                } else {
+                var tooltip_text = row["tooltipDimension"][0]
+            }
+
+            let geo_data = {
+
+                type: "Feature",
+                geometry: JSON.parse(row["mapDimension"][1]),
+                properties: {
+                    dim: row["mapDimension"][0],
+                    met: row["mapMetric"][0]
+                },
+                dimId: data.fields["mapDimension"][0].id,
+                tooltip: tooltip_text
+            };
+
+            geojson.features.push(geo_data);
+            vls.push(row["mapMetric"][0])
+
+        });
+
+        // Find the maximum value of metric
+        var max = d3.max(geojson.features, function(d) { return +d.properties.met;} );
+
+        // Find the minimum value of metric
+        var min = d3.min(geojson.features, function(d) { return +d.properties.met;} );
+
+        // Find the mean value of metric
+        var av = d3.mean(geojson.features, function(d) { return +d.properties.met;} );
+
+        // Find the absolute maximum, needed for divergent color scheme
+        var abs_max = d3.max([Math.abs(min),Math.abs(max)]);
+
+        // Create the breaks for certain legend/color map types
+        if (legendType == 'Quantile') {
+            var numCells = legendCells
+        } else if (legendType == 'Categorical') {
+            var numCells = legendCells
+        } else if (legendType == 'User Breaks') {
+            try {
+                var userBreaks = legendBreaks.split(',')
+            } catch (TypeError) {
+                var userBreaks = [legendBreaks]
+            }
+            var userBreaks = userBreaks.concat(userBreaks.slice(-1)[0])
+            var numCells = userBreaks.length
+        } else if (legendType == 'Custom') {
+            try {
+                var customBreaks = legendBreaks.split(',').map(x=>+x)
+            } catch (TypeError) {
+                var customBreaks = [legendBreaks]
+            }
+            var numCells = customBreaks.length
         } else {
-            svg.select(".legend")
-                .attr("fill", legendTextColor)
-                .call(legendPlot);
+            var numCells = 1
         }
 
-    } else {
+        // Create the color array for the map
+        var start = 0
+        var step = 1 / (numCells - 1);
+        var stop = 1 + step
+        var colorArray = [];
+        for (let i = 0, n = Math.ceil((stop - start) / step); i < n; ++i) {
+            colorArray.push(d3.piecewise(d3.interpolateRgb.gamma(1),[minColor, midColor, maxColor])(start + i * step));
+        }
 
-         svg
-            .select('.legend')
-            .remove();
+        var catValues = [...new Set(vls)]
 
+        if (legendType == 'Linear') {
+        //    // Create color scale from min and max values and colours
+            var colorScale = d3.scaleLinear()
+                .domain([min,av,max])
+                .range([minColor,midColor,maxColor]);
+        } else if (legendType == 'Quantile') {
+            var colorScale = d3.scaleQuantile()
+                .domain(vls)
+                .range(colorArray);
+        } else if (legendType == 'Divergent') {
+            var colorScale = d3.scaleLinear()
+                .domain([-abs_max,0,abs_max])
+                .range([minColor,midColor,maxColor]);
+        } else if (legendType == 'Categorical') {
+            var colorScale = d3.scaleOrdinal()
+                .domain(catValues)
+                .range(colorArray);
+        } else if (legendType == 'User Breaks') {
+            var colorScale = d3.scaleThreshold()
+                .domain(userBreaks)
+                .range(colorArray);
+        } else if (legendType == 'Custom') {
+            var colorScale = d3.scaleOrdinal()
+                .domain(customBreaks)
+                .range(colorArray);
+        }
+
+        // Set how the legend and tooltip should display the values
+        if (legendDecimalPlacesShort == 'Long') {
+            var decimalSuffix = 'f'
+        } else if (legendDecimalPlacesShort == 'Short') {
+            var decimalSuffix = 's'
+        }
+
+        if (boundary != "Add boundary geojson here" && zoomOnFilter == "No"){
+            // Finds centroid of path for plotting
+            var centroid = path.centroid(boundary)
+            // Sets projection
+            var projection = d3.geoMercator()
+                .center(centroid)
+                .fitExtent([[0,0],[width, height - 25]], boundary);
+        } else {
+            // Finds centroid of path for plotting
+            var centroid = path.centroid(geojson)
+            // Sets projection
+            var projection = d3.geoMercator()
+                .center(centroid)
+                .fitExtent([[0,0],[width, height - 25]], geojson);
+        }
+
+        if (legendType == 'Custom'){
+            // Creates the tool tip
+            var tool_tip = d3.tip()
+              .attr("class", "d3-tip")
+              .style("position", "absolute")
+              .style("overflow", "visible")
+              .html(d => d.properties.met === null ? d.tooltip + ': null' : d.tooltip + ': ' + d.properties.met);
+              svg.call(tool_tip);
+        } else {
+            // Creates the tool tip
+            var tool_tip = d3.tip()
+              .attr("class", "d3-tip")
+              .style("position", "absolute")
+              .style("overflow", "visible")
+              .html(d => d.properties.met === null ? d.tooltip + ': null' : d.tooltip + ': ' + Number.parseFloat(d.properties.met).toFixed(legendDecimalPlaces));
+              svg.call(tool_tip);
+        }
+
+        // Draw the map
+        var g = svg.append("g")
+        .selectAll("path")
+            .data(geojson.features)
+            .enter()
+            .append("path")
+                // Draw each polygon as a path
+                .attr("d", d3.geoPath()
+                    .projection(projection)
+                  )
+                // Set the color of each feature
+                .attr("fill", "#808080")
+                .attr("fill", d => (d.properties.met === null) || (d.properties.met < min) || (d.properties.met > max) ? nullColor : colorScale(d.properties.met))
+                .style("stroke", polygonBorderColor)
+                .style("stroke-width", polygonBorderWidth)
+                .attr("class", "area")
+                .on('mouseover', tool_tip.show)
+                .on('mouseout', tool_tip.hide);
+
+        // Draw the boundary if user specifies they want one in STYLE
+        if (boundary != "Add boundary geojson here"){
+            var b = svg.append("g")
+                .selectAll("path")
+                    .data(boundary.features)
+                    .enter()
+                    .append("path")
+                    // Draw each polygon as a path
+                    .attr("d", d3.geoPath()
+                        .projection(projection)
+                      )
+                    // Set the outline color of each feature
+                    .style("stroke", boundaryBorderColor)
+                    .style("fill", "none");
+
+             var zoom = d3.zoom()
+                  .extent([[0, 0], [width, height]])
+                  .on("zoom", function() {
+                      b.attr("transform", d3.event.transform);
+                      g.attr("transform", d3.event.transform);
+                      g.attr("stroke-width", polygonBorderWidth / d3.event.transform.k);
+                      b.attr("stroke-width", boundaryBorderWidth / d3.event.transform.k);
+                      b.attr("transform", d3.event.transform);
+                  })
+
+        } else {
+            var zoom = d3.zoom()
+                          .extent([[0, 0], [width, height]])
+                          .on("zoom", function() {
+                              g.attr("stroke-width", polygonBorderWidth / d3.event.transform.k);
+                              g.attr("transform", d3.event.transform);
+                          })
+
+        }
+
+        svg.call(zoom);
+
+
+        // Draw the legend
+        var l = svg.append("g")
+          .attr("class", "legend")
+          .attr("transform", "translate(" + legendPosition + ")")
+          .style("font-size",legendTextSize)
+          .style("fill",legendTextColor)
+          .style("font-family",legendTextFamily);
+
+        if (showLegend != "Horizontal") {
+            var legendOr = 'vertical'
+            var shapeW = 20
+            var titleW = 200
+        } else {
+            var legendOr = 'horizontal'
+            var shapeW = 50
+            var titleW = 400
+        }
+
+        var legendPlot = d3
+          .legendColor()
+          .labelFormat(d3.format(",."+ legendDecimalPlaces + decimalSuffix))
+          .title(legendTitle)
+          .titleWidth(titleW)
+          .shapeWidth(shapeW)
+          .orient(legendOr)
+          .cellFilter(function(d){ return d.label != null })
+          .scale(colorScale);
+
+        var legendCustom = d3
+          .legendColor()
+          .labelFormat(d3.format(",."+ legendDecimalPlaces + decimalSuffix))
+          .title(legendTitle)
+          .labels(customLabels)
+          .titleWidth(titleW)
+          .shapeWidth(shapeW)
+          .orient(legendOr)
+          .scale(colorScale);
+
+        // Show legend or not
+        if (showLegend != "Off") {
+            if (legendType == 'User Breaks') {
+                svg.select(".legend")
+                    .attr("fill", legendTextColor)
+                    .call(legendCustom);
+            } else {
+                svg.select(".legend")
+                    .attr("fill", legendTextColor)
+                    .call(legendPlot);
+            }
+        } else {
+             svg.select('.legend')
+                .remove();
+        }
+
+        svg.select(".legend")
+          .selectAll("rect")
+              .attr("stroke", legendBorderColor)
+              .attr("stroke-width", legendBorderWidth);
     }
 
+    updateData() // Call function
 
-    svg.select(".legend")
-      .selectAll("rect")
-      .attr("stroke", legendBorderColor)
-      .attr("stroke-width", legendBorderWidth);
-
-}
-updateData()
-
-function customLabels({
-  i,
-  genLength,
-  generatedLabels,
-  labelDelimiter
-}) {
-  if (i === 0) {
-    const values = generatedLabels[i].split(` ${labelDelimiter} `)
-    return `Less than ${values[1]}`
-  } else if (i === genLength - 1) {
-
-    const values = generatedLabels[i - 1].split(` ${labelDelimiter} `)
-
-    return `${values[1]} or more`
-  }
-  return generatedLabels[i]
-}
+    function customLabels({i,genLength,generatedLabels,labelDelimiter}) {
+      if (i === 0) {
+        const values = generatedLabels[i].split(` ${labelDelimiter} `)
+        return `Less than ${values[1]}`
+      } else if (i === genLength - 1) {
+        const values = generatedLabels[i - 1].split(` ${labelDelimiter} `)
+        return `${values[1]} or more`
+      }
+      return generatedLabels[i]
+    }
 
 };
 

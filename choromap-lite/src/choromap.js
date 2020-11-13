@@ -17831,19 +17831,18 @@ const drawViz = data => {
         // Remove all frames
         d3.select('body')
             .selectAll('svg')
-            .remove();
+                .remove();
 
         d3.select('body')
-        .selectAll('path')
-        .remove();
+            .selectAll('path')
+                .remove();
 
         // Create SVG
-        var svg = d3
-            .select('body')
+        var svg = d3.select('body')
             .append('svg')
-            .attr('width', width)
-            .attr('height', height - 25)
-            .attr('transform', `translate(0, 0)`);
+                .attr('width', width)
+                .attr('height', height - 25)
+                .attr('transform', `translate(0, 0)`);
 
         // Create map and projection
         var path = d3
@@ -18014,38 +18013,38 @@ const drawViz = data => {
         var g = svg
             .append("g")
             .selectAll("path")
-            .data(geojson.features)
-            .enter()
-            .append("path")
-            // Draw each polygon as a path
-                .attr("d", d3.geoPath()
-                    .projection(projection)
-                )
-                // Set the color of each polygon
-                .attr("fill", "#808080")
-                .attr("fill", d => (d.properties.met === null) || (d.properties.met < min) || (d.properties.met > max) ? nullColor : colorScale(d.properties.met))
-                .style("stroke", polygonBorderColor)
-                .attr("stroke-width", polygonBorderWidth)
-                .attr("class", "area")
-                .on('mouseover', tool_tip.show)
-                .on('mouseout', tool_tip.hide);
+                .data(geojson.features)
+                .enter()
+                .append("path")
+                // Draw each polygon as a path
+                    .attr("d", d3.geoPath()
+                        .projection(projection)
+                    )
+                    // Set the color of each polygon
+                    .attr("fill", "#808080")
+                    .attr("fill", d => (d.properties.met === null) || (d.properties.met < min) || (d.properties.met > max) ? nullColor : colorScale(d.properties.met))
+                    .style("stroke", polygonBorderColor)
+                    .attr("stroke-width", polygonBorderWidth)
+                    .attr("class", "area")
+                    .on('mouseover', tool_tip.show)
+                    .on('mouseout', tool_tip.hide);
 
         // Draw the boundary if user specifies they want one in STYLE
         if (boundary != "Add boundary geojson here"){
              var b = svg
                 .append("g")
                 .selectAll("path")
-                .data(boundary.features)
-                .enter()
-                .append("path")
-                // Draw each polygon as a path
-                    .attr("d", d3.geoPath()
-                        .projection(projection)
-                      )
-                    // Set the outline color of each feature
-                    .style("stroke", boundaryBorderColor)
-                    .attr("stroke-width", boundaryBorderWidth)
-                    .style("fill", "none");
+                    .data(boundary.features)
+                    .enter()
+                    .append("path")
+                    // Draw each polygon as a path
+                        .attr("d", d3.geoPath()
+                            .projection(projection)
+                          )
+                        // Set the outline color of each feature
+                        .style("stroke", boundaryBorderColor)
+                        .attr("stroke-width", boundaryBorderWidth)
+                        .style("fill", "none");
 
              var zoom = d3.zoom()
                   .extent([[0, 0], [width, height]])
@@ -18061,6 +18060,7 @@ const drawViz = data => {
             var zoom = d3.zoom()
                           .extent([[0, 0], [width, height]])
                           .on("zoom", function() {
+                              g.attr("stroke-width", polygonBorderWidth / d3.event.transform.k);
                               g.attr("transform", d3.event.transform);
                           })
 

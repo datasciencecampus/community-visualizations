@@ -226,21 +226,9 @@
       "elements": [
         {
           "type": "TEXTAREA",
-          "id": "geojson",
-          "label": "Input GeoJSON",
+          "id": "boundary",
+          "label": "Input boundary GeoJSON",
           "defaultValue": "Add boundary geojson here"
-        },
-        {
-          "type": "TEXTINPUT",
-          "id": "geojsonID",
-          "label": "ID field of GeoJSON features",
-          "defaultValue": "id"
-        },
-        {
-          "type": "TEXTINPUT",
-          "id": "geojsonName",
-          "label": "Name field of GeoJSON features",
-          "defaultValue": "name"
         },
         {
           "type": "BORDER_COLOR",
