@@ -17782,9 +17782,36 @@ const drawViz = data => {
     ? data.style.legendTextFamily.value
     : data.style.legendTextFamily.defaultValue;
 
+    var boundary =  data.style.boundary.value
+    ? data.style.boundary.value
+    : data.style.boundary.defaultValue;
+
+    var boundaryID =  data.style.boundaryID.value
+    ? data.style.boundaryID.value
+    : data.style.boundaryID.defaultValue;
+
+    var boundaryName =  data.style.boundaryName.value
+    ? data.style.boundaryName.value
+    : data.style.boundaryName.defaultValue;
+
+    var boundaryBorderColor =  data.style.boundaryBorderColor.value
+    ? data.style.boundaryBorderColor.value.color
+    : data.style.boundaryBorderColor.defaultValue;
+
+    var boundaryBorderWidth =  data.style.boundaryBorderWidth.value
+
     // get the width and the height of the iframe
     var width = dscc.getWidth();
     var height = dscc.getHeight();
+
+    if (boundary != "Add boundary geojson here"){
+
+        boundary = boundary.split(boundaryID).join('id');
+        boundary = boundary.split(boundaryName).join('name');
+
+        var boundary = JSON.parse(boundary)
+
+    }
 
     geojson = geojson.split(geojsonID).join('id');
     geojson = geojson.split(geojsonName).join('name');
@@ -17866,6 +17893,9 @@ function updateData() {
         if (filterNull == true){
         delete val.geometry
         }
+      }
+      if (val.properties.tooltip == undefined) {     //Incase tooltip is undefined use area name
+        val.properties.tooltip = val.properties.name
       }
     })
 
@@ -18024,10 +18054,41 @@ function updateData() {
     .on('mouseover', tool_tip.show)
     .on('mouseout', tool_tip.hide);
 
-     var zoom = d3.zoom()
-          .extent([[0, 0], [width, height]])
-          .on("zoom", () => g.attr("transform", d3.event.transform));
+    if (boundary != "Add boundary geojson here"){
 
+        // Draw the boundary
+        var b = svg
+        .append("g")
+        .selectAll("path")
+        .data(boundary.features)
+        .enter()
+        .append("path")
+        // draw each feature
+        .attr("d", d3.geoPath()
+            .projection(projection)
+          )
+        // set the color of each feature
+        .style("stroke", boundaryBorderColor)
+        .style("fill", "none");
+
+         var zoom = d3.zoom()
+              .extent([[0, 0], [width, height]])
+              .on("zoom", function() {
+              b.attr("transform", d3.event.transform);
+              g.attr("transform", d3.event.transform);
+              b.attr("stroke-width", boundaryBorderWidth / d3.event.transform.k);
+              b.attr("transform", d3.event.transform);
+              })
+
+    } else {
+
+        var zoom = d3.zoom()
+                      .extent([[0, 0], [width, height]])
+                      .on("zoom", function() {
+                      g.attr("transform", d3.event.transform);
+                      })
+
+    }
       svg.call(zoom);
 
     // Draw the legend

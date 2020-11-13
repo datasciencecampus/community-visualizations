@@ -269,6 +269,42 @@
             "label": "Legend Font Family"
         }
       ]
+    },
+    {
+      "id": "boundary",
+      "label": "Boundary",
+      "elements": [
+        {
+          "type": "TEXTAREA",
+          "id": "boundary",
+          "label": "Input boundary GeoJSON",
+          "defaultValue": "Add boundary geojson here"
+        },
+        {
+          "type": "TEXTINPUT",
+          "id": "boundaryID",
+          "label": "ID field of GeoJSON features",
+          "defaultValue": "id"
+        },
+        {
+          "type": "TEXTINPUT",
+          "id": "boundaryName",
+          "label": "Name field of GeoJSON features",
+          "defaultValue": "name"
+        },
+        {
+          "type": "BORDER_COLOR",
+          "id": "boundaryBorderColor",
+          "label": "Boundary Border Color",
+          "defaultValue": "#000"
+        },
+        {
+          "type": "TEXTINPUT",
+          "id": "boundaryBorderWidth",
+          "label": "Boundary Border Width",
+          "defaultValue": 0
+        }
+      ]
     }
   ]
 }

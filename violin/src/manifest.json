@@ -7,10 +7,10 @@
   "packageUrl": "https://datastudio.google.com/reporting/4617cbac-3514-4c8d-a999-a3cb6683e579",
   "privacyPolicyUrl": "https://datasciencecampus.github.io/community-visualizations/docs/privacy-policy.html",
   "description": "Violin plots using D3.",
-  "devMode": false,
+  "devMode": true,
   "termsOfServiceUrl": "https://datasciencecampus.github.io/community-visualizations/docs/privacy-policy.html",
   "components": [{
-    "id": "violin-dev",
+    "id": "violin-plot",
     "name": "Violin plot",
     "iconUrl": "https://storage.googleapis.com/violin-plot/violin.png",
     "description": "Violin plots using D3.",

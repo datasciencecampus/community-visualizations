@@ -1,23 +1,23 @@
 {
-  "name": "Choropleth Map",
-  "logoUrl": "https://storage.googleapis.com/choromap/choropleth.png",
+  "name": "Violin plot (dev)",
+  "logoUrl": "https://storage.googleapis.com/violin-plot/violin.png",
   "organization": "Data Science Campus",
   "organizationUrl": "https://datasciencecampus.ons.gov.uk/",
   "supportUrl": "https://github.com/datasciencecampus/community-visualizations/issues",
   "packageUrl": "https://datastudio.google.com/reporting/4617cbac-3514-4c8d-a999-a3cb6683e579",
   "privacyPolicyUrl": "https://datasciencecampus.github.io/community-visualizations/docs/privacy-policy.html",
-  "description": "Choropleth mapping using D3.",
-  "devMode": false,
+  "description": "Violin plots using D3.",
+  "devMode": true,
   "termsOfServiceUrl": "https://datasciencecampus.github.io/community-visualizations/docs/privacy-policy.html",
   "components": [{
-    "id": "choromap",
-    "name": "Choropleth Map",
-    "iconUrl": "https://storage.googleapis.com/choromap/choropleth.png",
-    "description": "Choropleth mapping using D3.",
+    "id": "violin-dev",
+    "name": "Violin plot (dev)",
+    "iconUrl": "https://storage.googleapis.com/violin-plot/violin.png",
+    "description": "Violin plots using D3.",
     "resource": {
-      "js": "gs://choromap/choromap.js",
-      "config": "gs://choromap/choromap.json",
-      "css": "gs://choromap/choromap.css"
+      "js": "gs://violin-dev/violin.js",
+      "config": "gs://violin-dev/violin.json",
+      "css": "gs://violin-dev/violin.css"
     }
   }]
 }
