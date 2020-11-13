@@ -281,18 +281,6 @@
           "defaultValue": "Add boundary geojson here"
         },
         {
-          "type": "TEXTINPUT",
-          "id": "boundaryID",
-          "label": "ID field of GeoJSON features",
-          "defaultValue": "id"
-        },
-        {
-          "type": "TEXTINPUT",
-          "id": "boundaryName",
-          "label": "Name field of GeoJSON features",
-          "defaultValue": "name"
-        },
-        {
           "type": "BORDER_COLOR",
           "id": "boundaryBorderColor",
           "label": "Boundary Border Color",

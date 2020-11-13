@@ -17787,14 +17787,6 @@ const drawViz = data => {
     ? data.style.boundary.value
     : data.style.boundary.defaultValue;
 
-    var boundaryID =  data.style.boundaryID.value
-    ? data.style.boundaryID.value
-    : data.style.boundaryID.defaultValue;
-
-    var boundaryName =  data.style.boundaryName.value
-    ? data.style.boundaryName.value
-    : data.style.boundaryName.defaultValue;
-
     var boundaryBorderColor =  data.style.boundaryBorderColor.value
     ? data.style.boundaryBorderColor.value.color
     : data.style.boundaryBorderColor.defaultValue;
@@ -17807,9 +17799,6 @@ const drawViz = data => {
 
     // Create boundary geoJSON object if user specifies they want to plot one in STYLE
     if (boundary != "Add boundary geojson here"){
-
-        boundary = boundary.split(boundaryID).join('id');
-        boundary = boundary.split(boundaryName).join('name');
 
         var boundary = JSON.parse(boundary)
 
@@ -18036,7 +18025,7 @@ const drawViz = data => {
                 .attr("fill", "#808080")
                 .attr("fill", d => (d.properties.met === null) || (d.properties.met < min) || (d.properties.met > max) ? nullColor : colorScale(d.properties.met))
                 .style("stroke", polygonBorderColor)
-                .style("stroke-width", polygonBorderWidth)
+                .attr("stroke-width", polygonBorderWidth)
                 .attr("class", "area")
                 .on('mouseover', tool_tip.show)
                 .on('mouseout', tool_tip.hide);
@@ -18055,6 +18044,7 @@ const drawViz = data => {
                       )
                     // Set the outline color of each feature
                     .style("stroke", boundaryBorderColor)
+                    .attr("stroke-width", boundaryBorderWidth)
                     .style("fill", "none");
 
              var zoom = d3.zoom()
@@ -18062,6 +18052,7 @@ const drawViz = data => {
                   .on("zoom", function() {
                       b.attr("transform", d3.event.transform);
                       g.attr("transform", d3.event.transform);
+                      g.attr("stroke-width", polygonBorderWidth / d3.event.transform.k);
                       b.attr("stroke-width", boundaryBorderWidth / d3.event.transform.k);
                       b.attr("transform", d3.event.transform);
                   })
