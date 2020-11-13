@@ -7,7 +7,7 @@
   "packageUrl": "https://datastudio.google.com/reporting/4617cbac-3514-4c8d-a999-a3cb6683e579",
   "privacyPolicyUrl": "https://datasciencecampus.github.io/community-visualizations/docs/privacy-policy.html",
   "description": "Choropleth mapping using D3.",
-  "devMode": false,
+  "devMode": true,
   "termsOfServiceUrl": "https://datasciencecampus.github.io/community-visualizations/docs/privacy-policy.html",
   "components": [{
     "id": "choromap",

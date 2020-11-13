@@ -23224,7 +23224,6 @@ const drawViz = data => {
     }
 
 
-//    console.log(rowData)
     d3.select('body')
         .selectAll('svg')
         .remove();
@@ -23465,7 +23464,7 @@ const drawViz = data => {
 
 
     svg.append("text")
-        .attr("class", "y label")
+        .attr("class", "y-label")
         .attr("text-anchor", "middle")
         .attr("y", 0 - margin.left)
         .attr("x",0 - (height / 2))

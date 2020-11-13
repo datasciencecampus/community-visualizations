@@ -225,7 +225,7 @@
       "label": "Boundary",
       "elements": [
         {
-          "type": "TEXTAREA",
+          "type": "TEXTINPUT",
           "id": "boundary",
           "label": "Input boundary GeoJSON",
           "defaultValue": "Add boundary geojson here"

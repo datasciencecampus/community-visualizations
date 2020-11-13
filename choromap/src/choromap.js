@@ -17677,9 +17677,6 @@ const drawViz = data => {
     // Create boundary geoJSON object if user specifies they want to plot one in STYLE
     if (boundary != "Add boundary geojson here"){
 
-        boundary = boundary.split(boundaryID).join('id');
-        boundary = boundary.split(boundaryName).join('name');
-
         var boundary = JSON.parse(boundary)
 
     }
@@ -17894,7 +17891,7 @@ const drawViz = data => {
                 .attr("fill", "#808080")
                 .attr("fill", d => (d.properties.met === null) || (d.properties.met < min) || (d.properties.met > max) ? nullColor : colorScale(d.properties.met))
                 .style("stroke", polygonBorderColor)
-                .style("stroke-width", polygonBorderWidth)
+                .attr("stroke-width", polygonBorderWidth)
                 .attr("class", "area")
                 .on('mouseover', tool_tip.show)
                 .on('mouseout', tool_tip.hide);
@@ -17912,6 +17909,7 @@ const drawViz = data => {
                       )
                     // Set the outline color of each feature
                     .style("stroke", boundaryBorderColor)
+                    .attr("stroke-width",boundaryBorderWidth )
                     .style("fill", "none");
 
              var zoom = d3.zoom()
