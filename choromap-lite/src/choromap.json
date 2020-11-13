@@ -40,7 +40,7 @@
       "label": "Data",
       "elements": [
         {
-          "type": "TEXTAREA",
+          "type": "TEXTINPUT",
           "id": "geojson",
           "label": "Input GeoJSON",
           "defaultValue": ""
@@ -275,7 +275,7 @@
       "label": "Boundary",
       "elements": [
         {
-          "type": "TEXTAREA",
+          "type": "TEXTINPUT",
           "id": "boundary",
           "label": "Input boundary GeoJSON",
           "defaultValue": "Add boundary geojson here"
