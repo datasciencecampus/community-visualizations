@@ -1,23 +1,23 @@
 {
-  "name": "Choropleth Map (lite)",
-  "logoUrl": "https://storage.googleapis.com/choromap-lite/choropleth.png",
-  "organization": "Data Science Campus",
+  "name": "Choropleth Map (lite). Hosted by Huq Industries.",
+  "logoUrl": "https://storage.googleapis.com/huq-choromap-lite/choropleth.png",
+  "organization": "Data Science Campus (hosted by Huq Industries)",
   "organizationUrl": "https://datasciencecampus.ons.gov.uk/",
   "supportUrl": "https://github.com/datasciencecampus/community-visualizations/issues",
   "packageUrl": "https://datastudio.google.com/reporting/d0c938d0-9e49-4781-8cab-ec159c233499/page/XEHUB",
   "privacyPolicyUrl": "https://datasciencecampus.github.io/community-visualizations/docs/privacy-policy.html",
-  "description": "Choropleth mapping for Google Data Studio written in D3 (lite)",
+  "description": "Choropleth mapping for Google Data Studio written in D3 (lite). Hosted by Huq Industries.",
   "devMode": true,
   "termsOfServiceUrl": "https://datasciencecampus.github.io/community-visualizations/docs/privacy-policy.html",
   "components": [{
-    "id": "choromap-lite",
+    "id": "huq-choromap-lite",
     "name": "Choropleth Map (lite)",
-    "iconUrl": "https://storage.googleapis.com/choromap-lite/choropleth.png",
-    "description": "Choropleth mapping for Google Data Studio written in D3 (lite).",
+    "iconUrl": "https://storage.googleapis.com/huq-choromap-lite/choropleth.png",
+    "description": "Choropleth mapping for Google Data Studio written in D3 (lite). Hosted by Huq Industries.",
     "resource": {
-      "js": "gs://choromap-lite/choromap.js",
-      "config": "gs://choromap-lite/choromap.json",
-      "css": "gs://choromap-lite/choromap.css"
+      "js": "gs://huq-choromap-lite/choromap.js",
+      "config": "gs://huq-choromap-lite/choromap.json",
+      "css": "gs://huq-choromap-lite/choromap.css"
     }
   }]
 }
