@@ -42631,9 +42631,21 @@ const drawViz = data => {
         .selectAll('div')
         .remove();
 
-    var markerFillColor =  data.style.markerFillColor.value
-    ? data.style.markerFillColor.value.color
-    : data.style.markerFillColor.defaultValue;
+    var markerColor =  data.style.markerColor.value
+    ? data.style.markerColor.value.color
+    : data.style.markerColor.defaultValue;
+
+    var minColor =  data.style.minColor.value
+    ? data.style.minColor.value.color
+    : data.style.minColor.defaultValue;
+
+    var midColor =  data.style.midColor.value
+    ? data.style.midColor.value.color
+    : data.style.midColor.defaultValue;
+
+    var maxColor =  data.style.maxColor.value
+    ? data.style.maxColor.value.color
+    : data.style.maxColor.defaultValue;
 
     var markerLineColor =  data.style.markerLineColor.value
     ? data.style.markerLineColor.value.color
@@ -42657,6 +42669,11 @@ const drawViz = data => {
     ? data.style.lineWeight.value
     : data.style.lineWeight.defaultValue;
 
+    var showArrows =  data.style.showArrows.value;
+
+    var arrowSize =  data.style.arrowSize.value
+    ? data.style.arrowSize.value
+    : data.style.arrowSize.defaultValue;
 
     var showLabels =  data.style.showLabels.value;
 
@@ -42703,6 +42720,32 @@ const drawViz = data => {
     var labelIsDate = data.style.labelIsDate.value;
 
     var horizontalLine = data.style.horizontalLine.value;
+
+    var showLegend =  data.style.showLegend.value
+
+    var legendTitle =  data.style.legendTitle.value
+    ? data.style.legendTitle.value
+    : data.style.legendTitle.defaultValue;
+
+    if (legendTitle == 'none') {
+        var legendTitle = ''
+    }
+
+    var legendPosition =  data.style.legendPosition.value
+    ? data.style.legendPosition.value
+    : data.style.legendPosition.defaultValue;
+
+    var legendTextColor =  data.style.legendTextColor.value
+    ? data.style.legendTextColor.value.color
+    : data.style.legendTextColor.defaultValue;
+
+    var legendTextSize =  data.style.legendTextSize.value
+    ? data.style.legendTextSize.value
+    : data.style.legendTextSize.defaultValue;
+
+    var legendTextFamily =  data.style.legendTextFamily.value
+    ? data.style.legendTextFamily.value
+    : data.style.legendTextFamily.defaultValue;
 
     // set up the canvas space
     const yMargin = 5;
@@ -42782,7 +42825,7 @@ function updateData(selectedIndex) {
 
     var new_data = []
 
-
+    var color_cats_tmp = []
     // Add data to GeoJSON object
     rowData.forEach(function (row) {
     // 'mapDimension' and 'mapMetric' come from the id defined in choromap.json
@@ -42792,22 +42835,40 @@ function updateData(selectedIndex) {
         let new_data_row = {
             x: row["MetricX"][0],
             y: row["MetricY"][0],
-            aggregateby: row["aggregateBy"][0]
+            aggregateby: row["aggregateBy"][0],
+            colorby: row["colorBy"][0]
             }
 
 
         new_data.push(new_data_row);
-
+        color_cats_tmp.push(row["colorBy"][0]);
     });
+
+    console.log(new_data)
+    // Remove duplicates from color_cats array
+    var color_cats_tmp = color_cats_tmp.filter((v, i, a) => a.indexOf(v) === i);
+
+    // Create the color array for the map
+    var numCells = color_cats_tmp.length
+    var start = 0
+    var step = 1 / (numCells - 1);
+    var stop = 1 + step
+    var colorArray = [];
+    for (let i = 0, n = Math.ceil((stop - start) / step); i < n; ++i) {
+        colorArray.push(d3.piecewise(d3.interpolateRgb.gamma(1),[minColor, midColor, maxColor])(start + i * step));
+    }
 
     // aggregates data based on aggregateby field
     var aggregation = d3.nest()
       .key(function(d) { return d.aggregateby; })
+      .key(function(d) { return d.colorby; })
       .rollup(function(v) { return {
           x: d3.mean(v, function(d) { return d.x; }),
-          y: d3.mean(v, function(d) { return d.y; })
+          y: d3.mean(v, function(d) { return d.y; }),
       }; })
       .entries(new_data);
+
+    console.log(aggregation)
 
     aggregation.sort(function(a, b){
         return a.key - b.key;
@@ -42817,17 +42878,32 @@ function updateData(selectedIndex) {
 
     var i = 0
 
+    color_cats = []
+
     aggregation.forEach(function (row) {
+        console.log(row.values[0])
         new_agg_row = {
             aggregateby: row.key,
-            x: row.value.x,
-            y: row.value.y,
-            index: i
-        }
+            index: i,
+            x: row.values[0].value.x,
+            y: row.values[0].value.y,
+            colorby: row.values[0].key,
+            }
+
          new_agg.push(new_agg_row),
+         color_cats.push(row.values[0].key)
          i++;
 
     });
+
+    var color_cats = color_cats.filter((v, i, a) => a.indexOf(v) === i);
+
+    console.log(color_cats)
+
+    // Create catergorical colors
+    var colorScale = d3.scaleOrdinal()
+        .domain(color_cats)
+        .range(colorArray);
 
     // Find the maximum value of metric
     var max_y = d3.max(new_agg, function(d) { return +d.y;} );
@@ -42838,9 +42914,10 @@ function updateData(selectedIndex) {
     var min_x = d3.min(new_agg, function(d) { return +d.x;} );
 
     var line = d3.line()
-        .curve(d3.curveCatmullRom)
+        .curve(d3.curveCatmullRom.alpha(0))
         .x(d => x(d.x))
         .y(d => y(d.y))
+
 
     function length(path) {
       return d3.create("svg:path").attr("d", path).node().getTotalLength();
@@ -42927,7 +43004,7 @@ function updateData(selectedIndex) {
     var g = svg.append("g")
       .call(xAxis);
 
-  svg.append("g")
+    svg.append("g")
       .call(yAxis);
 
     if (horizontalLine == true) {
@@ -42945,69 +43022,145 @@ function updateData(selectedIndex) {
           .html(d => d.aggregateby === null ? 'null' : d.aggregateby);
 
 
-  var path = svg.append("path")
-      .datum(new_agg)
-      .attr("fill", "none")
-      .attr("stroke", lineColor)
-      .attr("stroke-width", lineWeight)
-      .attr("stroke-linejoin", "round")
-      .attr("stroke-linecap", "round")
-      .attr("stroke-dasharray", `0,${l}`)
-      .attr("d", line)
+    // build the arrow.
+    svg.append("defs")
+        .append("marker")
+        .attr("id", "marker")
+        .attr("viewBox", "0 -5 10 10")
+        .attr("refX", 15)
+        .attr("refY", 0)
+        .attr("markerWidth", arrowSize)
+        .attr("markerHeight", arrowSize)
+        .attr("orient", "auto")
+      .append("path")
+        .attr("d", "M0,-5L10,0L0,5");
 
-    .transition()
-      .duration(transitionSpeed)
-      .ease(d3.easeLinear)
-      .attr("stroke-dasharray", `${l},${l}`);
+    // Show arrows
+    if (showArrows == "On"){
+     var arrows = svg.append("path")
+          .datum(new_agg)
+          .attr("fill", "none")
+          .attr("stroke", lineColor)
+          .attr("stroke-width", lineWeight)
+          .attr("opacity", 0)
+          .attr("stroke-linejoin", "bevel")
+          .attr("stroke-linecap", "bevel")
+//          .attr("marker-end", "url(#marker)")
+          .attr("marker-mid", "url(#marker)")
+          .attr("stroke-dasharray", `0,${l}`)
+          .attr("d", line)
 
+
+      arrows.transition()
+          .delay((d, i) => length(line(new_agg.slice(0, i + 1))) / l * (transitionSpeed - 125))
+          .attr("opacity", 1);
+
+
+      var path = svg.append("path")
+          .datum(new_agg)
+          .attr("fill", "none")
+          .attr("stroke", lineColor)
+          .attr("stroke-width", lineWeight)
+          .attr("stroke-linejoin", "bevel")
+          .attr("stroke-linecap", "bevel")
+          .attr("stroke-dasharray", `0,${l}`)
+          .attr("d", line)
+
+        .transition()
+          .duration(transitionSpeed)
+          .ease(d3.easeLinear)
+          .attr("stroke-dasharray", `${l},${l}`);
+    } else {
+          var path = svg.append("path")
+          .datum(new_agg)
+          .attr("fill", "none")
+          .attr("stroke", lineColor)
+          .attr("stroke-width", lineWeight)
+          .attr("stroke-linejoin", "miter")
+          .attr("stroke-linecap", "miter")
+          .attr("stroke-dasharray", `0,${l}`)
+          .attr("d", line)
+
+        .transition()
+          .duration(transitionSpeed)
+          .ease(d3.easeLinear)
+          .attr("stroke-dasharray", `${l},${l}`);
+    }
 
     if (showMarkers == "On"){
-  svg.append("g")
-    .selectAll("circle")
-    .data(new_agg)
-    .enter()
-    .append("circle")
-      .attr("fill", markerFillColor)
-      .style("stroke", markerLineColor)
-      .style("stroke-width", markerBorderWidth)
-      .attr("id", "circleCustomTooltip")
-      .attr("cx", d => x(d.x))
-      .attr("cy", d => y(d.y))
-      .attr("r", markerSize)
-      .attr("class", "area")
-        .append("svg:title")
-        .text(function(d) { return d.aggregateby; })
-        .each(date_label);
+        svg.append("g")
+        .selectAll("circle")
+        .data(new_agg)
+        .enter()
+        .append("circle")
+          .attr("fill", d => (d.colorby === null) ? markerColor : colorScale(d.colorby))
+          .style("stroke", markerLineColor)
+          .style("stroke-width", markerBorderWidth)
+          .attr("id", "circleCustomTooltip")
+          .attr("cx", d => x(d.x))
+          .attr("cy", d => y(d.y))
+          .attr("r", markerSize)
+          .attr("class", "area")
+            .append("svg:title")
+            .text(function(d) { return d.aggregateby; })
+            .each(date_label);
+    }
 
-}
+    if (showLabels == "On"){
+      const label = svg.append("g")
+          .attr("font-family", labelTextFamily)
+          .attr("font-size", labelTextSize)
+          .attr("fill", labelColor)
+        .selectAll("g")
+        .data(new_agg)
+        .join("g")
+          .attr("transform", d => `translate(${x(d.x)},${y(d.y)})`)
+          .attr("opacity", 0);
 
+      label.append("text")
+          .attr('class', 'place-label')
+          .attr('x', 8)
+          .attr('y', 0.5)
+          .text(d => (d.index % labelsEvery) == 0 ? d.aggregateby : null)
+          .each(date_label)
+          .call(halo);
 
-if (showLabels == "On"){
-  const label = svg.append("g")
-      .attr("font-family", labelTextFamily)
-      .attr("font-size", labelTextSize)
-      .attr("fill", labelColor)
-    .selectAll("g")
-    .data(new_agg)
-    .join("g")
-      .attr("transform", d => `translate(${x(d.x)},${y(d.y)})`)
-      .attr("opacity", 0);
-
-  label.append("text")
-      .attr('class', 'place-label')
-      .attr('x', function(d) { return d.x; })
-      .attr('y', function(d) { return d.y; })
-      .text(d => (d.index % labelsEvery) == 0 ? d.aggregateby : null)
-      .each(date_label)
-      .call(halo);
-
-  label.transition()
-      .delay((d, i) => length(line(new_agg.slice(0, i + 1))) / l * (transitionSpeed - 125))
-      .attr("opacity", 1);
+      label.transition()
+          .delay((d, i) => length(line(new_agg.slice(0, i + 1))) / l * (transitionSpeed - 125))
+          .attr("opacity", 1);
 
 
 
-}
+    }
+    if (showMarkers == "On" && showLegend == "On"){
+        // Draw the legend
+        var l = svg.append("g")
+          .attr("class", "legend")
+          .attr("transform", "translate(" + legendPosition + ")")
+          .style("fill",legendTextColor)
+          .style("font-family",legendTextFamily)
+          .style("font-size",legendTextSize);
+
+
+        var legendPlot = d3
+          .legendColor()
+          .shape("path", d3.symbol().type(d3.symbolCircle).size(150)())
+          .title(legendTitle)
+          .cellFilter(function(d){ return d.label != null })
+          .scale(colorScale);
+
+        svg.select(".legend")
+            .call(legendPlot);
+
+        svg.select(".legend")
+            .selectAll("path")
+            .attr('stroke', markerLineColor)
+            .attr("stroke-width", markerBorderWidth);
+
+        svg.select(".legend")
+            .selectAll("text")
+            .call(halo);
+    }
 }
 updateData(0)
 

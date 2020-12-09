@@ -1,0 +1,298 @@
+{
+  "data": [
+    {
+      "id": "concepts",
+      "label": "Concepts",
+      "elements": [
+        {
+          "id": "mapDimension",
+          "label": "Dimension",
+          "type": "DIMENSION",
+          "options": {
+            "min": 2,
+            "max": 2
+          }
+        },
+        {
+          "id": "mapMetric",
+          "label": "Metric",
+          "type": "METRIC",
+          "options": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "id": "tooltipDimension",
+          "label": "Tooltip",
+          "type": "DIMENSION",
+          "options": {
+            "min": 1,
+            "max": 1
+          }
+        }
+      ]
+    }
+  ],
+  "style": [
+    {
+      "id": "data",
+      "label": "Data",
+      "elements": [
+        {
+          "type": "TEXTINPUT",
+          "id": "geojson",
+          "label": "Input GeoJSON",
+          "defaultValue": ""
+        },
+        {
+          "type": "TEXTINPUT",
+          "id": "geojsonID",
+          "label": "ID field of GeoJSON features",
+          "defaultValue": "id"
+        },
+        {
+          "type": "TEXTINPUT",
+          "id": "geojsonName",
+          "label": "Name field of GeoJSON features",
+          "defaultValue": "name"
+        },
+        {
+          "type": "TEXTINPUT",
+          "id": "polyNumber",
+          "label": "Number of Polygons",
+          "defaultValue": "max"
+        },
+        {
+          "type": "SELECT_SINGLE",
+          "id": "filterNull",
+          "label": "Filter nulls",
+          "defaultValue": "false",
+          "options": [
+            {
+              "label": "true",
+              "value": "true"
+            },
+            {
+              "label": "false",
+              "value": "false"
+            }
+          ]
+        },
+        {
+          "type": "SELECT_SINGLE",
+          "id": "reverseWindingOrder",
+          "label": "Reverse Winding Order",
+          "defaultValue": "false",
+          "options": [
+            {
+              "label": "true",
+              "value": "true"
+            },
+            {
+              "label": "false",
+              "value": "false"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "color",
+      "label": "Colors",
+      "elements": [
+        {
+          "type": "FILL_COLOR",
+          "id": "minColor",
+          "label": "Min Color",
+          "defaultValue": "#BED9FF"
+        },
+        {
+          "type": "FILL_COLOR",
+          "id": "midColor",
+          "label": "Mid Color",
+          "defaultValue": "#0053c7"
+        },
+        {
+          "type": "FILL_COLOR",
+          "id": "maxColor",
+          "label": "Max Color",
+          "defaultValue": "#003B8E"
+        },
+        {
+          "type": "FILL_COLOR",
+          "id": "nullColor",
+          "label": "Null Color",
+          "defaultValue": "#808080"
+        },
+        {
+          "type": "BORDER_COLOR",
+          "id": "polygonBorderColor",
+          "label": "Polygon Border Color",
+          "defaultValue": "#fff"
+        },
+        {
+          "type": "TEXTINPUT",
+          "id": "polygonBorderWidth",
+          "label": "Polygon Border Width",
+          "defaultValue": 0
+        }
+      ]
+    },
+    {
+      "id": "legend",
+      "label": "Legend",
+      "elements": [
+        {
+          "type": "SELECT_SINGLE",
+          "id": "showLegend",
+          "label": "Legend Orientation",
+          "defaultValue": "Vertical",
+          "options": [
+            {
+              "label": "Vertical",
+              "value": "Vertical"
+            },
+            {
+              "label": "Horizontal",
+              "value": "Horizontal"
+            },
+            {
+              "label": "Off",
+              "value": "Off"
+            }
+          ]
+        },
+        {
+          "type": "SELECT_SINGLE",
+          "id": "legendType",
+          "label": "Legend Type",
+          "defaultValue": "Linear",
+          "options": [
+            {
+              "label": "Linear",
+              "value": "Linear"
+            },
+            {
+              "label": "Quantile",
+              "value": "Quantile"
+            },
+            {
+              "label": "Divergent",
+              "value": "Divergent"
+            },
+            {
+              "label": "Categorical",
+              "value": "Categorical"
+            },
+            {
+              "label": "User Breaks",
+              "value": "User Breaks"
+            },
+            {
+              "label": "Custom",
+              "value": "Custom"
+            }
+          ]
+        },
+        {
+          "type": "TEXTINPUT",
+          "id": "legendCells",
+          "label": "Number of Quantiles / Categories",
+          "defaultValue": 5
+        },
+        {
+          "type": "TEXTINPUT",
+          "id": "legendBreaks",
+          "label": "Custom Breaks",
+          "defaultValue": "1,5,10"
+        },
+        {
+          "type": "TEXTINPUT",
+          "id": "legendDecimalPlaces",
+          "label": "Decimal Places",
+          "defaultValue": 0
+        },
+        {
+          "type": "SELECT_SINGLE",
+          "id": "legendDecimalPlacesShort",
+          "label": "Number Format",
+          "defaultValue": "Long",
+          "options": [
+            {
+              "label": "Long",
+              "value": "Long"
+            },
+            {
+              "label": "Short",
+              "value": "Short"
+            }
+          ]
+        },
+        {
+            "type": "TEXTINPUT",
+            "id": "legendTitle",
+            "label": "Legend Title",
+            "defaultValue": "Legend Title"
+        },
+        {
+            "type": "TEXTINPUT",
+            "id": "legendPosition",
+            "label": "Legend Position (x,y)",
+            "defaultValue": "20,40"
+        },
+                {
+            "type": "BORDER_COLOR",
+            "id": "legendBorderColor",
+            "label": "Legend Border Color",
+            "defaultValue": "#fff"
+        },
+        {
+            "type": "TEXTINPUT",
+            "id": "legendBorderWidth",
+            "label": "Legend Border Width",
+            "defaultValue": "1"
+        },
+        {
+            "type": "FONT_COLOR",
+            "id": "legendTextColor",
+            "label": "Legend Font Color"
+        },
+        {
+            "type": "FONT_SIZE",
+            "id": "legendTextSize",
+            "label": "Legend Font Size"
+        },
+        {
+            "type": "FONT_FAMILY",
+            "id": "legendTextFamily",
+            "label": "Legend Font Family"
+        }
+      ]
+    },
+    {
+      "id": "boundary",
+      "label": "Boundary",
+      "elements": [
+        {
+          "type": "TEXTINPUT",
+          "id": "boundary",
+          "label": "Input boundary GeoJSON",
+          "defaultValue": "Add boundary geojson here"
+        },
+        {
+          "type": "BORDER_COLOR",
+          "id": "boundaryBorderColor",
+          "label": "Boundary Border Color",
+          "defaultValue": "#000"
+        },
+        {
+          "type": "TEXTINPUT",
+          "id": "boundaryBorderWidth",
+          "label": "Boundary Border Width",
+          "defaultValue": 0
+        }
+      ]
+    }
+  ]
+}

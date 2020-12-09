@@ -141,7 +141,7 @@
           "type": "BORDER_COLOR",
           "id": "medianFillColor",
           "label": "Median Fill Color",
-          "defaultValue": "#fff"
+          "defaultValue": "#ffffff"
         },
         {
           "type": "BORDER_COLOR",
@@ -159,13 +159,31 @@
     },
     {
       "id": "labels",
-      "label": "Labels",
+      "label": "Labels and Axis",
       "elements": [
+        {
+          "type": "TEXTINPUT",
+          "id": "xAxisLabel",
+          "label": "X Axis Label",
+          "defaultValue": "xAxisLabel"
+        },
         {
           "type": "TEXTINPUT",
           "id": "xAxisRotation",
           "label": "X Axis Rotation",
           "defaultValue": 45
+        },
+        {
+          "type": "TEXTINPUT",
+          "id": "yAxisMin",
+          "label": "Y Axis Min Value",
+          "defaultValue": ""
+        },
+        {
+          "type": "TEXTINPUT",
+          "id": "yAxisMax",
+          "label": "Y Axis Max Value",
+          "defaultValue": ""
         },
         {
           "type": "TEXTINPUT",
@@ -177,7 +195,7 @@
             "type": "FONT_COLOR",
             "id": "axisTextColor",
             "label": "Legend Font Color",
-            "default": "#000"
+            "defaultValue": "#000000"
         },
         {
             "type": "FONT_SIZE",

@@ -23298,6 +23298,18 @@ const drawViz = data => {
     ? data.style.yAxisLabel.value
     : data.style.yAxisLabel.defaultValue;
 
+    var yAxisMin =  data.style.yAxisMin.value
+    ? data.style.yAxisMin.value
+    : data.style.yAxisMin.defaultValue;
+
+    var yAxisMax =  data.style.yAxisMax.value
+    ? data.style.yAxisMax.value
+    : data.style.yAxisMax.defaultValue;
+
+    var xAxisLabel =  data.style.xAxisLabel.value
+    ? data.style.xAxisLabel.value
+    : data.style.xAxisLabel.defaultValue;
+
     var xAxisRotation =  data.style.xAxisRotation.value
     ? data.style.xAxisRotation.value
     : data.style.xAxisRotation.defaultValue;
@@ -23361,11 +23373,15 @@ const drawViz = data => {
 
     });
 
-    // Find the maximum value of metric
-    var x_max = d3.max(x_vls);
+    // Find the maximum value of metric or use user defined maximum
+    if (yAxisMax == ""){
+        var x_max = d3.max(x_vls);
+    } else {var x_max = parseInt(yAxisMax)}
 
-    // Find the minimum value of metric
-    var x_min = d3.min(x_vls);
+    // Find the minimum value of metric or use user defined minimum
+        if (yAxisMin == ""){
+        var x_min = d3.min(x_vls);
+    } else {var x_min = parseInt(yAxisMin)}
 
     var colorScale = d3
         .scaleLinear()
@@ -23463,7 +23479,7 @@ const drawViz = data => {
         .range([0, x.bandwidth()])
         .domain([-maxNum,maxNum])
 
-
+    // Add Y Axis Label
     svg.append("text")
         .attr("class", "y label")
         .attr("text-anchor", "middle")
@@ -23472,6 +23488,18 @@ const drawViz = data => {
         .attr("dy", ".75em")
         .attr("transform", "rotate(-90)")
         .text(yAxisLabel)
+        .attr("font-family", axisTextFamily)
+        .attr("font-size", axisTextSize)
+        .attr("fill", axisTextColor);
+
+    // Add X Axis Label
+    svg.append("text")
+        .attr("class", "x label")
+        .attr("transform",
+                "translate(" + (width/2) + " ," +
+                               (height + margin.top + 60) + ")")
+        .style("text-anchor", "middle")
+        .text(xAxisLabel)
         .attr("font-family", axisTextFamily)
         .attr("font-size", axisTextSize)
         .attr("fill", axisTextColor);

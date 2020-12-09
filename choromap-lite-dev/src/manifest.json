@@ -1,0 +1,23 @@
+{
+  "name": "Choropleth Map (lite) Dev",
+  "logoUrl": "https://storage.googleapis.com/choromap-lite/choropleth.png",
+  "organization": "Data Science Campus",
+  "organizationUrl": "https://datasciencecampus.ons.gov.uk/",
+  "supportUrl": "https://github.com/datasciencecampus/community-visualizations/issues",
+  "packageUrl": "https://datastudio.google.com/reporting/d0c938d0-9e49-4781-8cab-ec159c233499/page/XEHUB",
+  "privacyPolicyUrl": "https://datasciencecampus.github.io/community-visualizations/docs/privacy-policy.html",
+  "description": "Choropleth mapping for Google Data Studio written in D3 (lite)",
+  "devMode": true,
+  "termsOfServiceUrl": "https://datasciencecampus.github.io/community-visualizations/docs/privacy-policy.html",
+  "components": [{
+    "id": "choromap-lite-dev",
+    "name": "Choropleth Map (lite) Dev",
+    "iconUrl": "https://storage.googleapis.com/choromap-lite/choropleth.png",
+    "description": "Choropleth mapping for Google Data Studio written in D3 (lite).",
+    "resource": {
+      "js": "gs://choromap-lite-dev/choromap.js",
+      "config": "gs://choromap-lite-dev/choromap.json",
+      "css": "gs://choromap-lite-dev/choromap.css"
+    }
+  }]
+}

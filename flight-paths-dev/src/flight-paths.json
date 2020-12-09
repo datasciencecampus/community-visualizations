@@ -30,6 +30,15 @@
             "min": 1,
             "max": 1
           }
+        },
+        {
+          "id": "colorBy",
+          "label": "Color Markers by",
+          "type": "DIMENSION",
+          "options": {
+            "min": 0,
+            "max": 1
+          }
         }
       ]
     }
@@ -41,9 +50,27 @@
       "elements": [
         {
           "type": "FILL_COLOR",
-          "id": "markerFillColor",
-          "label": "Marker fill color",
+          "id": "markerColor",
+          "label": "Marker Color",
           "defaultValue": "#fff"
+        },
+        {
+          "type": "FILL_COLOR",
+          "id": "minColor",
+          "label": "Marker min Color",
+          "defaultValue": "#BED9FF"
+        },
+        {
+          "type": "FILL_COLOR",
+          "id": "midColor",
+          "label": "Marker mid Color",
+          "defaultValue": "#0053c7"
+        },
+        {
+          "type": "FILL_COLOR",
+          "id": "maxColor",
+          "label": "Marker max Color",
+          "defaultValue": "#003B8E"
         },
         {
           "type": "BORDER_COLOR",
@@ -96,6 +123,28 @@
           "id": "lineWeight",
           "label": "Line weight",
           "defaultValue": "1"
+        },
+        {
+          "type": "SELECT_SINGLE",
+          "id": "showArrows",
+          "label": "Show arrows",
+          "defaultValue": "Off",
+          "options": [
+            {
+              "label": "On",
+              "value": "On"
+            },
+            {
+              "label": "Off",
+              "value": "Off"
+            }
+          ]
+        },
+        {
+          "type": "TEXTINPUT",
+          "id": "arrowSize",
+          "label": "Arrow size",
+          "defaultValue": "5"
         }
       ]
     },
@@ -287,6 +336,55 @@
               "value": "false"
             }
           ]
+        }
+      ]
+      },
+    {
+      "id": "legend",
+      "label": "Legend",
+      "elements": [
+        {
+          "type": "SELECT_SINGLE",
+          "id": "showLegend",
+          "label": "Legend Orientation",
+          "defaultValue": "On",
+          "options": [
+            {
+              "label": "On",
+              "value": "On"
+            },
+            {
+              "label": "Off",
+              "value": "Off"
+            }
+          ]
+        },
+        {
+          "type": "TEXTINPUT",
+          "id": "legendTitle",
+          "label": "Legend Title",
+          "defaultValue": "Legend Title"
+        },
+        {
+          "type": "TEXTINPUT",
+          "id": "legendPosition",
+          "label": "Legend Position (x,y)",
+          "defaultValue": "70,40"
+        },
+        {
+          "type": "FONT_COLOR",
+          "id": "legendTextColor",
+          "label": "Legend Font Color"
+        },
+        {
+          "type": "FONT_SIZE",
+          "id": "legendTextSize",
+          "label": "Legend Font Size"
+        },
+        {
+          "type": "FONT_FAMILY",
+          "id": "legendTextFamily",
+          "label": "Legend Font Family"
         }
       ]
     }
