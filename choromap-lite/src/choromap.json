@@ -98,6 +98,116 @@
       ]
     },
     {
+      "id": "projection",
+      "label": "Projection",
+      "elements": [
+        {
+          "type": "SELECT_SINGLE",
+          "id": "projectionSelection",
+          "label": "Map Projection",
+          "defaultValue": "Mercator",
+          "options": [
+            {
+              "label": "Azimuthal Equal Area",
+              "value": "AzimuthalEqualArea"
+            },
+            {
+              "label": "Azimuthal Equidistant",
+              "value": "AzimuthalEquidistant"
+            },
+            {
+              "label": "Gnomonic",
+              "value": "Gnomonic"
+            },
+            {
+              "label": "Orthographic",
+              "value": "Orthographic"
+            },
+            {
+              "label": "Stereographic",
+              "value": "Stereographic"
+            },
+            {
+              "label": "Albers",
+              "value": "Albers"
+            },
+            {
+              "label": "Conic Conformal",
+              "value": "ConicConformal"
+            },
+            {
+              "label": "Conic Equal Area",
+              "value": "ConicEqualArea"
+            },
+            {
+              "label": "Conic Equidistant",
+              "value": "ConicEquidistant"
+            },
+            {
+              "label": "Equirectangular",
+              "value": "Equirectangular"
+            },
+            {
+              "label": "Mercator",
+              "value": "Mercator"
+            },
+            {
+              "label": "Transverse Mercator",
+              "value": "TransverseMercator"
+            }
+          ]
+        },
+        {
+          "type": "TEXTINPUT",
+          "id": "projectionScale",
+          "label": "Scale",
+          "defaultValue": ""
+        },
+        {
+          "type": "TEXTINPUT",
+          "id": "projectionTranslateX",
+          "label": "Translate X",
+          "defaultValue": ""
+        },
+        {
+          "type": "TEXTINPUT",
+          "id": "projectionTranslateY",
+          "label": "Translate Y",
+          "defaultValue": ""
+        },
+        {
+          "type": "TEXTINPUT",
+          "id": "projectionCenterLon",
+          "label": "Center Lon",
+          "defaultValue": 0
+        },
+        {
+          "type": "TEXTINPUT",
+          "id": "projectionCenterLat",
+          "label": "Center Lat",
+          "defaultValue": 0
+        },
+        {
+          "type": "TEXTINPUT",
+          "id": "projectionRotateLambda",
+          "label": "Rotate Lambda",
+          "defaultValue": ""
+        },
+        {
+          "type": "TEXTINPUT",
+          "id": "projectionRotatePhi",
+          "label": "Rotate Phi",
+          "defaultValue": ""
+        },
+        {
+          "type": "TEXTINPUT",
+          "id": "projectionRotateGamma",
+          "label": "Rotate Gamma",
+          "defaultValue": ""
+        }
+      ]
+    },
+    {
       "id": "color",
       "label": "Colors",
       "elements": [
