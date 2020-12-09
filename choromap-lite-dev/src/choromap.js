@@ -17711,6 +17711,40 @@ const drawViz = data => {
 
     var reverseWindingOrder =  data.style.reverseWindingOrder.value
 
+    var projectionSelection =  data.style.projectionSelection.value
+
+    var projectionScale =  data.style.projectionScale.value
+    ? data.style.projectionScale.value
+    : data.style.projectionScale.defaultValue;
+
+    var projectionTranslateX =  data.style.projectionTranslateX.value
+    ? data.style.projectionTranslateX.value
+    : data.style.projectionTranslateX.defaultValue;
+
+    var projectionTranslateY =  data.style.projectionTranslateY.value
+    ? data.style.projectionTranslateY.value
+    : data.style.projectionTranslateY.defaultValue;
+
+    var projectionCenterLon =  data.style.projectionCenterLon.value
+    ? data.style.projectionCenterLon.value
+    : data.style.projectionCenterLon.defaultValue;
+
+    var projectionCenterLat =  data.style.projectionCenterLat.value
+    ? data.style.projectionCenterLat.value
+    : data.style.projectionCenterLat.defaultValue;
+
+    var projectionRotateLambda =  data.style.projectionRotateLambda.value
+    ? data.style.projectionRotateLambda.value
+    : data.style.projectionRotateLambda.defaultValue;
+
+    var projectionRotatePhi =  data.style.projectionRotatePhi.value
+    ? data.style.projectionRotatePhi.value
+    : data.style.projectionRotatePhi.defaultValue;
+
+    var projectionRotateGamma =  data.style.projectionRotateGamma.value
+    ? data.style.projectionRotateGamma.value
+    : data.style.projectionRotateGamma.defaultValue;
+
     var minColor =  data.style.minColor.value
     ? data.style.minColor.value.color
     : data.style.minColor.defaultValue;
@@ -17997,9 +18031,19 @@ const drawViz = data => {
         var centroid = path.centroid(geojson)
 
         // Sets projection
-        var projection = d3.geoMercator()
+        var projection = d3['geo' + projectionSelection]()
             .center(centroid)
-            .fitExtent([[0,0],[width, height - 25]], geojson);
+            .fitExtent([[projectionCenterLon,projectionCenterLat],[width, height - 25]], geojson);
+
+        projection
+            .rotate([projectionRotateLambda, projectionRotatePhi, projectionRotateGamma])
+
+        if (projectionScale != "" && projectionTranslateX != "" && projectionTranslateY != ""){
+            projection
+                .scale(projectionScale)
+                .translate([projectionTranslateX, projectionTranslateY])
+                .center([projectionCenterLon, projectionCenterLat])
+        }
 
         if (legendType == 'Custom'){
                 // Creates the tool tip
