@@ -17559,6 +17559,23 @@ function join(lookupTable, mainTable, lookupKey, mainKey, select) {
     return output;
 };
 
+function applyFilter(d, data) {
+    const FILTER = dscc.InteractionType.FILTER;
+    var interactionId = "onClick";
+    var applyFilterData = data.interactions.onClick.value.data
+    var dimensionId = d.dimId;
+    var value = d.properties.dim;
+    if (typeof applyFilterData != "undefined") {
+        dscc.clearInteraction(interactionId, FILTER);
+    }
+    if ((typeof applyFilterData === "undefined") || (applyFilterData && applyFilterData.values[0][0] != value)) {
+        var applyFilterData = {
+            concepts: [dimensionId],
+            values: [[value]]
+        };
+        dscc.sendInteraction(interactionId, FILTER, applyFilterData);
+    }
+}
 
 // choromap code
 const drawViz = data => {
@@ -17937,8 +17954,27 @@ const drawViz = data => {
                 .style("stroke", polygonBorderColor)
                 .attr("stroke-width", polygonBorderWidth)
                 .attr("class", "area")
+                .on("click", function(d){
+                    if ((d.properties.met != null) && (d.properties.met >= min) && (d.properties.met <= max)){
+                        applyFilter(d, data);
+                    }
+                })
                 .on('mouseover', tool_tip.show)
                 .on('mouseout', tool_tip.hide);
+
+        // Update opacity if 'apply filter' feature is in use
+        var applyFilterData = data.interactions.onClick.value.data;
+        if (typeof applyFilterData != "undefined") {
+            g.style("opacity", function(d) {
+                var value = d.properties.dim;
+                var opacity = d3.select(this).style("opacity");
+                var applyFilterValue = applyFilterData.values[0][0];
+                if (applyFilterValue != value) {
+                    return opacity * 0.3;
+                }
+                return opacity;
+            })
+        };
 
         // Draw the boundary if user specifies they want one in STYLE
         if (boundary != "Add boundary geojson here"){
