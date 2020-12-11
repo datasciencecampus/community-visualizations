@@ -58,6 +58,10 @@ Then add the chart to your report. In the `DATA` tab, for the `Dimensions` make 
 - show or remove the legend
 - add a title for the legend
 
+## Filtering
+
+Many thanks to GitHub user [sesi](https://github.com/sesi) for working this one out. You can now filter data using choromap. First click 'apply filter' at the bottom of the DATA tab, then click an area in choromap to filter data for other charts on the same page.
+
 ## Contributing and Bugs
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to contribute. For all Bugs please raise an Issue ticket.
