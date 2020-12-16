@@ -17685,6 +17685,10 @@ const drawViz = data => {
     ? data.style.legendBreaks.value
     : data.style.legendBreaks.defaultValue;
 
+    var legendStrings =  data.style.legendStrings.value
+    ? data.style.legendStrings.value
+    : data.style.legendStrings.defaultValue;
+
     var legendPosition =  data.style.legendPosition.value
     ? data.style.legendPosition.value
     : data.style.legendPosition.defaultValue;
@@ -17841,8 +17845,13 @@ const drawViz = data => {
         } else if (legendType == 'Custom') {
             try {
                 var customBreaks = legendBreaks.split(',').map(x=>+x)
+                if (legendStrings != ''){
+                    var customStrings = legendStrings.split(',')
+                    console.log(customStrings)
+                }
             } catch (TypeError) {
                 var customBreaks = [legendBreaks]
+                var customStrings = [legendStrings]
             }
             var numCells = customBreaks.length
         } else {
@@ -18073,6 +18082,14 @@ const drawViz = data => {
           .selectAll("rect")
               .attr("stroke", legendBorderColor)
               .attr("stroke-width", legendBorderWidth);
+
+        if (legendStrings != ''){
+            svg.select(".legend")
+                .select(".legendCells")
+                .selectAll("text")
+                .data(customStrings)
+                .text(function(d) {return d;});
+        }
     }
 
     updateData() // Call function

@@ -269,6 +269,12 @@
         },
         {
           "type": "TEXTINPUT",
+          "id": "legendStrings",
+          "label": "Custom Strings",
+          "defaultValue": ""
+        },
+        {
+          "type": "TEXTINPUT",
           "id": "legendDecimalPlaces",
           "label": "Decimal Places",
           "defaultValue": 0

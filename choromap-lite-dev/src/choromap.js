@@ -17671,23 +17671,54 @@ function join(lookupTable, mainTable, lookupKey, mainKey, select) {
     return output;
 };
 
+
+
 function applyFilter(d, data) {
+    console.log(data)
     const FILTER = dscc.InteractionType.FILTER;
-    var interactionId = "onClick";
-    var applyFilterData = data.interactions.onClick.value.data
-    var dimensionId = d.properties.dimId;
-    var value = d.properties.id;
-    if (typeof applyFilterData != "undefined") { 
-        dscc.clearInteraction(interactionId, FILTER);
-    }
-    if ((typeof applyFilterData === "undefined") || (applyFilterData && applyFilterData.values[0][0] != value)) {
-        var applyFilterData = {
-            concepts: [dimensionId],
-            values: [[value]]
+    var actionId = "onClick";
+    var dimIds = data.fields.mapDimension.map(d => d.id);
+    let selected = new Set();
+
+
+    if (data.interactions.onClick.value.data !== undefined) {
+        var selVals = data.interactions[actionId].value.data.values.map(d =>
+          JSON.stringify(d)
+            );
+        selected = new Set(selVals);
+        var clickData = JSON.stringify(d.mapDimension);
+        if (selected.has(clickData)) {
+          selected.delete(clickData);
+        } else {
+          selected.add(clickData);
+        }
+      } else {
+        const filterData = {
+          concepts: dimIds,
+          values: [d.mapDimension],
         };
-        dscc.sendInteraction(interactionId, FILTER, applyFilterData);
-    }
+        dscc.sendInteraction(actionId, FILTER, filterData);
+        return;
+      }
+
+      if (selected.size > 0) {
+        const filterData = {
+          concepts: dimIds,
+          values: Array.from(selected).map(d => JSON.parse(d)),
+        };
+        dscc.sendInteraction(actionId, FILTER, filterData);
+      } else {
+        dscc.clearInteraction(actionId, FILTER);
+      }
 }
+//        values_list.push([value])
+//        var applyFilterData = {
+//            concepts: [dimensionId],
+//            values: values_list
+//        };
+//        dscc.sendInteraction(interactionId, FILTER, applyFilterData);
+//    }
+//}
     
 
 // choromap-lite code
@@ -17813,6 +17844,10 @@ const drawViz = data => {
     var legendBreaks =  data.style.legendBreaks.value
     ? data.style.legendBreaks.value
     : data.style.legendBreaks.defaultValue;
+
+    var legendStrings =  data.style.legendStrings.value
+    ? data.style.legendStrings.value
+    : data.style.legendStrings.defaultValue;
 
     var legendPosition =  data.style.legendPosition.value
     ? data.style.legendPosition.value
@@ -17994,8 +18029,13 @@ const drawViz = data => {
         } else if (legendType == 'Custom') {
             try {
                 var customBreaks = legendBreaks.split(',').map(x=>+x)
+                if (legendStrings != ''){
+                    var customStrings = legendStrings.split(',')
+                    console.log(customStrings)
+                }
             } catch (TypeError) {
                 var customBreaks = [legendBreaks]
+                var customStrings = [legendStrings]
             }
             var numCells = customBreaks.length
         } else {
@@ -18104,18 +18144,20 @@ const drawViz = data => {
                     .on('mouseout', tool_tip.hide);
         
         // Update opacity if 'apply filter' feature is in use
-        var applyFilterData = data.interactions.onClick.value.data;
-        if (typeof applyFilterData != "undefined") {
-            g.style("opacity", function(d) {
-                var value = d.properties.id;
-                var opacity = d3.select(this).style("opacity");
-                var applyFilterValue = applyFilterData.values[0][0];
-                if (applyFilterValue != value) {
-                    return opacity * 0.3;
-                }
-                return opacity;
-            })
-        };
+        var enableInteractions =
+            data.interactions.onClick.value.type === 'FILTER' ? true : false;
+
+          if (enableInteractions) {
+            if (data.interactions.onClick.value.data !== undefined) {
+              var selected = data.interactions.onClick.value.data.values;
+              selected.forEach(val => {
+                var selector = `[data-cat0="${val[0]}"][data-cat1="${val[1]}"]`;
+                d3.select(selector)
+                  .style('stroke', 'red')
+                  .style('stroke-width', 5);
+              });
+            }
+          }
         
         // Draw the boundary if user specifies they want one in STYLE
         if (boundary != "Add boundary geojson here"){
@@ -18212,12 +18254,19 @@ const drawViz = data => {
           .selectAll("rect")
               .attr("stroke", legendBorderColor)
               .attr("stroke-width", legendBorderWidth);
+
+        if (legendStrings != ''){
+            svg.select(".legend")
+                .select(".legendCells")
+                .selectAll("text")
+                .data(customStrings)
+                .text(function(d) {return d;});
+        }
     }
 
     updateData() // Call function
 
     function customLabels({i,genLength,generatedLabels,labelDelimiter,domain,range}) {
-      console.log(range)
       if (i === 0) {
         const values = generatedLabels[i].split(` ${labelDelimiter} `)
 
