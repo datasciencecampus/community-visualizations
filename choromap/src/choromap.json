@@ -342,7 +342,7 @@
       "elements": [
         {
           "type": "TEXTINPUT",
-          "id": "boundary",
+          "id": "boundaryGeoJSON",
           "label": "Input boundary GeoJSON",
           "defaultValue": "Add boundary geojson here"
         },

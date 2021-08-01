@@ -17711,9 +17711,9 @@ const drawViz = data => {
     ? data.style.legendTextFamily.value
     : data.style.legendTextFamily.defaultValue;
 
-    var boundary =  data.style.boundary.value
-    ? data.style.boundary.value
-    : data.style.boundary.defaultValue;
+    var boundaryGeoJSON =  data.style.boundaryGeoJSON.value
+    ? data.style.boundaryGeoJSON.value
+    : data.style.boundaryGeoJSON.defaultValue;
 
     var boundaryBorderColor =  data.style.boundaryBorderColor.value
     ? data.style.boundaryBorderColor.value.color
@@ -17730,9 +17730,9 @@ const drawViz = data => {
     var height = dscc.getHeight();
 
     // Create boundary geoJSON object if user specifies they want to plot one in STYLE
-    if (boundary != "Add boundary geojson here"){
+    if (boundaryGeoJSON != "Add boundary geojson here"){
 
-        var boundary = JSON.parse(boundary)
+        var boundaryGeoJSON = JSON.parse(boundaryGeoJSON)
 
     }
 
@@ -17903,13 +17903,13 @@ const drawViz = data => {
             var decimalSuffix = 's'
         }
 
-        if (boundary != "Add boundary geojson here" && zoomOnFilter == "No"){
+        if (boundaryGeoJSON != "Add boundary geojson here" && zoomOnFilter == "No"){
             // Finds centroid of path for plotting
-            var centroid = path.centroid(boundary)
+            var centroid = path.centroid(boundaryGeoJSON)
             // Sets projection
             var projection = d3['geo' + projectionSelection]()
                 .center(centroid)
-                .fitExtent([[projectionCenterLon,projectionCenterLat],[width, height - 25]], boundary);
+                .fitExtent([[projectionCenterLon,projectionCenterLat],[width, height - 25]], boundaryGeoJSON);
         } else {
             // Finds centroid of path for plotting
             var centroid = path.centroid(geojson)
@@ -17986,10 +17986,10 @@ const drawViz = data => {
         };
 
         // Draw the boundary if user specifies they want one in STYLE
-        if (boundary != "Add boundary geojson here"){
+        if (boundaryGeoJSON != "Add boundary geojson here"){
             var b = svg.append("g")
                 .selectAll("path")
-                    .data(boundary.features)
+                    .data(boundaryGeoJSON.features)
                     .enter()
                     .append("path")
                     // Draw each polygon as a path
