@@ -25,7 +25,7 @@
           "type": "TEXTINPUT",
           "id": "violinBinSize",
           "label": "Bin size of violins",
-          "defaultValue": 20
+          "defaultValue": "20"
         },
         {
           "type": "SELECT_SINGLE",
@@ -47,7 +47,7 @@
           "type": "TEXTINPUT",
           "id": "medianCircleSize",
           "label": "Median Circle Size",
-          "defaultValue": 5
+          "defaultValue": "5"
         },
         {
           "type": "SELECT_SINGLE",
@@ -69,13 +69,13 @@
           "type": "TEXTINPUT",
           "id": "scatterNumber",
           "label": "Number of points",
-          "defaultValue": 1000
+          "defaultValue": "1000"
         },
         {
           "type": "TEXTINPUT",
           "id": "scatterRadius",
           "label": "Radius of points",
-          "defaultValue": 1
+          "defaultValue": "1"
         }
       ]
     },
@@ -99,7 +99,7 @@
           "type": "LINE_WEIGHT",
           "id": "violinBorderWidth",
           "label": "Violin Border Width",
-          "defaultValue": 0
+          "defaultValue": "0"
         }
       ]
     },
@@ -129,7 +129,7 @@
           "type": "LINE_WEIGHT",
           "id": "scatterBorderWidth",
           "label": "scatter Border Width",
-          "defaultValue": 0
+          "defaultValue": "0"
         }
       ]
     },
@@ -153,7 +153,7 @@
           "type": "LINE_WEIGHT",
           "id": "medianBorderWidth",
           "label": "Median Border Width",
-          "defaultValue": 1
+          "defaultValue": "1"
         }
       ]
     },
@@ -165,7 +165,7 @@
           "type": "TEXTINPUT",
           "id": "xAxisRotation",
           "label": "X Axis Rotation",
-          "defaultValue": 45
+          "defaultValue": "45"
         },
         {
           "type": "TEXTINPUT",

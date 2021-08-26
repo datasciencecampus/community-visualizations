@@ -17674,42 +17674,21 @@ function join(lookupTable, mainTable, lookupKey, mainKey, select) {
 
 
 function applyFilter(d, data) {
-    console.log(data)
     const FILTER = dscc.InteractionType.FILTER;
-    var actionId = "onClick";
-    var dimIds = data.fields.mapDimension.map(d => d.id);
-    let selected = new Set();
-
-
-    if (data.interactions.onClick.value.data !== undefined) {
-        var selVals = data.interactions[actionId].value.data.values.map(d =>
-          JSON.stringify(d)
-            );
-        selected = new Set(selVals);
-        var clickData = JSON.stringify(d.mapDimension);
-        if (selected.has(clickData)) {
-          selected.delete(clickData);
-        } else {
-          selected.add(clickData);
-        }
-      } else {
-        const filterData = {
-          concepts: dimIds,
-          values: [d.mapDimension],
+    var interactionId = "onClick";
+    var applyFilterData = data.interactions.onClick.value.data
+    var dimensionId = d.properties.dimId;
+    var value = d.properties.id;
+    if (typeof applyFilterData != "undefined") {
+        dscc.clearInteraction(interactionId, FILTER);
+    }
+    if ((typeof applyFilterData === "undefined") || (applyFilterData && applyFilterData.values[0][0] != value)) {
+        var applyFilterData = {
+            concepts: [dimensionId],
+            values: [[value]]
         };
-        dscc.sendInteraction(actionId, FILTER, filterData);
-        return;
-      }
-
-      if (selected.size > 0) {
-        const filterData = {
-          concepts: dimIds,
-          values: Array.from(selected).map(d => JSON.parse(d)),
-        };
-        dscc.sendInteraction(actionId, FILTER, filterData);
-      } else {
-        dscc.clearInteraction(actionId, FILTER);
-      }
+        dscc.sendInteraction(interactionId, FILTER, applyFilterData);
+    }
 }
 //        values_list.push([value])
 //        var applyFilterData = {
@@ -17871,9 +17850,9 @@ const drawViz = data => {
     ? data.style.legendTextFamily.value
     : data.style.legendTextFamily.defaultValue;
 
-    var boundary =  data.style.boundary.value
-    ? data.style.boundary.value
-    : data.style.boundary.defaultValue;
+    var boundaryGeoJSON =  data.style.boundaryGeoJSON.value
+    ? data.style.boundaryGeoJSON.value
+    : data.style.boundaryGeoJSON.defaultValue;
 
     var boundaryBorderColor =  data.style.boundaryBorderColor.value
     ? data.style.boundaryBorderColor.value.color
@@ -17886,9 +17865,9 @@ const drawViz = data => {
     var height = dscc.getHeight();
 
     // Create boundary geoJSON object if user specifies they want to plot one in STYLE
-    if (boundary != "Add boundary geojson here"){
+    if (boundaryGeoJSON != "Add boundary geojson here"){
 
-        var boundary = JSON.parse(boundary)
+        var boundaryGeoJSON = JSON.parse(boundaryGeoJSON)
 
     }
 
@@ -18143,28 +18122,27 @@ const drawViz = data => {
                     .on('mouseover', tool_tip.show)
                     .on('mouseout', tool_tip.hide);
         
-        // Update opacity if 'apply filter' feature is in use
-        var enableInteractions =
-            data.interactions.onClick.value.type === 'FILTER' ? true : false;
 
-          if (enableInteractions) {
-            if (data.interactions.onClick.value.data !== undefined) {
-              var selected = data.interactions.onClick.value.data.values;
-              selected.forEach(val => {
-                var selector = `[data-cat0="${val[0]}"][data-cat1="${val[1]}"]`;
-                d3.select(selector)
-                  .style('stroke', 'red')
-                  .style('stroke-width', 5);
-              });
-            }
-          }
+        // Update opacity if 'apply filter' feature is in use
+        var applyFilterData = data.interactions.onClick.value.data;
+        if (typeof applyFilterData != "undefined") {
+            g.style("opacity", function(d) {
+                var value = d.properties.id;
+                var opacity = d3.select(this).style("opacity");
+                var applyFilterValue = applyFilterData.values[0][0];
+                if (applyFilterValue != value) {
+                    return opacity * 0.3;
+                }
+                return opacity;
+            })
+        };
         
         // Draw the boundary if user specifies they want one in STYLE
-        if (boundary != "Add boundary geojson here"){
+        if (boundaryGeoJSON != "Add boundary geojson here"){
              var b = svg
                 .append("g")
                 .selectAll("path")
-                    .data(boundary.features)
+                    .data(boundaryGeoJSON.features)
                     .enter()
                     .append("path")
                     // Draw each polygon as a path

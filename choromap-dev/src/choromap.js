@@ -17582,6 +17582,8 @@ const drawViz = data => {
 
     var rowData = data.tables.DEFAULT;
 
+    console.log(rowData)
+
     // Remove frame
     d3.select('body')
         .selectAll('svg')

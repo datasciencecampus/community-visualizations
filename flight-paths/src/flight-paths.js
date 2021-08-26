@@ -42995,8 +42995,8 @@ if (showLabels == "On"){
 
   label.append("text")
       .attr('class', 'place-label')
-      .attr('x', function(d) { return d.x; })
-      .attr('y', function(d) { return d.y; })
+          .attr('x', 8)
+          .attr('y', 0.5)
       .text(d => (d.index % labelsEvery) == 0 ? d.aggregateby : null)
       .each(date_label)
       .call(halo);
