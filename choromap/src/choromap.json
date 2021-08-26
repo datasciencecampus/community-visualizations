@@ -129,13 +129,13 @@
           "type": "TEXTINPUT",
           "id": "projectionCenterLon",
           "label": "Center Lon",
-          "defaultValue": 0
+          "defaultValue": "0"
         },
         {
           "type": "TEXTINPUT",
           "id": "projectionCenterLat",
           "label": "Center Lat",
-          "defaultValue": 0
+          "defaultValue": "0"
         },
         {
           "type": "TEXTINPUT",
@@ -195,7 +195,7 @@
           "type": "TEXTINPUT",
           "id": "polygonBorderWidth",
           "label": "Polygon Border Width",
-          "defaultValue": 0
+          "defaultValue": "0"
         }
       ]
     },
@@ -259,7 +259,7 @@
           "type": "TEXTINPUT",
           "id": "legendCells",
           "label": "Number of Quantiles / Categories",
-          "defaultValue": 5
+          "defaultValue": "5"
         },
         {
           "type": "TEXTINPUT",
@@ -277,7 +277,7 @@
           "type": "TEXTINPUT",
           "id": "legendDecimalPlaces",
           "label": "Decimal Places",
-          "defaultValue": 0
+          "defaultValue": "0"
         },
         {
           "type": "SELECT_SINGLE",
@@ -342,7 +342,7 @@
       "elements": [
         {
           "type": "TEXTINPUT",
-          "id": "boundary",
+          "id": "boundaryGeoJSON",
           "label": "Input boundary GeoJSON",
           "defaultValue": "Add boundary geojson here"
         },
@@ -356,7 +356,7 @@
           "type": "TEXTINPUT",
           "id": "boundaryBorderWidth",
           "label": "Boundary Border Width",
-          "defaultValue": 0
+          "defaultValue": "0"
         },
         {
           "type": "SELECT_SINGLE",
